@@ -19,14 +19,15 @@ class PlayersFactory extends CommunsTools {
 			immat: 1,
 			datas: {
 				classname: 'player',
+				visualdatas: this.tools.get_emoji(),
 				size: {
 					w: new Number('32'),
 					h: new Number('32'),
 					l: new Number('32'),
 				},
 				pos: {
-					x: new Number('64'),//window.innerWidth / 2, // left
-					y: new Number('64'),//window.innerHeight / 2, // right
+					x: new Number('2048'),//window.innerWidth / 2, // left
+					y: new Number('2048'),//window.innerHeight / 2, // right
 					z: new Number('1'), // z-index
 					d: 0 // nort
 				},
@@ -73,7 +74,7 @@ class PlayersFactory extends CommunsTools {
 
 					let newdivvisual = document.createElement('div')
 					newdivvisual.style.position = 'absolute'
-					newdivvisual.textContent = this.aleaEntreBornes(0, 1) > 0 ? '🧙‍♂️' : '🧙‍♀️'// Man Mage
+					newdivvisual.textContent = this.player.datas.visualdatas.ico
 					newdivvisual.className = 'visual'
 					newdivvisual.style.width = this.player.datas.size.w + px
 					newdivvisual.style.height = this.player.datas.size.h + px

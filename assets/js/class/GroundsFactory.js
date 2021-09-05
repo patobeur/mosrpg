@@ -63,7 +63,7 @@ class GroundsFactory extends CommunsTools {
 					this.ground.set_Div()
 				}
 				else {
-					this.setBugAndPause('empty ground')
+					this.tools.setBugAndPause('empty ground')
 				}
 			},
 			add_ToDom: () => {
