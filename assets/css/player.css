@@ -1,0 +1,79 @@
+body {
+  background: rgba(23, 22, 26, 0.911);
+}
+
+.player {
+  background-repeat: repeat;
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.player .visual {
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 12%;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  text-shadow: 0px 0px 5px #181313;
+}
+
+.player .info {
+  background-color: rgba(255, 255, 255, 0.76);
+  border-radius: 0.5rem;
+  color: black;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  left: 100%;
+  bottom: 100%;
+  padding: 0.5rem;
+  display: none;
+}
+
+.player:hover .info {
+  display: initial;
+}
+
+.player .clickrange {
+  border: 3px dotted rgba(16, 16, 19, 0.678);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.beyond {
+  border: 2px dotted white;
+  background-color: rgba(0, 0, 0, 0.644);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  background-image: url(../img/danger.png);
+  background-size: 50%;
+}
+/*# sourceMappingURL=player.css.map */

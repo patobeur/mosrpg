@@ -1,0 +1,19 @@
+.ground {
+  background-color: black;
+  background-repeat: repeat;
+  -webkit-box-shadow: 0px 0px 20px #181313;
+          box-shadow: 0px 0px 20px #181313;
+}
+
+.ground.ground-0 {
+  background-image: url("../img/floors/floor_256-0.png");
+}
+
+.ground.ground-1 {
+  background-image: url("../img/floors/floor_256-1.png");
+}
+
+.ground.ground-2 {
+  background-image: url("../img/floors/floor_256-2.png");
+}
+/*# sourceMappingURL=ground.css.map */

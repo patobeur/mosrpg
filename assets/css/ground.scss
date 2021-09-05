@@ -1,0 +1,15 @@
+.ground {
+	background-color: black;
+	// background-image: url("../img/floors/floor-1.jpg");
+	background-repeat: repeat;
+	box-shadow: 0px 0px 20px rgb(24, 19, 19);
+	&.ground-0 {
+		background-image: url("../img/floors/floor_256-0.png");
+	}
+	&.ground-1 {
+		background-image: url("../img/floors/floor_256-1.png");
+	}
+	&.ground-2 {
+		background-image: url("../img/floors/floor_256-2.png");
+	}
+}

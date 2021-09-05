@@ -1,0 +1,54 @@
+body {
+	background: rgba(23, 22, 26, 0.911);
+}
+.player {
+	// background-image: url("../img/floors/floor-1.jpg");
+	background-repeat: repeat;
+	transform: rotate(0deg);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	.visual {
+		font-size: 1.8rem;
+		line-height: 1.8rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		border-radius: 12%;
+		border-top-left-radius: 50%;
+		border-top-right-radius: 50%;
+		text-shadow: 0px 0px 5px rgb(24, 19, 19);
+	}
+	.info {
+		background-color: rgba(255, 255, 255, 0.76);
+		border-radius: 0.5rem;
+		color: black;
+		width: max-content;
+		left: 100%;
+		bottom: 100%;
+		padding: 0.5rem;
+		display: none;
+	}
+	&:hover {
+		.info {
+			display: initial;
+		}
+	}
+	.clickrange {
+		border: 3px dotted rgba(16, 16, 19, 0.678);
+		border-radius: 50%;
+		z-index: -1;
+		pointer-events: none;
+	}
+}
+.beyond {
+	border: 2px dotted white;
+	background-color: rgba(0, 0, 0, 0.644);
+	border-radius: 50%;
+	pointer-events: none;
+	z-index: -1;
+	background-image: url(../img/danger.png);
+	background-size: 50%;
+}
