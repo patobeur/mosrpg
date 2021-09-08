@@ -34,56 +34,80 @@ class GroundsFactory extends CommunsTools {
 			div: Object,
 			refresh: () => {
 				if (this.ground) {
-
-					this.player.checkPos(this.ground)
-					this.player.divinfo.textContent = 'x:' + this.player.datas.pos.x + ' ,y:' + this.player.datas.pos.y
-					this.player.divvisual.style.transform = 'rotate(' + this.player.datas.pos.d + 'deg)'
-
-					this.player.div.style.left = parseInt((window.innerWidth / 2) - 16) + px
-					this.player.div.style.top = parseInt((window.innerHeight / 2) - 16) + px
-
-
-					this.player.divbeyond.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.clickrange / 2)) + px
-					this.player.divbeyond.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.clickrange / 2)) + px
-
-
-					this.ground.div.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - 16) + px
-					this.ground.div.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - 16) + px
+					this.ground.div.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - (this.casesize / 2)) + px
+					this.ground.div.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - (this.casesize / 2)) + px
+					// console.log('ground:' + this.ground.datas.pos.x + px, this.ground.datas.pos.y + px)
+					// console.log('player:' + this.player.datas.pos.x + px, this.player.datas.pos.y + px)
 				}
+			},
+			resize_Ground: () => {
+				this.ground.datas.size.w = (this.ground.datas.nbcase.x * this.ground.datas.casesize.w)
+				this.ground.datas.size.h = (this.ground.datas.nbcase.y * this.ground.datas.casesize.h)
 			},
 			set_GroundDatas: () => {
 				let grounds = {
-					0: { name: 'GroundZero', pos: { x: 4096, y: 4096, z: 1 }, size: { w: 4096, h: 4096, l: 1 }, classname: 'ground ground-0', case: { w: 32, h: 32, l: 32 } },
-					1: { name: 'GroundOne', pos: { x: 4096, y: 4096, z: 1 }, size: { w: 4096, h: 4096, l: 1 }, classname: 'ground ground-1', case: { w: 32, h: 32, l: 32 } },
-					2: { name: 'GroundTwo', pos: { x: 4096, y: 4096, z: 1 }, size: { w: 4096, h: 4096, l: 1 }, classname: 'ground ground-2', case: { w: 32, h: 32, l: 32 } },
+					0: {
+						name: 'GroundZero', pos: {
+							x: parseInt((window.innerWidth / 2) - (this.player.datas.pos.x)),
+							y: parseInt((window.innerHeight / 2) - (this.player.datas.pos.y)),
+							z: 1
+						},
+						size: { w: 128, h: 128, l: 1 },
+						classname: 'ground ground-0',
+						case: { w: 32, h: 32, l: 32 },
+						nbcase: { x: 128, h: 128, l: 1 }
+					},
+					1: {
+						name: 'GroundOne', pos: {
+							x: parseInt((window.innerWidth / 2) - (this.player.datas.pos.x)),
+							y: parseInt((window.innerHeight / 2) - (this.player.datas.pos.y)),
+							z: 1
+						},
+						size: { w: 128, h: 128, l: 1 },
+						classname: 'ground ground-1',
+						case: { w: 32, h: 32, l: 32 },
+						nbcase: { x: 128, h: 128, l: 1 }
+					},
+					2: {
+						name: 'GroundTwo', pos: {
+							x: parseInt((window.innerWidth / 2) - (this.player.datas.pos.x)),
+							y: parseInt((window.innerHeight / 2) - (this.player.datas.pos.y)),
+							z: 1
+						},
+						size: { w: 128, h: 128, l: 1 },
+						classname: 'ground ground-2',
+						casesize: { w: 32, h: 32, l: 32 },
+						nbcase: { x: 128, y: 128, z: 1 }
+					},
 				}
 				// this.ground.datas = (this.currentGroundImmat >= 0 && grounds[this.currentGroundImmat]) ? grounds[this.currentGroundImmat] : false
 				if (grounds[this.currentGroundImmat]) {
 					this.ground.datas = grounds[this.currentGroundImmat]
+					this.ground.resize_Ground()
 					this.ground.set_Div()
 				}
 				else {
-					this.tools.setBugAndPause('empty ground')
+					this.setBugAndPause('empty ground')
 				}
 			},
 			add_ToDom: () => {
 				document.body.appendChild(this.ground.div)
 			},
 			set_Div: () => {
-				this.ground.div = this.ground.div_Maker('div', this.ground.datas)
+				this.ground.div = this.ground.get_DivElem('div', this.ground.datas)
 			},
-			div_Maker: () => {
+			get_DivElem: () => {
 				if (this.ground.datas) {
-					let newdiv = document.createElement('div')
-					// newdiv.id = 'absolute' + this.ground.immat
-					newdiv.style.position = 'absolute'
-					newdiv.className = this.ground.datas.classname
+					let groundDiv = document.createElement('div')
+					// groundDiv.id = 'absolute' + this.ground.immat
+					groundDiv.style.position = 'absolute'
+					groundDiv.className = this.ground.datas.classname
 					//--
-					newdiv.style.width = this.ground.datas.size.w + px
-					newdiv.style.height = this.ground.datas.size.h + px
-					newdiv.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - 16) + px
-					newdiv.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - 16) + px
-					return newdiv
+					groundDiv.style.width = this.ground.datas.size.w + px
+					groundDiv.style.height = this.ground.datas.size.h + px
+					groundDiv.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - (this.casesize / 2)) + px
+					groundDiv.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - (this.casesize / 2)) + px
+					return groundDiv
 				}
 				return false
 			}
@@ -93,27 +117,47 @@ class GroundsFactory extends CommunsTools {
 	move = (dir) => {
 		// key 37 & 81
 		if (dir === "ArrowLeft" || dir === "q") {
-			this.player.datas.pos.x -= this.player.datas.speed
-			this.player.datas.pos.d = 270
+			this.player.datas.pos.d = 180
+			let nextpos = this.get_PosWithDegree(this.player)
+			this.player.datas.pos.x = nextpos.x
+			this.player.datas.pos.y = nextpos.y
+			this.ground.datas.pos.x = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x))
+			this.ground.datas.pos.y = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y))
 			this.ground.refresh()
+			this.player.refresh(this.ground)
 		}
 		// key 37 & 81
 		if (dir === "ArrowRight" || dir === "d") {
-			this.player.datas.pos.x += this.player.datas.speed
-			this.player.datas.pos.d = 90
+			this.player.datas.pos.d = 0
+			let nextpos = this.get_PosWithDegree(this.player)
+			this.player.datas.pos.x = nextpos.x
+			this.player.datas.pos.y = nextpos.y
+			this.ground.datas.pos.x = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x))
+			this.ground.datas.pos.y = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y))
 			this.ground.refresh()
+			this.player.refresh(this.ground)
 		}
 		// key 38 & 90
 		if (dir === "ArrowUp" || dir === "z") {
-			this.player.datas.pos.y -= this.player.datas.speed
-			this.player.datas.pos.d = 0
+			this.player.datas.pos.d = 270
+			let nextpos = this.get_PosWithDegree(this.player)
+			this.player.datas.pos.x = nextpos.x
+			this.player.datas.pos.y = nextpos.y
+			this.ground.datas.pos.x = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x))
+			this.ground.datas.pos.y = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y))
 			this.ground.refresh()
+			this.player.refresh(this.ground)
 		}
 		// key 40 & 83
 		if (dir === "ArrowDown" || dir === "s") {
-			this.player.datas.pos.y += this.player.datas.speed
-			this.player.datas.pos.d = 180
+			this.player.datas.pos.d = 90
+			let nextpos = this.get_PosWithDegree(this.player)
+			this.player.datas.pos.x = nextpos.x
+			this.player.datas.pos.y = nextpos.y
+			this.ground.datas.pos.x = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x))
+			this.ground.datas.pos.y = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y))
 			this.ground.refresh()
+			this.player.refresh(this.ground)
 		}
 	}
 	get_ScreenConfig = () => {

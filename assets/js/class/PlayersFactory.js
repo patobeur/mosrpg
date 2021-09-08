@@ -19,15 +19,14 @@ class PlayersFactory extends CommunsTools {
 			immat: 1,
 			datas: {
 				classname: 'player',
-				visualdatas: this.tools.get_emoji(),
 				size: {
 					w: new Number('32'),
 					h: new Number('32'),
 					l: new Number('32'),
 				},
 				pos: {
-					x: new Number('2048'),//window.innerWidth / 2, // left
-					y: new Number('2048'),//window.innerHeight / 2, // right
+					x: new Number('64'),//window.innerWidth / 2, // left
+					y: new Number('64'),//window.innerHeight / 2, // right
 					z: new Number('1'), // z-index
 					d: 0 // nort
 				},
@@ -57,68 +56,79 @@ class PlayersFactory extends CommunsTools {
 			add_ToDom: () => {
 				document.body.appendChild(this.player.div)
 			},
-			div_Maker: () => {
+			get_DivElem: () => {
 				if (this.player.datas) {
-					let newdiv = document.createElement('div')
-					newdiv.style.position = 'absolute'
-					newdiv.style.width = this.player.datas.size.w + px
-					newdiv.style.height = this.player.datas.size.h + px
-					// newdiv.style.left = parseInt(this.player.datas.pos.x - (this.player.datas.size.w / 2)) + px
-					// newdiv.style.top = parseInt(this.player.datas.pos.y - (this.player.datas.size.h / 2)) + px
-					newdiv.style.left = parseInt((window.innerWidth / 2) - 16) + px
-					newdiv.style.top = parseInt((window.innerHeight / 2) - 16) + px
-					newdiv.className = this.player.datas.classname
-					newdiv.style.zIndex = parseInt(this.player.datas.pos.z)
+					let playerDiv = document.createElement('div')
+					playerDiv.style.position = 'absolute'
+					playerDiv.style.width = this.player.datas.size.w + px
+					playerDiv.style.height = this.player.datas.size.h + px
+					// playerDiv.style.left = parseInt(this.player.datas.pos.x - (this.player.datas.size.w / 2)) + px
+					// playerDiv.style.top = parseInt(this.player.datas.pos.y - (this.player.datas.size.h / 2)) + px
+					playerDiv.style.left = parseInt((window.innerWidth / 2) - (this.casesize / 2) - (this.player.datas.size.w / 2)) + px
+					playerDiv.style.top = parseInt((window.innerHeight / 2) - (this.casesize / 2) - (this.player.datas.size.h / 2)) + px
+					playerDiv.className = this.player.datas.classname
+					playerDiv.style.zIndex = parseInt(this.player.datas.pos.z)
 
 
 
-					let newdivvisual = document.createElement('div')
-					newdivvisual.style.position = 'absolute'
-					newdivvisual.textContent = this.player.datas.visualdatas.ico
-					newdivvisual.className = 'visual'
-					newdivvisual.style.width = this.player.datas.size.w + px
-					newdivvisual.style.height = this.player.datas.size.h + px
-					this.player.divvisual = newdivvisual
+					let playerDivvisual = document.createElement('div')
+					playerDivvisual.style.position = 'absolute'
+					playerDivvisual.textContent = this.aleaEntreBornes(0, 1) > 0 ? '🧙‍♂️' : '🧙‍♀️'// Man Mage
+					playerDivvisual.className = 'visual'
+					playerDivvisual.style.width = this.player.datas.size.w + px
+					playerDivvisual.style.height = this.player.datas.size.h + px
+					this.player.divvisual = playerDivvisual
 
 
-					let newdivinfo = document.createElement('div')
-					newdivinfo.style.position = 'absolute'
-					newdivinfo.textContent = 'ok playerOne'
-					newdivinfo.className = 'info'
-					this.player.divinfo = newdivinfo
+					let playerDivinfo = document.createElement('div')
+					playerDivinfo.style.position = 'absolute'
+					playerDivinfo.textContent = 'ok playerOne'
+					playerDivinfo.className = 'info'
+					this.player.divinfo = playerDivinfo
 
+					let playerDivclickrange = document.createElement('div')
+					playerDivclickrange.style.position = 'absolute'
+					playerDivclickrange.className = 'clickrange'
+					playerDivclickrange.style.width = this.player.datas.clickrange + px
+					playerDivclickrange.style.height = this.player.datas.clickrange + px
+					this.player.divclickrange = playerDivclickrange
 
-
-					let newdivclickrange = document.createElement('div')
-					newdivclickrange.style.position = 'absolute'
-					newdivclickrange.className = 'clickrange'
-					newdivclickrange.style.width = this.player.datas.clickrange + px
-					newdivclickrange.style.height = this.player.datas.clickrange + px
-					this.player.divclickrange = newdivclickrange
-
-					let newdivbeyond = document.createElement('div')
-					newdivbeyond.style.position = 'absolute'
-					newdivbeyond.className = 'beyond'
-					newdivbeyond.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.clickrange / 2)) + px
-					newdivbeyond.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.clickrange / 2)) + px
-					newdivbeyond.style.width = this.player.datas.clickrange + px
-					newdivbeyond.style.height = this.player.datas.clickrange + px
-					this.player.divbeyond = newdivbeyond
+					let playerDivbeyond = document.createElement('div')
+					playerDivbeyond.style.position = 'absolute'
+					playerDivbeyond.className = 'beyond'
+					playerDivbeyond.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.w / 2)) + px
+					playerDivbeyond.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.h / 2)) + px
+					playerDivbeyond.style.width = this.player.datas.clickrange + px
+					playerDivbeyond.style.height = this.player.datas.clickrange + px
+					playerDivbeyond.style.transform = 'rotate(0deg)'
+					this.player.divbeyond = playerDivbeyond
 
 					document.body.appendChild(this.player.divbeyond)
 
-					// newdiv.appendChild(this.player.divbeyond)
-					newdiv.appendChild(this.player.divclickrange)
-					newdiv.appendChild(this.player.divinfo)
-					newdiv.appendChild(this.player.divvisual)
-					this.player.div = newdiv
+					// playerDiv.appendChild(this.player.divbeyond)
+					playerDiv.appendChild(this.player.divclickrange)
+					playerDiv.appendChild(this.player.divinfo)
+					playerDiv.appendChild(this.player.divvisual)
+					this.player.div = playerDiv
 					this.player.add_ToDom()
+					this.player.refresh()
 				}
 			},
 			refresh: (ground) => {
 				// this.player.div.style.left = ground.datas.pos.x + this.player.datas.pos.x + px
 				// this.player.div.style.top = ground.datas.pos.y + this.player.datas.pos.y + px
+				if (ground) {
+					this.player.checkPos(ground)
+					this.player.divinfo.textContent = 'x:' + this.player.datas.pos.x + ' ,y:' + this.player.datas.pos.y
+					this.player.divclickrange.style.transform = 'rotate(' + (this.player.datas.pos.d + 90) + 'deg)'
 
+					this.player.div.style.left = parseInt((window.innerWidth / 2) - (this.casesize / 2) - (this.player.datas.size.w / 2)) + px
+					this.player.div.style.top = parseInt((window.innerHeight / 2) - (this.casesize / 2) - (this.player.datas.size.h / 2)) + px
+
+
+					this.player.divbeyond.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.w / 2)) + px
+					this.player.divbeyond.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.h / 2)) + px
+				}
 			},
 			checkPos: (ground) => {
 				if (this.player.datas.pos.x + (this.player.datas.size.w / 2) < 1) {
@@ -136,6 +146,6 @@ class PlayersFactory extends CommunsTools {
 			}
 		}
 		this.player = player
-		this.player.div_Maker()
+		this.player.get_DivElem()
 	}
 }

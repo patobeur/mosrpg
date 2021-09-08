@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   background: rgba(23, 22, 26, 0.911);
 }
@@ -65,10 +66,22 @@ body {
   border-radius: 50%;
   z-index: -1;
   pointer-events: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.player .clickrange::after {
+  content: "🧭";
+  font-size: 5;
+  font-weight: 900;
+  color: white;
 }
 
 .beyond {
-  border: 2px dotted white;
   background-color: rgba(0, 0, 0, 0.644);
   border-radius: 50%;
   pointer-events: none;

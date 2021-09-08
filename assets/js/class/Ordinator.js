@@ -12,7 +12,6 @@ class Ordinator extends CommunsTools {
 		this.rendertics = 0
 		this.renderInterval = 50 // render speed 1ms * 50
 		this.Start()
-
 	}
 
 	Start = () => {
