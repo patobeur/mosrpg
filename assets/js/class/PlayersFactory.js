@@ -34,7 +34,10 @@ class PlayersFactory extends CommunsTools {
 					x: 64,
 					y: 64,
 					z: 1,
-					d: 0
+					d: 0,
+					arrivedX: true,
+					arrivedY: true,
+					arrived: true
 				},
 				clickrange: 150,
 				height: new Number('180'),
@@ -48,7 +51,7 @@ class PlayersFactory extends CommunsTools {
 				hp: new Number('100'),
 				xp: new Number('0'),
 				lv: new Number('1'),
-				speed: new Number('5'),
+				speed: new Number('2'),
 				actions: {
 					movingToDestinationClick: false
 				},
@@ -82,7 +85,7 @@ class PlayersFactory extends CommunsTools {
 
 					let playerDivvisual = document.createElement('div')
 					playerDivvisual.style.position = 'absolute'
-					playerDivvisual.textContent = this.communsTools.aleaEntreBornes(0, 1) > 0 ? '🧙‍♂️' : '🧙‍♀️'// Man Mage
+					playerDivvisual.textContent = this.communsTools.get_aleaEntreBornes(0, 1) > 0 ? '🧙‍♂️' : '🧙‍♀️'// Man Mage
 					playerDivvisual.className = 'visual'
 					playerDivvisual.style.width = this.player.datas.size.w + px
 					playerDivvisual.style.height = this.player.datas.size.h + px
@@ -153,14 +156,23 @@ class PlayersFactory extends CommunsTools {
 					this.player.datas.pos.y = 1 - (this.player.datas.size.h / 2)
 				}
 			},
-			set_Destination: (nextpos) => {
+			set_Destination: (e) => {
 				this.player.datas.actions.movingToDestinationClick = true
 				this.player.datas.destination = {
-					x: nextpos.x,
-					y: nextpos.y,
+					x: e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2),
+					y: e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2),
 					z: 1,
-					d: this.player.datas.pos.d
+					d: this.player.datas.pos.d,
+					arrivedX: false,
+					arrivedY: false,
+					arrived: false
 				}
+				this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
+					this.player.datas.destination.x,
+					this.player.datas.destination.y,
+					this.player.datas.pos.x,
+					this.player.datas.pos.y
+				)
 			},
 			reset_Destination: (player) => {
 				this.player.datas.actions.movingToDestinationClick = false

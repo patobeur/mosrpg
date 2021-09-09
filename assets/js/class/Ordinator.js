@@ -6,7 +6,7 @@ class Ordinator extends CommunsTools {
 		this.GF = new GroundsFactory(this.PF.player)
 		this.render = this.renderManager()
 		this.rendertics = 0
-		this.renderInterval = 20 // render speed 1ms * 50
+		this.renderInterval = 30 // render speed 1ms * 50
 		this.gameRender = false
 		this.PAUSE = this.isPause
 		this.set_EventListener()
@@ -50,6 +50,9 @@ class Ordinator extends CommunsTools {
 		}
 	}
 	playerKeyboard(eventKeyDown) {
+		// stop auto move
+		this.PF.player.datas.destination.arrived = true
+
 		let tmpMooving = false // needed to check if actived mooves
 		if (eventKeyDown === 'p') {
 			this.setPause(false)

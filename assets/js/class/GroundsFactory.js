@@ -85,7 +85,7 @@ class GroundsFactory extends CommunsTools {
 					this.ground.set_Div()
 				}
 				else {
-					this.setBugAndPause('empty ground')
+					this.set_BugAndPause('empty ground')
 				}
 			},
 			add_ToDom: () => {
@@ -113,35 +113,62 @@ class GroundsFactory extends CommunsTools {
 		return newground
 	}
 	click_Ground = (e) => {
-		// get mouse clik x,y info
+		// CLICK TO RUN
+		// reset last arrived actions
+		this.player.datas.destination.arrived = false
+
+		// methode A test if e.clientX and e.clientY is on board
+		// this work but not realy tested
 		let x = e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2)
 		let y = e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2)
+		if (x > 0 && x < this.ground.datas.size.w && y > 0 && y < this.ground.datas.size.h) {
+			this.player.set_Destination(e)
+		}
 
-		this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
-			x,
-			y,
-			this.player.datas.pos.x,
-			this.player.datas.pos.y
-		)
-		let nextpos = this.communsTools.get_PosWithDegree(this.player)
-		this.player.set_Destination(nextpos)
+		// methode B open bar click
+		// this.player.set_Destination(e)
 	}
-	move_ToDestination = (player) => {
-		let xxx = [player.datas.destination.x, player.datas.pos.x]
-		console.log(Math.max(...xxx), Math.min(...xxx))
-		console.log(player.datas.destination.x, player.datas.pos.x)
+	move_ToDestination = () => {
 
-		if (player.datas.destination.x === player.datas.pos.x &&
-			player.datas.destination.x === player.datas.pos.y) {
+		let xxx = [this.player.datas.destination.x, this.player.datas.pos.x]
+		let yyy = [this.player.datas.destination.y, this.player.datas.pos.y]
+
+		// check only if arrivedX not reach
+		!this.player.datas.destination.arrivedX
+			? this.player.datas.destination.arrivedX =
+			(Math.max(...xxx) - Math.min(...xxx) <= (this.player.datas.size.w / 2))
+				? true
+				: false
+			: ''
+		// check only if arrivedY not reach
+		!this.player.datas.destination.arrivedY
+			? this.player.datas.destination.arrivedY =
+			(Math.max(...yyy) - Math.min(...yyy) <= (this.player.datas.size.h / 2))
+				? true
+				: false
+			: ''
+		// if both x && y are reached then arrived = true
+		!this.player.datas.destination.arrived
+			? this.player.datas.destination.arrived = (this.player.datas.destination.arrivedX && this.player.datas.destination.arrivedY)
+			: ''
+
+		console.log('playerPIXELSmove:' + this.player.datas.speed)
+		console.log('dist x:' + (Math.max(...xxx) - Math.min(...xxx)), this.player.datas.destination.arrivedX)
+		console.log('dist y:' + (Math.max(...yyy) - Math.min(...yyy)), this.player.datas.destination.arrivedY)
+		console.log('DestinaPos:', this.player.datas.destination)
+		console.log('CurrentPos:', this.player.datas.pos)
+
+
+		if (this.player.datas.destination.arrived) {
+			console.log('RESET')
 			this.player.reset_Destination()
 		}
 		else {
 			let nextpos = this.communsTools.get_PosWithDegree(this.player)
 			this.player.datas.pos.x = nextpos.x
 			this.player.datas.pos.y = nextpos.y
-			// this.player.refresh(this.ground)
-			// this.ground.refresh()
 		}
+
 	}
 	get_ScreenConfig = () => {
 		return {
@@ -163,14 +190,6 @@ class GroundsFactory extends CommunsTools {
 		this.screenConfig.screenSize = {
 			x: window.innerWidth,
 			y: window.innerHeight,
-			z: 0
-		}
-		this.set_ScreenCenterXY()
-	}
-	set_ScreenCenterXY = () => {
-		this.screenConfig.screenCenter = {
-			x: window.innerWidth / 2,
-			y: window.innerHeight / 2,
 			z: 0
 		}
 	}

@@ -12,12 +12,10 @@ class CommunsTools {
 		this.isWait = false
 		this.communsTools = this.communsTools()
 	}
-	setPause = (bol) => {
-		//--
+	setPause = () => {
 		this.isPause = !this.isPause
 	}
 	get_isPause() {
-		console.log('local pause:' + this.isPause)
 		return this.isPause
 	}
 	set_EventListener() {
@@ -38,20 +36,20 @@ class CommunsTools {
 	}
 	communsTools = () => {
 		return {
-			setBugAndPause: (string = false) => {
+			set_BugAndPause: (string = false) => {
 				this.isBug = true
 				this.isPause = true
 				if (this.isBug && this.isPause) {
 					console.log('🐛 bug ! game paused' + (string ? ' 💀->' + string : ''))
 				}
 			},
-			aleaEntreBornes: (minimum, maximum) => {
+			get_aleaEntreBornes: (minimum, maximum) => {
 				return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
 			},
-			get_DegreeWithTwoPos: (cx, cy, ex, ey) => {
-				var dy = ey - cy;
-				var dx = ex - cx;
-				var theta = Math.atan2(-dy, -dx); // 0° = east
+			get_DegreeWithTwoPos: (destX, destY, fromX, fromY) => {
+				var nextY = fromY - destY;
+				var nextX = fromX - destX;
+				var theta = Math.atan2(-nextY, -nextX); // 0° = east
 				theta *= 180 / Math.PI; // radians to degrees
 				if (theta < 0) theta += 360; // negative case
 				return theta;
