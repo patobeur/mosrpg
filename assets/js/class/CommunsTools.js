@@ -1,55 +1,42 @@
 "use strict";
 class CommunsTools {
 	constructor() {
-		this.isBug = false
-		this.isPause = false
-		this.wait = false
-		this.tools = this.tools()
+		// on peux faire ça ??? can we do that ??? this call himself ?
 		// game data
 		this.ratio = 1
 		this.casesize = 32 * this.ratio // px
 		// mouse 
 		this.drag = false
+		this.isBug = false
+		this.isPause = true
+		this.isWait = false
+		this.communsTools = this.communsTools()
+	}
+	setPause = (bol) => {
+		//--
+		this.isPause = !this.isPause
+	}
+	get_isPause() {
+		console.log('local pause:' + this.isPause)
+		return this.isPause
 	}
 	set_EventListener() {
 		window.addEventListener('resize', this.resize, true)
 
-		document.addEventListener('mousedown', () => this.drag = false);
-		document.addEventListener('mousemove', () => this.drag = true);
-		document.addEventListener('mouseup', () => console.log(this.drag ? 'draging' : 'clicking'));
-		window.addEventListener('click', this.click, true)
-	}
-	set_Onkeydown() {
-		document.onkeydown = (eventkeydown) => {
-			this.GF.move(eventkeydown.key)
-			// if (eventkeydown.key === "ArrowLeft" || eventkeydown.key === "q") { this.GF.move(eventkeydown.key) } // key 37 & 81
-			// if (eventkeydown.key === "ArrowRight" || eventkeydown.key === "d") { this.GF.move(eventkeydown.key) } // key 37 & 81
-			// if (eventkeydown.key === "ArrowUp" || eventkeydown.key === "z") { this.GF.move(eventkeydown.key) } // key 38 & 90
-			// if (eventkeydown.key === "ArrowDown" || eventkeydown.key === "s") { this.GF.move(eventkeydown.key) } // key 40 & 83
-		}
+		// drag test for futur drag and drop stuff ?
+		// document.addEventListener('mousedown', () => { this.drag = false });
+		// document.addEventListener('mousemove', () => { this.drag = true });
+		// document.addEventListener('mouseup', () => console.log(this.drag ? 'draging' : 'clicking'));
+
+		// on click to move
+		document.addEventListener('click', this.GF.click_Ground, true)
 	}
 	resize = () => {
 		this.GF.set_ScreenXY()
 		this.PF.player.refresh(this.GF.ground)
 		this.GF.ground.refresh()
 	}
-	click = (e) => {
-		console.log(this.drag ? 'draging' : 'clicking')
-		let x = e.clientX - (window.innerWidth / 2) + this.PF.player.datas.pos.x + (this.casesize / 2)
-		let y = e.clientY - (window.innerHeight / 2) + this.PF.player.datas.pos.y + (this.casesize / 2)
-		this.PF.player.datas.pos.d = this.get_DegreeWithTwoPos(
-			x,
-			y,
-			this.PF.player.datas.pos.x,
-			this.PF.player.datas.pos.y
-		)
-		let nextpos = this.get_PosWithDegree(this.PF.player)
-		this.PF.player.datas.pos.x = nextpos.x
-		this.PF.player.datas.pos.y = nextpos.y
-		this.PF.player.refresh(this.GF.ground)
-		this.GF.ground.refresh()
-	}
-	tools = () => {
+	communsTools = () => {
 		return {
 			setBugAndPause: (string = false) => {
 				this.isBug = true
@@ -60,41 +47,29 @@ class CommunsTools {
 			},
 			aleaEntreBornes: (minimum, maximum) => {
 				return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
+			},
+			get_DegreeWithTwoPos: (cx, cy, ex, ey) => {
+				var dy = ey - cy;
+				var dx = ex - cx;
+				var theta = Math.atan2(-dy, -dx); // 0° = east
+				theta *= 180 / Math.PI; // radians to degrees
+				if (theta < 0) theta += 360; // negative case
+				return theta;
+			},
+			get_PosWithDegree: (player) => {
+				let x = parseInt(player.datas.pos.x + (player.datas.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180))))
+				let y = parseInt(player.datas.pos.y + (player.datas.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180))))
+				return { x: x, y: y }
+			},
+			// trigonometrie
+			get_Distance: (from, destination) => { // get hypotenus with pythaGore
+				let AB = (destination.x) - (from.x)
+				let AC = (destination.y) - (from.y)
+				return Math.sqrt((AB * AB) + (AC * AC))
 			}
 		}
 	}
-	setBugAndPause = (string = false) => {
-		this.isBug = true
-		this.isPause = true
-		if (this.isBug && this.isPause) {
-			console.log('🐛 bug ! game paused' + (string ? ' 💀->' + string : ''))
-		}
-	}
-	aleaEntreBornes(minimum, maximum) {
-		return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
-	}
-	setPause() {
-		this.isPause = !this.isPause
-	}
-	// trigonometrie
-	get_Distance = (from, destination) => { // get hypotenus with pythaGore
-		let AB = (destination.x) - (from.x)
-		let AC = (destination.y) - (from.y)
-		return Math.sqrt((AB * AB) + (AC * AC))
-	}
-	get_PosWithDegree = (player) => {
-		let x = parseInt(player.datas.pos.x + (player.datas.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180))))
-		let y = parseInt(player.datas.pos.y + (player.datas.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180))))
-		return { x: x, y: y }
-	}
-	get_DegreeWithTwoPos = (cx, cy, ex, ey) => {
-		var dy = ey - cy;
-		var dx = ex - cx;
-		var theta = Math.atan2(-dy, -dx); // 0° = east
-		theta *= 180 / Math.PI; // radians to degrees
-		if (theta < 0) theta += 360; // negative case
-		return theta;
-	}
+
 	// emojis
 	get_emoji = () => {
 		let emojis = {

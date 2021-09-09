@@ -28,7 +28,13 @@ class PlayersFactory extends CommunsTools {
 					x: new Number('64'),//window.innerWidth / 2, // left
 					y: new Number('64'),//window.innerHeight / 2, // right
 					z: new Number('1'), // z-index
-					d: 0 // nort
+					d: 0 // north
+				},
+				destination: {
+					x: 64,
+					y: 64,
+					z: 1,
+					d: 0
 				},
 				clickrange: 150,
 				height: new Number('180'),
@@ -43,6 +49,9 @@ class PlayersFactory extends CommunsTools {
 				xp: new Number('0'),
 				lv: new Number('1'),
 				speed: new Number('5'),
+				actions: {
+					movingToDestinationClick: false
+				},
 				status: {
 					poisoned: { active: false, currentdelay: new Number('0'), maxdelay: new Number('100') },
 					cursed: { active: false, currentdelay: new Number('0'), maxdelay: new Number('100') },
@@ -73,7 +82,7 @@ class PlayersFactory extends CommunsTools {
 
 					let playerDivvisual = document.createElement('div')
 					playerDivvisual.style.position = 'absolute'
-					playerDivvisual.textContent = this.aleaEntreBornes(0, 1) > 0 ? '🧙‍♂️' : '🧙‍♀️'// Man Mage
+					playerDivvisual.textContent = this.communsTools.aleaEntreBornes(0, 1) > 0 ? '🧙‍♂️' : '🧙‍♀️'// Man Mage
 					playerDivvisual.className = 'visual'
 					playerDivvisual.style.width = this.player.datas.size.w + px
 					playerDivvisual.style.height = this.player.datas.size.h + px
@@ -143,7 +152,19 @@ class PlayersFactory extends CommunsTools {
 				if (this.player.datas.pos.y + (this.player.datas.size.h / 2) > ground.datas.size.h) {
 					this.player.datas.pos.y = 1 - (this.player.datas.size.h / 2)
 				}
-			}
+			},
+			set_Destination: (nextpos) => {
+				this.player.datas.actions.movingToDestinationClick = true
+				this.player.datas.destination = {
+					x: nextpos.x,
+					y: nextpos.y,
+					z: 1,
+					d: this.player.datas.pos.d
+				}
+			},
+			reset_Destination: (player) => {
+				this.player.datas.actions.movingToDestinationClick = false
+			},
 		}
 		this.player = player
 		this.player.get_DivElem()

@@ -5,8 +5,6 @@ let rem = 'rem';
 class GroundsFactory extends CommunsTools {
 	constructor(player) {
 		super()
-		this.isBug = true
-		this.isPause = true
 		this.startGroundImmat = 2
 		this.currentGroundImmat = this.startGroundImmat
 		// --
@@ -114,50 +112,35 @@ class GroundsFactory extends CommunsTools {
 		}
 		return newground
 	}
-	move = (dir) => {
-		// key 37 & 81
-		if (dir === "ArrowLeft" || dir === "q") {
-			this.player.datas.pos.d = 180
-			let nextpos = this.get_PosWithDegree(this.player)
-			this.player.datas.pos.x = nextpos.x
-			this.player.datas.pos.y = nextpos.y
-			this.ground.datas.pos.x = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x))
-			this.ground.datas.pos.y = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y))
-			this.ground.refresh()
-			this.player.refresh(this.ground)
+	click_Ground = (e) => {
+		// get mouse clik x,y info
+		let x = e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2)
+		let y = e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2)
+
+		this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
+			x,
+			y,
+			this.player.datas.pos.x,
+			this.player.datas.pos.y
+		)
+		let nextpos = this.communsTools.get_PosWithDegree(this.player)
+		this.player.set_Destination(nextpos)
+	}
+	move_ToDestination = (player) => {
+		let xxx = [player.datas.destination.x, player.datas.pos.x]
+		console.log(Math.max(...xxx), Math.min(...xxx))
+		console.log(player.datas.destination.x, player.datas.pos.x)
+
+		if (player.datas.destination.x === player.datas.pos.x &&
+			player.datas.destination.x === player.datas.pos.y) {
+			this.player.reset_Destination()
 		}
-		// key 37 & 81
-		if (dir === "ArrowRight" || dir === "d") {
-			this.player.datas.pos.d = 0
-			let nextpos = this.get_PosWithDegree(this.player)
+		else {
+			let nextpos = this.communsTools.get_PosWithDegree(this.player)
 			this.player.datas.pos.x = nextpos.x
 			this.player.datas.pos.y = nextpos.y
-			this.ground.datas.pos.x = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x))
-			this.ground.datas.pos.y = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y))
-			this.ground.refresh()
-			this.player.refresh(this.ground)
-		}
-		// key 38 & 90
-		if (dir === "ArrowUp" || dir === "z") {
-			this.player.datas.pos.d = 270
-			let nextpos = this.get_PosWithDegree(this.player)
-			this.player.datas.pos.x = nextpos.x
-			this.player.datas.pos.y = nextpos.y
-			this.ground.datas.pos.x = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x))
-			this.ground.datas.pos.y = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y))
-			this.ground.refresh()
-			this.player.refresh(this.ground)
-		}
-		// key 40 & 83
-		if (dir === "ArrowDown" || dir === "s") {
-			this.player.datas.pos.d = 90
-			let nextpos = this.get_PosWithDegree(this.player)
-			this.player.datas.pos.x = nextpos.x
-			this.player.datas.pos.y = nextpos.y
-			this.ground.datas.pos.x = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x))
-			this.ground.datas.pos.y = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y))
-			this.ground.refresh()
-			this.player.refresh(this.ground)
+			// this.player.refresh(this.ground)
+			// this.ground.refresh()
 		}
 	}
 	get_ScreenConfig = () => {

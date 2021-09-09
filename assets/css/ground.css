@@ -3,6 +3,7 @@
   background-repeat: repeat;
   -webkit-box-shadow: 0px 0px 20px #181313;
           box-shadow: 0px 0px 20px #181313;
+  z-index: -1;
 }
 
 .ground.ground-0 {
