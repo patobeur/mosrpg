@@ -30,15 +30,6 @@ class PlayersFactory extends CommunsTools {
 					z: new Number('1'), // z-index
 					d: 0 // north
 				},
-				destination: {
-					x: 64,
-					y: 64,
-					z: 1,
-					d: 0,
-					arrivedX: true,
-					arrivedY: true,
-					arrived: true
-				},
 				clickrange: 150,
 				height: new Number('180'),
 				strength: new Number('10'),
@@ -52,8 +43,19 @@ class PlayersFactory extends CommunsTools {
 				xp: new Number('0'),
 				lv: new Number('1'),
 				speed: new Number('2'),
+				destination: {
+					x: 64,
+					y: 64,
+					z: 1,
+					d: 0,
+					arrivedX: true,
+					arrivedY: true,
+					arrived: true
+				},
 				actions: {
-					movingToDestinationClick: false
+					movingToDestinationClick: false,
+					firingAFireBall: false,
+					castingADefenseSpell: false
 				},
 				status: {
 					poisoned: { active: false, currentdelay: new Number('0'), maxdelay: new Number('100') },

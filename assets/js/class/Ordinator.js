@@ -51,7 +51,7 @@ class Ordinator extends CommunsTools {
 	}
 	playerKeyboard(eventKeyDown) {
 		// stop auto move
-		this.PF.player.datas.destination.arrived = true
+		this.PF.player.reset_Destination()
 
 		let tmpMooving = false // needed to check if actived mooves
 		if (eventKeyDown === 'p') {
