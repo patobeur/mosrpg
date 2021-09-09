@@ -155,8 +155,8 @@ class GroundsFactory extends CommunsTools {
 		// console.log('playerPIXELSmove:' + this.player.datas.speed)
 		// console.log('dist x:' + (Math.max(...xxx) - Math.min(...xxx)), this.player.datas.destination.arrivedX)
 		// console.log('dist y:' + (Math.max(...yyy) - Math.min(...yyy)), this.player.datas.destination.arrivedY)
-		// console.log('DestinaPos:', this.player.datas.destination)
-		// console.log('CurrentPos:', this.player.datas.pos)
+		console.log('DestinaPos:', this.player.datas.destination)
+		console.log('CurrentPos:', this.player.datas.pos)
 
 
 		if (this.player.datas.destination.arrived) {
