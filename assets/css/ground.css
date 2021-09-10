@@ -1,29 +1,52 @@
-.ground {
+@charset "UTF-8";
+#game {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: black;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: hidden;
+  border: 5px solid black;
+  -webkit-box-shadow: 0px 0px 20px #181313;
+          box-shadow: 0px 0px 20px #181313;
+}
+
+#game .ground {
+  position: absolute;
   background-color: black;
   background-repeat: repeat;
   -webkit-box-shadow: 0px 0px 20px #181313;
           box-shadow: 0px 0px 20px #181313;
-  z-index: -1;
   cursor: crosshair;
 }
 
-.ground.ground-0 {
+#game .ground.ground-0 {
   background-image: url("../img/floors/floor_256-0.png");
 }
 
-.ground.ground-1 {
+#game .ground.ground-1 {
   background-image: url("../img/floors/floor_256-1.png");
 }
 
-.ground.ground-2 {
+#game .ground.ground-2 {
   background-image: url("../img/floors/floor_256-2.png");
 }
 
-.ground .destination {
+#game .ground .destination {
   position: absolute;
   width: 1px;
   height: 1px;
-  z-index: 1;
   font-size: 2rem;
   line-height: 2rem;
   display: -webkit-box;
@@ -36,5 +59,120 @@
       -ms-flex-align: center;
           align-items: center;
   background-color: none;
+}
+
+#game .player {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 1;
+}
+
+#game .player .visual {
+  position: absolute;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 12%;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  text-shadow: 0px 0px 5px #181313;
+}
+
+#game .player .info {
+  background-color: rgba(255, 255, 255, 0.76);
+  border-radius: 0.5rem;
+  color: black;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  left: 100%;
+  bottom: 100%;
+  padding: 0.5rem;
+  display: none;
+}
+
+#game .player:hover .info {
+  display: initial;
+}
+
+#game .player .fog {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.116);
+}
+
+#game .player .clickrange {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-image: radial-gradient(rgba(255, 255, 255, 0), black, black);
+}
+
+#game .player .clickrange::after {
+  content: "🧭";
+  font-size: 5;
+  font-weight: 900;
+  color: white;
+}
+
+#game .beyond {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.644);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  background-image: url(../img/danger.png);
+  background-size: 50%;
+}
+
+.mire {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: rgba(245, 245, 220, 0.568);
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 9999;
 }
 /*# sourceMappingURL=ground.css.map */

@@ -4,6 +4,11 @@ class Ordinator extends CommunsTools {
 		super()
 		this.PF = new PlayersFactory()
 		this.GF = new GroundsFactory(this.PF.player)
+
+
+		this.add_ToGame(this.PF.player.div)
+		this.PF.player.refresh()
+
 		this.render = this.renderManager()
 		this.rendertics = 0
 		this.renderInterval = 30 // render speed 1ms * 50

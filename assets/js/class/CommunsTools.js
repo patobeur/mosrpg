@@ -3,14 +3,25 @@ class CommunsTools {
 	constructor() {
 		// on peux faire ça ??? can we do that ??? this call himself ?
 		// game data
-		this.ratio = 1
-		this.casesize = 32 * this.ratio // px
+		// this.casesize = 32 * this.ratio // px
+		this.communs = {
+			//casesize: 32 * this.ratio, // px
+			ratio: 1,
+			gamesize: { w: '512', h: '512' },
+			// gamesize2: this.setit()
+		}
 		// mouse 
 		this.drag = false
 		this.isBug = false
 		this.isPause = true
 		this.isWait = false
 		this.communsTools = this.communsTools()
+	}
+	setit = () => {
+		return {
+			w: this.PF.player.div.parentNode.clientWidth,
+			h: this.PF.player.div.parentNode.clientHeight
+		}
 	}
 	setPause = () => {
 		this.isPause = !this.isPause
@@ -98,7 +109,15 @@ class CommunsTools {
 			}
 		}
 	}
-
+	add_ToDom = (div) => {
+		document.body.appendChild(div)
+	}
+	add_ToGame = (div) => {
+		document.getElementById('game').appendChild(div)
+	}
+	add_ToMap = (div) => {
+		document.getElementById('ground').appendChild(div)
+	}
 	// emojis
 	get_emoji = () => {
 		let emojis = {

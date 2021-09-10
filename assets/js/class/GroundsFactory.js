@@ -17,31 +17,27 @@ class GroundsFactory extends CommunsTools {
 		this.screenConfig = this.get_ScreenConfig()
 		this.ground = this.groundManager()
 		this.ground.set_GroundDatas()
-		this.ground.add_ToDom(this.ground.div)
+		this.add_ToDom(this.ground.divGame)
+		this.add_ToGame(this.ground.div)
 	}
 	groundManager = () => {
 		let newground = {
 			immat: this.currentGroundImmat,
-			datas: {
-				// name: 'GroundZero', 
-				// pos: { x: 0, y: 0, z: 0 }, 
-				// size: { w: 0, h: 0, l: 0 }, 
-				// classname: 'ground ground-0', 
-				// case: { w: , h:, l: }
-			},
+			datas: {},
+			divGame: Object,
 			div: Object,
 			divDest: Object,
 			refresh: () => {
 				if (this.ground) {
-					this.ground.datas.pos.x = (window.innerWidth / 2) - this.player.datas.pos.x
-					this.ground.datas.pos.y = (window.innerHeight / 2) - this.player.datas.pos.y
+					this.ground.datas.pos.x = 0 - this.player.datas.pos.x + (this.communs.gamesize.w / 2)
+					this.ground.datas.pos.y = 0 - this.player.datas.pos.y + (this.communs.gamesize.h / 2)
 					this.ground.div.style.left = this.ground.datas.pos.x + px
 					this.ground.div.style.top = this.ground.datas.pos.y + px
 				}
 			},
 			resize_Ground: () => {
-				this.ground.datas.size.w = (this.ground.datas.nbcase.x * this.ground.datas.casesize.w)
-				this.ground.datas.size.h = (this.ground.datas.nbcase.y * this.ground.datas.casesize.h)
+				this.ground.datas.size.w = (this.ground.datas.nbcase.x * this.ground.datas.casesize.w)// * this.communs.ratio)
+				this.ground.datas.size.h = (this.ground.datas.nbcase.y * this.ground.datas.casesize.h)// * this.communs.ratio)
 			},
 			set_GroundDatas: () => {
 				let grounds = {
@@ -54,6 +50,7 @@ class GroundsFactory extends CommunsTools {
 						size: { w: 128, h: 128, l: 1 },
 						classname: 'ground ground-0',
 						case: { w: 32, h: 32, l: 32 },
+						casesize: { w: 32, h: 32, l: 32 },
 						nbcase: { x: 128, h: 128, l: 1 }
 					},
 					1: {
@@ -65,18 +62,19 @@ class GroundsFactory extends CommunsTools {
 						size: { w: 128, h: 128, l: 1 },
 						classname: 'ground ground-1',
 						case: { w: 32, h: 32, l: 32 },
+						casesize: { w: 32, h: 32, l: 32 },
 						nbcase: { x: 128, h: 128, l: 1 }
 					},
 					2: {
 						name: 'GroundTwo', pos: {
-							x: parseInt((window.innerWidth / 2) - (this.player.datas.pos.x)),
-							y: parseInt((window.innerHeight / 2) - (this.player.datas.pos.y)),
+							x: 0,//parseInt((window.innerWidth / 2) - (this.player.datas.pos.x)),
+							y: 0,//parseInt((window.innerHeight / 2) - (this.player.datas.pos.y)),
 							z: 1
 						},
 						size: { w: 128, h: 128, l: 1 },
 						classname: 'ground ground-2',
 						casesize: { w: 32, h: 32, l: 32 },
-						nbcase: { x: 128, y: 128, z: 1 }
+						nbcase: { x: 15, y: 10, z: 1 }
 					},
 				}
 				// this.ground.datas = (this.currentGroundImmat >= 0 && grounds[this.currentGroundImmat]) ? grounds[this.currentGroundImmat] : false
@@ -89,12 +87,16 @@ class GroundsFactory extends CommunsTools {
 					this.set_BugAndPause('empty ground')
 				}
 			},
-			add_ToDom: (div) => {
-				document.body.appendChild(div)
-			},
 			set_Div: () => {
 				this.ground.div = this.ground.get_DivElem('div', this.ground.datas)
+				this.ground.divGame.className = 'ground'
 				this.ground.div.id = 'ground'
+
+				this.ground.divGame = document.createElement('div')
+				this.ground.divGame.id = 'game'
+				this.ground.divGame.className = 'game'
+				this.ground.divGame.style.width = this.communs.gamesize.w + px
+				this.ground.divGame.style.height = this.communs.gamesize.h + px
 			},
 			get_DivElem: () => {
 				if (this.ground.datas) {
@@ -105,8 +107,8 @@ class GroundsFactory extends CommunsTools {
 					//--
 					groundDiv.style.width = this.ground.datas.size.w + px
 					groundDiv.style.height = this.ground.datas.size.h + px
-					groundDiv.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - (this.casesize / 2)) + px
-					groundDiv.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - (this.casesize / 2)) + px
+					groundDiv.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - (this.communs.casesize / 2)) + px
+					groundDiv.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - (this.communs.casesize / 2)) + px
 
 					let divdest = document.createElement('div')
 					divdest.style.position = 'absolute'
@@ -124,16 +126,18 @@ class GroundsFactory extends CommunsTools {
 			set_Destination: (e) => {
 				this.player.datas.actions.movingToDestinationClick = true
 				this.player.datas.destination = {
-					x: e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2),
-					y: e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2),
-					mapX: parseInt(e.clientX - this.ground.datas.pos.x),
-					mapY: parseInt(e.clientY - this.ground.datas.pos.y),
+					x: e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x - (this.player.datas.size.w / 2),
+					y: e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y - (this.player.datas.size.h / 2),
+					mapX: e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x - (this.player.datas.size.w / 2),
+					mapY: e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y - (this.player.datas.size.h / 2),
 					z: 1,
 					d: this.player.datas.pos.d,
 					arrivedX: false,
 					arrivedY: false,
 					arrived: false
 				}
+				console.log('Cliked->Pos:', this.player.datas.destination.x, this.player.datas.destination.y)
+				console.log('Cliked->map:', this.player.datas.destination.mapX, this.player.datas.destination.mapY)
 				this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
 					this.player.datas.pos.x,
 					this.player.datas.pos.y,
@@ -149,12 +153,11 @@ class GroundsFactory extends CommunsTools {
 			},
 
 			add_DestMark: () => {
-				console.log('Cliked->Pos:', this.player.datas.destination.mapX + px, this.player.datas.destination.mapY + px)
 				// v1 
 				// this.ground.divDest.style.left = parseInt(this.player.datas.destination.mapX + this.ground.datas.pos.x - (this.casesize / 2)) + px
 				// this.ground.divDest.style.top = parseInt(this.player.datas.destination.mapY + this.ground.datas.pos.y - (this.casesize / 2)) + px
 				// this.player.divDest.style.zIndex = this.player.datas.destination.z
-				this.ground.add_ToDom(this.ground.divDest)
+				this.add_ToMap(this.ground.divDest)
 				// v2 
 				this.ground.divDest.style.left = this.player.datas.destination.mapX + px
 				this.ground.divDest.style.top = this.player.datas.destination.mapY + px
@@ -190,10 +193,10 @@ class GroundsFactory extends CommunsTools {
 				// console.log('playerPIXELSmove:' + this.player.datas.speed)
 				// console.log('dist x:' + (Math.max(...xxx) - Math.min(...xxx)), this.player.datas.destination.arrivedX)
 				// console.log('dist y:' + (Math.max(...yyy) - Math.min(...yyy)), this.player.datas.destination.arrivedY)
-				// console.log('CurDestPos:', this.player.datas.destination)
-				// console.log('CurPlayPos:', this.player.datas.pos)
-				// console.log('CurGrndPos:', this.ground.datas.pos)
-				// console.log('DestMard:', this.ground.datas.pos)
+				console.log('CurDestPos:', this.player.datas.destination)
+				console.log('CurPlayPos:', this.player.datas.pos)
+				console.log('CurGrndPos:', this.ground.datas.pos)
+				// console.log('DestMark:', this.ground.datas.pos)
 
 
 				if (this.player.datas.destination.arrived) {
