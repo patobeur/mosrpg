@@ -34,6 +34,7 @@ get_PosWithDegree: (player) => {
 	return { x: x, y: y }
 },
 this may be nice to remove parseInt() to get better posistion check ! more work for processor !!!
+```
 
 get distance from two objects
 ```
