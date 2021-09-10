@@ -74,7 +74,7 @@ class GroundsFactory extends CommunsTools {
 						size: { w: 128, h: 128, l: 1 },
 						classname: 'ground ground-2',
 						casesize: { w: 32, h: 32, l: 32 },
-						nbcase: { x: 15, y: 10, z: 1 }
+						nbcase: { x: 30, y: 30, z: 1 }
 					},
 				}
 				// this.ground.datas = (this.currentGroundImmat >= 0 && grounds[this.currentGroundImmat]) ? grounds[this.currentGroundImmat] : false

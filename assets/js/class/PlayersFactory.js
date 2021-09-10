@@ -37,7 +37,7 @@ class PlayersFactory extends CommunsTools {
 					z: new Number('1'), // z-index
 					d: 0 // north
 				},
-				clickrange: 512,
+				clickrange: 1030,
 				height: new Number('180'),
 				strength: new Number('10'),
 				agility: new Number('10'),

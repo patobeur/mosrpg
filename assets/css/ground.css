@@ -135,6 +135,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   background-image: radial-gradient(rgba(255, 255, 255, 0), black, black);
+  border: 5px solid black;
 }
 
 #game .player .clickrange::after {

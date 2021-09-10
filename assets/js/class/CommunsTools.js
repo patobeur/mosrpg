@@ -7,7 +7,7 @@ class CommunsTools {
 		this.communs = {
 			//casesize: 32 * this.ratio, // px
 			ratio: 1,
-			gamesize: { w: '512', h: '512' },
+			gamesize: { w: '1024', h: '1024' },
 			// gamesize2: this.setit()
 		}
 		// mouse 
