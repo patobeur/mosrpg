@@ -3,23 +3,8 @@ my own solo rpg test
 
 Where am i going ?
 
-Visuals ressources link :
-
-floors :
-
-https://www.pinterest.fr/pin/31877109835551591/
-
-ideas :
-
-https://vryell.itch.io/tiny-adventure-pack
-
-https://angrysnail.itch.io/pixel-art-graveyard-tileset
-
-
-https://patobeur.github.io/mosrpg/
-
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
 Get direction in degrees from player to click
 ```
 this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
@@ -40,3 +25,38 @@ get_DegreeWithTwoPos: (fromX, fromY, destX, destY,) ={
 	return theta;
 },
 ```
+
+By the way : get next position x,y with degree
+```
+get_PosWithDegree: (player) => {
+	let x = parseInt(player.datas.pos.x + (player.datas.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180))))
+	let y = parseInt(player.datas.pos.y + (player.datas.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180))))
+	return { x: x, y: y }
+},
+this may be nice to remove parseInt() to get better posistion check ! more work for processor !!!
+
+get distance from two objects
+```
+get_Distance: (from, destination) => { // get hypotenus with pythaGore
+	let AB = (destination.x) - (from.x)
+	let AC = (destination.y) - (from.y)
+	return Math.sqrt((AB * AB) + (AC * AC))
+}
+```
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Visuals ressources link :
+
+floors :
+
+https://www.pinterest.fr/pin/31877109835551591/
+
+ideas :
+
+https://vryell.itch.io/tiny-adventure-pack
+
+https://angrysnail.itch.io/pixel-art-graveyard-tileset
+
+
+https://patobeur.github.io/mosrpg/
