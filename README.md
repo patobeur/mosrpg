@@ -21,15 +21,16 @@ https://patobeur.github.io/mosrpg/
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Get direction in degrees from player to click
-
+```
 > this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
 > 	this.player.datas.pos.x,
 > 	this.player.datas.pos.y,
 > 	this.player.datas.destination.x,
 > 	this.player.datas.destination.y
 > )
-
+```
 Then 
+```
 > get_DegreeWithTwoPos: (fromX, fromY, destX, destY,) => {
 > 	var nextY = fromY - destY;
 > 	var nextX = fromX - destX;
@@ -38,3 +39,4 @@ Then
 > 	if (theta < 0) theta += 360; // negative case
 > 	return theta;
 > },
+```
