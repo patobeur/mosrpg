@@ -1,7 +1,9 @@
 # mosrpg
-my own solo rpg test
+🧙 my own solo rpg testing javascript
 
 Where am i going ?
+
+🕹️ https://patobeur.github.io/mosrpg/
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
@@ -60,6 +62,3 @@ ideas :
 https://vryell.itch.io/tiny-adventure-pack
 
 https://angrysnail.itch.io/pixel-art-graveyard-tileset
-
-
-https://patobeur.github.io/mosrpg/
