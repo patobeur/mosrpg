@@ -23,4 +23,8 @@ body {
   overflow: hidden;
   color: white;
 }
+
+body .remove {
+  pointer-events: none;
+}
 /*# sourceMappingURL=base.css.map */

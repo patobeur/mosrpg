@@ -15,4 +15,7 @@
 body {
 	overflow: hidden;
 	color: white;
+	.remove {
+		pointer-events: none;
+	}
 }

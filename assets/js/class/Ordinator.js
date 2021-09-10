@@ -23,10 +23,12 @@ class Ordinator extends CommunsTools {
 	Play = () => {
 		//RENDER 
 		this.rendertics = 0
+		this.isWait = false // UNstuck render
 		this.gameRender = setInterval(() => { this.render() }, this.renderInterval);
 	}
 	Wait = () => {
 		//RENDER 
+		this.GF.ground.reset_Destination()
 		this.isWait = true // stuck render
 		clearInterval(this.gameRender);
 	}
@@ -37,21 +39,22 @@ class Ordinator extends CommunsTools {
 	}
 	renderManager = () => {
 		return () => {
+			console.log('- - - - - - -')
 			this.rendertics++
 			if (this.isPause != false) {
-				// if new destination x y clicked
-				if (this.PF.player.datas.actions.movingToDestinationClick === true) {
-					this.GF.move_ToDestination(this.PF.player)
-				}
 				this.PF.player.refresh(this.GF.ground)
-				this.PF.player.refresh()
 				this.GF.ground.refresh()
+				// if new destination x y clicked
+				this.refresh_Console()
+				if (this.PF.player.datas.actions.movingToDestinationClick === true) {
+					this.GF.ground.move_ToPlayerDestination()
+				}
 			}
 		}
 	}
 	playerKeyboard(eventKeyDown) {
 		// stop auto move
-		this.PF.player.reset_Destination()
+		this.GF.ground.reset_Destination()
 
 		let tmpMooving = false // needed to check if actived mooves
 		if (eventKeyDown === 'p') {
@@ -82,8 +85,7 @@ class Ordinator extends CommunsTools {
 			let nextpos = this.communsTools.get_PosWithDegree(this.PF.player)
 			this.PF.player.datas.pos.x = nextpos.x
 			this.PF.player.datas.pos.y = nextpos.y
-			this.GF.ground.datas.pos.x = parseInt((window.innerWidth / 2) - (this.PF.player.datas.pos.x))
-			this.GF.ground.datas.pos.y = parseInt((window.innerHeight / 2) - (this.PF.player.datas.pos.y))
+			console.log('CurPlayPos:', this.PF.player.datas.pos)
 		}
 	}
 }

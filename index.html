@@ -13,10 +13,31 @@
 		<link rel='stylesheet' href='assets/css/player.css' type='text/css' media='all' id='player-css' />
 	</head>
 
-	<body>Pause : [P]<br>Mouse Click to Run !<br>Arrows to walk !
+	<body>
+		<div class="remove">
+			<div class="remove ico">💡</div>
+			<div class="remove item">Pause : [P]</div>
+			<div class="remove item">Mouse Click to Run !</div>
+			<div class="remove item">Arrows to walk !</div>
+		</div>
 		<div id="info">
 			<div class="github">
 				<a target="github" title="new tab on github" href="https://github.com/patobeur/"> </a>
+			</div>
+		</div>
+		<div id="tools">
+			<div class="devjauge speed" title='change speed (1 to ?)'>
+				<div class="ico">💨</div>
+				<div id='speedplus' class="plus" title='plus'>➕</div>
+				<div id='speedminus' class="minus" title='minus'>➖</div>
+				<div id='speedvalue' class="value" title='value'>?</div>
+
+			</div>
+			<div class="devjauge interval" title='change refresh interval (10 to ♾️)'>
+				<div class="ico">⏲️</div>
+				<div id='intervalplus' class="plus" title='plus'>➕</div>
+				<div id='intervalminus' class="minus" title='minus'>➖</div>
+				<div id='intervalvalue' class="value" title='value'>?</div>
 			</div>
 		</div>
 		<script src='assets/js/class/CommunsTools.js' id='communstools-js'></script>

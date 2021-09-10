@@ -35,3 +35,27 @@
 		margin-right: 0.5rem;
 	}
 }
+#tools {
+	cursor: pointer;
+	position: absolute;
+	bottom: 0.5rem;
+	right: 0.5rem;
+	display: flex;
+	flex-direction: row;
+	z-index: 1999;
+	background-color: rgba(255, 255, 255, 0.76);
+	border-radius: 0.5rem;
+	font-size: 1.2rem;
+	border: 3px dotted rgba(0, 0, 0, 0.349);
+	.devjauge {
+		padding: 0.2rem;
+		border-left: 3px dotted rgba(0, 0, 0, 0.349);
+		&:first-child {
+			border-left: none;
+		}
+		.value {
+			color: black;
+			text-align: center;
+		}
+	}
+}

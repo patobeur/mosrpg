@@ -17,7 +17,7 @@ class GroundsFactory extends CommunsTools {
 		this.screenConfig = this.get_ScreenConfig()
 		this.ground = this.groundManager()
 		this.ground.set_GroundDatas()
-		this.ground.add_ToDom()
+		this.ground.add_ToDom(this.ground.div)
 	}
 	groundManager = () => {
 		let newground = {
@@ -30,12 +30,13 @@ class GroundsFactory extends CommunsTools {
 				// case: { w: , h:, l: }
 			},
 			div: Object,
+			divDest: Object,
 			refresh: () => {
 				if (this.ground) {
-					this.ground.div.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - (this.casesize / 2)) + px
-					this.ground.div.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - (this.casesize / 2)) + px
-					// console.log('ground:' + this.ground.datas.pos.x + px, this.ground.datas.pos.y + px)
-					// console.log('player:' + this.player.datas.pos.x + px, this.player.datas.pos.y + px)
+					this.ground.datas.pos.x = (window.innerWidth / 2) - this.player.datas.pos.x
+					this.ground.datas.pos.y = (window.innerHeight / 2) - this.player.datas.pos.y
+					this.ground.div.style.left = this.ground.datas.pos.x + px
+					this.ground.div.style.top = this.ground.datas.pos.y + px
 				}
 			},
 			resize_Ground: () => {
@@ -88,11 +89,12 @@ class GroundsFactory extends CommunsTools {
 					this.set_BugAndPause('empty ground')
 				}
 			},
-			add_ToDom: () => {
-				document.body.appendChild(this.ground.div)
+			add_ToDom: (div) => {
+				document.body.appendChild(div)
 			},
 			set_Div: () => {
 				this.ground.div = this.ground.get_DivElem('div', this.ground.datas)
+				this.ground.div.id = 'ground'
 			},
 			get_DivElem: () => {
 				if (this.ground.datas) {
@@ -105,71 +107,137 @@ class GroundsFactory extends CommunsTools {
 					groundDiv.style.height = this.ground.datas.size.h + px
 					groundDiv.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - (this.casesize / 2)) + px
 					groundDiv.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - (this.casesize / 2)) + px
+
+					let divdest = document.createElement('div')
+					divdest.style.position = 'absolute'
+					divdest.className = 'destination'
+					divdest.textContent = '❌'
+					this.ground.divDest = divdest
+
+
+
+
 					return groundDiv
 				}
 				return false
+			},
+			set_Destination: (e) => {
+				this.player.datas.actions.movingToDestinationClick = true
+				this.player.datas.destination = {
+					x: e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2),
+					y: e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2),
+					mapX: parseInt(e.clientX - this.ground.datas.pos.x),
+					mapY: parseInt(e.clientY - this.ground.datas.pos.y),
+					z: 1,
+					d: this.player.datas.pos.d,
+					arrivedX: false,
+					arrivedY: false,
+					arrived: false
+				}
+				this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
+					this.player.datas.pos.x,
+					this.player.datas.pos.y,
+					this.player.datas.destination.x,
+					this.player.datas.destination.y
+				)
+
+				// this.ground.add_DestMark()
+			},
+			reset_Destination: () => {
+				this.player.datas.actions.movingToDestinationClick = false
+				this.ground.divDest.remove()
+			},
+
+			add_DestMark: () => {
+				console.log('Cliked->Pos:', this.player.datas.destination.mapX + px, this.player.datas.destination.mapY + px)
+				// v1 
+				// this.ground.divDest.style.left = parseInt(this.player.datas.destination.mapX + this.ground.datas.pos.x - (this.casesize / 2)) + px
+				// this.ground.divDest.style.top = parseInt(this.player.datas.destination.mapY + this.ground.datas.pos.y - (this.casesize / 2)) + px
+				// this.player.divDest.style.zIndex = this.player.datas.destination.z
+				this.ground.add_ToDom(this.ground.divDest)
+				// v2 
+				this.ground.divDest.style.left = this.player.datas.destination.mapX + px
+				this.ground.divDest.style.top = this.player.datas.destination.mapY + px
+				this.ground.div.appendChild(this.ground.divDest)
+			},
+			// refresh_DestMark: () => {
+			// 	this.ground.divDest.style.left = (this.player.datas.destination.mapX + this.ground.datas.pos.x - (this.casesize / 2)) + px
+			// 	this.ground.divDest.style.top = (this.player.datas.destination.mapY + this.ground.datas.pos.y - (this.casesize / 2)) + px
+			// },
+			move_ToPlayerDestination: (GF) => {
+				let xxx = [this.player.datas.destination.x, this.player.datas.pos.x]
+				let yyy = [this.player.datas.destination.y, this.player.datas.pos.y]
+
+				// check only if arrivedX not reach
+				!this.player.datas.destination.arrivedX
+					? this.player.datas.destination.arrivedX =
+					(Math.max(...xxx) - Math.min(...xxx) <= (this.player.datas.size.w / 2))
+						? true
+						: false
+					: ''
+				// check only if arrivedY not reach
+				!this.player.datas.destination.arrivedY
+					? this.player.datas.destination.arrivedY =
+					(Math.max(...yyy) - Math.min(...yyy) <= (this.player.datas.size.h / 2))
+						? true
+						: false
+					: ''
+				// if both x && y are reached then arrived = true
+				!this.player.datas.destination.arrived
+					? this.player.datas.destination.arrived = (this.player.datas.destination.arrivedX && this.player.datas.destination.arrivedY)
+					: ''
+
+				// console.log('playerPIXELSmove:' + this.player.datas.speed)
+				// console.log('dist x:' + (Math.max(...xxx) - Math.min(...xxx)), this.player.datas.destination.arrivedX)
+				// console.log('dist y:' + (Math.max(...yyy) - Math.min(...yyy)), this.player.datas.destination.arrivedY)
+				// console.log('CurDestPos:', this.player.datas.destination)
+				// console.log('CurPlayPos:', this.player.datas.pos)
+				// console.log('CurGrndPos:', this.ground.datas.pos)
+				// console.log('DestMard:', this.ground.datas.pos)
+
+
+				if (this.player.datas.destination.arrived) {
+					// console.log('RESET')
+					this.ground.reset_Destination()
+				}
+				else {
+					let nextpos = this.communsTools.get_PosWithDegree(this.player)
+					this.player.datas.pos.x = nextpos.x
+					this.player.datas.pos.y = nextpos.y
+				}
+
 			}
 		}
 		return newground
 	}
 	click_Ground = (e) => {
-		// CLICK TO RUN
-		// reset last arrived actions
-		this.player.datas.destination.arrived = false
+		console.log(e.target.id)
+		// 	// to do 
+		// 	// fonction and Set good dest pos with the translated coords if out ground clicked
+		if (e.target.id === 'ground') {
+			// CLICK TO RUN
+			// reset last arrived actions
+			this.ground.reset_Destination(e)
 
-		// methode A test if e.clientX and e.clientY is on board
-		// this work but not realy tested
-		let x = e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2)
-		let y = e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2)
-		if (x > 0 && x < this.ground.datas.size.w && y > 0 && y < this.ground.datas.size.h) {
-			this.player.add_ClickMarque()
-			this.player.set_Destination(e)
+
+
+			// methode A test if e.clientX and e.clientY is on board
+			// this work but not realy tested
+			// let x = e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2)
+			// let y = e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2)
+
+			// if (x > 0 && x < this.ground.datas.size.w && y > 0 && y < this.ground.datas.size.h) {
+
+
+			// 	// set new destination 
+			// 	this.player.set_Destination(e, this.ground)
+			// }
+
+			// methode B open bar click
+			this.ground.set_Destination(e, this.ground)
+			this.ground.add_DestMark()
+
 		}
-
-		// methode B open bar click
-		// this.player.set_Destination(e)
-	}
-	move_ToDestination = () => {
-
-		let xxx = [this.player.datas.destination.x, this.player.datas.pos.x]
-		let yyy = [this.player.datas.destination.y, this.player.datas.pos.y]
-
-		// check only if arrivedX not reach
-		!this.player.datas.destination.arrivedX
-			? this.player.datas.destination.arrivedX =
-			(Math.max(...xxx) - Math.min(...xxx) <= (this.player.datas.size.w / 2))
-				? true
-				: false
-			: ''
-		// check only if arrivedY not reach
-		!this.player.datas.destination.arrivedY
-			? this.player.datas.destination.arrivedY =
-			(Math.max(...yyy) - Math.min(...yyy) <= (this.player.datas.size.h / 2))
-				? true
-				: false
-			: ''
-		// if both x && y are reached then arrived = true
-		!this.player.datas.destination.arrived
-			? this.player.datas.destination.arrived = (this.player.datas.destination.arrivedX && this.player.datas.destination.arrivedY)
-			: ''
-
-		// console.log('playerPIXELSmove:' + this.player.datas.speed)
-		// console.log('dist x:' + (Math.max(...xxx) - Math.min(...xxx)), this.player.datas.destination.arrivedX)
-		// console.log('dist y:' + (Math.max(...yyy) - Math.min(...yyy)), this.player.datas.destination.arrivedY)
-		console.log('DestinaPos:', this.player.datas.destination)
-		console.log('CurrentPos:', this.player.datas.pos)
-
-
-		if (this.player.datas.destination.arrived) {
-			// console.log('RESET')
-			this.player.reset_Destination()
-		}
-		else {
-			let nextpos = this.communsTools.get_PosWithDegree(this.player)
-			this.player.datas.pos.x = nextpos.x
-			this.player.datas.pos.y = nextpos.y
-		}
-
 	}
 	get_ScreenConfig = () => {
 		return {

@@ -25,14 +25,43 @@ class CommunsTools {
 		// document.addEventListener('mousedown', () => { this.drag = false });
 		// document.addEventListener('mousemove', () => { this.drag = true });
 		// document.addEventListener('mouseup', () => console.log(this.drag ? 'draging' : 'clicking'));
-
+		document.getElementById('speedplus').addEventListener('click', () => { this.set_speed('plus') }, true)
+		document.getElementById('speedminus').addEventListener('click', () => { this.set_speed('minus') }, true)
+		document.getElementById('intervalplus').addEventListener('click', () => { this.set_Interval('plus') }, true)
+		document.getElementById('intervalminus').addEventListener('click', () => { this.set_Interval('minus') }, true)
 		// on click to move
 		document.addEventListener('click', this.GF.click_Ground, true)
+	}
+	refresh_Console() {
+		document.getElementById('speedvalue').textContent = this.PF.player.datas.speed
+		document.getElementById('intervalvalue').textContent = this.renderInterval
 	}
 	resize = () => {
 		this.GF.set_ScreenXY()
 		this.PF.player.refresh(this.GF.ground)
 		this.GF.ground.refresh()
+	}
+	set_speed = (data) => {
+		if (data === 'plus') {
+			this.PF.player.datas.speed += 1
+		}
+		if (data === 'minus') {
+			this.PF.player.datas.speed -= 1
+		}
+	}
+	set_Interval = (data) => {
+		if (data === 'plus') {
+			console.log(this.renderInterval)
+			this.Wait()
+			this.renderInterval += 1
+			this.Play()
+		}
+		if (data === 'minus') {
+			console.log(this.renderInterval)
+			this.Wait()
+			this.renderInterval -= 1
+			this.Play()
+		}
 	}
 	communsTools = () => {
 		return {

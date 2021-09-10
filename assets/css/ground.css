@@ -4,6 +4,7 @@
   -webkit-box-shadow: 0px 0px 20px #181313;
           box-shadow: 0px 0px 20px #181313;
   z-index: -1;
+  cursor: crosshair;
 }
 
 .ground.ground-0 {
@@ -16,5 +17,24 @@
 
 .ground.ground-2 {
   background-image: url("../img/floors/floor_256-2.png");
+}
+
+.ground .destination {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  z-index: 1;
+  font-size: 2rem;
+  line-height: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: none;
 }
 /*# sourceMappingURL=ground.css.map */

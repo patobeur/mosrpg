@@ -26,12 +26,12 @@ class PlayersFactory extends CommunsTools {
 					l: new Number('32'),
 				},
 				pos: {
-					x: new Number('64'),//window.innerWidth / 2, // left
-					y: new Number('64'),//window.innerHeight / 2, // right
+					x: new Number('1'),//window.innerWidth / 2, // left
+					y: new Number('1'),//window.innerHeight / 2, // right
 					z: new Number('1'), // z-index
 					d: 0 // north
 				},
-				clickrange: 150,
+				clickrange: 450,
 				height: new Number('180'),
 				strength: new Number('10'),
 				agility: new Number('10'),
@@ -68,29 +68,21 @@ class PlayersFactory extends CommunsTools {
 					magic: false
 				},
 			},
-			add_ToDom: () => {
-				document.body.appendChild(this.player.div)
-			},
-			add_ClickMarque: () => {
-				document.body.appendChild(this.player.div)
-			},
-			remove_ClickMarque: () => {
-				document.body.appendChild(this.player.div)
+			add_ToDom: (div) => {
+				document.body.appendChild(div)
 			},
 			get_DivElem: () => {
 				if (this.player.datas) {
 					let playerDiv = document.createElement('div')
 					playerDiv.style.position = 'absolute'
-					playerDiv.style.width = this.player.datas.size.w + px
-					playerDiv.style.height = this.player.datas.size.h + px
+					playerDiv.style.width = '1px'//this.player.datas.size.w + px
+					playerDiv.style.height = '1px'//this.player.datas.size.h + px
 					// playerDiv.style.left = parseInt(this.player.datas.pos.x - (this.player.datas.size.w / 2)) + px
 					// playerDiv.style.top = parseInt(this.player.datas.pos.y - (this.player.datas.size.h / 2)) + px
 					playerDiv.style.left = parseInt((window.innerWidth / 2) - (this.casesize / 2) - (this.player.datas.size.w / 2)) + px
 					playerDiv.style.top = parseInt((window.innerHeight / 2) - (this.casesize / 2) - (this.player.datas.size.h / 2)) + px
 					playerDiv.className = this.player.datas.classname
 					playerDiv.style.zIndex = parseInt(this.player.datas.pos.z)
-
-
 
 					let playerDivvisual = document.createElement('div')
 					playerDivvisual.style.position = 'absolute'
@@ -99,7 +91,6 @@ class PlayersFactory extends CommunsTools {
 					playerDivvisual.style.width = this.player.datas.size.w + px
 					playerDivvisual.style.height = this.player.datas.size.h + px
 					this.player.divvisual = playerDivvisual
-
 
 					let playerDivinfo = document.createElement('div')
 					playerDivinfo.style.position = 'absolute'
@@ -124,42 +115,29 @@ class PlayersFactory extends CommunsTools {
 					playerDivbeyond.style.transform = 'rotate(0deg)'
 					this.player.divbeyond = playerDivbeyond
 
-
-
-					let playerdivclick = document.createElement('div')
-					playerdivclick.style.position = 'absolute'
-					playerdivclick.className = 'click'
-					// playerdivclick.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.w / 2)) + px
-					// playerdivclick.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.h / 2)) + px
-					// playerdivclick.style.width = this.player.datas.clickrange + px
-					// playerdivclick.style.height = this.player.datas.clickrange + px
-					// playerdivclick.style.transform = 'rotate(0deg)'
-					this.player.divclick = playerdivclick
-
-
 					document.body.appendChild(this.player.divbeyond)
 
-					// playerDiv.appendChild(this.player.divbeyond)
 					playerDiv.appendChild(this.player.divclickrange)
 					playerDiv.appendChild(this.player.divinfo)
 					playerDiv.appendChild(this.player.divvisual)
 					this.player.div = playerDiv
-					this.player.add_ToDom()
+					this.player.add_ToDom(this.player.div)
 					this.player.refresh()
 				}
 			},
 			refresh: (ground) => {
-				// this.player.div.style.left = ground.datas.pos.x + this.player.datas.pos.x + px
-				// this.player.div.style.top = ground.datas.pos.y + this.player.datas.pos.y + px
 				if (ground) {
 					this.player.checkPos(ground)
-					this.player.divinfo.textContent = 'x:' + this.player.datas.pos.x + ' ,y:' + this.player.datas.pos.y
+					this.player.divinfo.textContent = 'x:' + parseInt(this.player.datas.pos.x) + ' , y:' + parseInt(this.player.datas.pos.y) + ' , d:' + parseInt(this.player.datas.pos.d) + '°'
 					this.player.divclickrange.style.transform = 'rotate(' + (this.player.datas.pos.d + 90) + 'deg)'
 
-					this.player.div.style.left = parseInt((window.innerWidth / 2) - (this.casesize / 2) - (this.player.datas.size.w / 2)) + px
-					this.player.div.style.top = parseInt((window.innerHeight / 2) - (this.casesize / 2) - (this.player.datas.size.h / 2)) + px
+					// Parse or NOT to parse !!!
 
+					// let's put the toon in the full center of the screen (window)
+					this.player.div.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.size.w / 2)) + px
+					this.player.div.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.size.h / 2)) + px
 
+					// same here 
 					this.player.divbeyond.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.w / 2)) + px
 					this.player.divbeyond.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.h / 2)) + px
 				}
@@ -177,27 +155,6 @@ class PlayersFactory extends CommunsTools {
 				if (this.player.datas.pos.y + (this.player.datas.size.h / 2) > ground.datas.size.h) {
 					this.player.datas.pos.y = 1 - (this.player.datas.size.h / 2)
 				}
-			},
-			set_Destination: (e) => {
-				this.player.datas.actions.movingToDestinationClick = true
-				this.player.datas.destination = {
-					x: e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2),
-					y: e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2),
-					z: 1,
-					d: this.player.datas.pos.d,
-					arrivedX: false,
-					arrivedY: false,
-					arrived: false
-				}
-				this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
-					this.player.datas.pos.x,
-					this.player.datas.pos.y,
-					this.player.datas.destination.x,
-					this.player.datas.destination.y
-				)
-			},
-			reset_Destination: (player) => {
-				this.player.datas.actions.movingToDestinationClick = false
 			},
 		}
 		this.player = player

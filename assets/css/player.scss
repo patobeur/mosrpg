@@ -11,6 +11,7 @@ body {
 	align-items: center;
 	z-index: 1;
 	.visual {
+		position: absolute;
 		font-size: 1.8rem;
 		line-height: 1.8rem;
 		display: flex;
@@ -38,6 +39,7 @@ body {
 		}
 	}
 	.clickrange {
+		position: absolute;
 		border: 3px dotted rgba(16, 16, 19, 0.678);
 		border-radius: 50%;
 		z-index: -1;
@@ -53,6 +55,7 @@ body {
 	}
 }
 .beyond {
+	position: absolute;
 	// border: 2px dotted white;
 	background-color: rgba(0, 0, 0, 0.644);
 	border-radius: 50%;
