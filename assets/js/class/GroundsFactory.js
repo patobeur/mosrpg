@@ -122,6 +122,7 @@ class GroundsFactory extends CommunsTools {
 		let x = e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2)
 		let y = e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2)
 		if (x > 0 && x < this.ground.datas.size.w && y > 0 && y < this.ground.datas.size.h) {
+			this.player.add_ClickMarque()
 			this.player.set_Destination(e)
 		}
 

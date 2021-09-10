@@ -15,9 +15,9 @@ this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
 	this.player.datas.destination.x,
 	this.player.datas.destination.y
 )
-```
+
 Then 
-```
+
 get_DegreeWithTwoPos: (fromX, fromY, destX, destY,) ={
 	var nextY = fromY - destY;
 	var nextX = fromX - destX;
@@ -27,6 +27,8 @@ get_DegreeWithTwoPos: (fromX, fromY, destX, destY,) ={
 	return theta;
 },
 ```
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 By the way : get next position x,y with degree
 ```
@@ -39,6 +41,8 @@ get_PosWithDegree: (player) => {
 },
 this may be nice to remove parseInt() to get better posistion check ! more work for processor !!!
 ```
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 get distance from two objects
 ```

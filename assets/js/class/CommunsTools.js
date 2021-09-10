@@ -46,7 +46,7 @@ class CommunsTools {
 			get_aleaEntreBornes: (minimum, maximum) => {
 				return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
 			},
-			get_DegreeWithTwoPos: (destX, destY, fromX, fromY) => {
+			get_DegreeWithTwoPos: (fromX, fromY, destX, destY,) => {
 				var nextY = fromY - destY;
 				var nextX = fromX - destX;
 				var theta = Math.atan2(-nextY, -nextX); // 0° = east
@@ -55,8 +55,10 @@ class CommunsTools {
 				return theta;
 			},
 			get_PosWithDegree: (player) => {
-				let x = parseInt(player.datas.pos.x + (player.datas.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180))))
-				let y = parseInt(player.datas.pos.y + (player.datas.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180))))
+				// let x = parseInt(player.datas.pos.x + (player.datas.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180))))
+				// let y = parseInt(player.datas.pos.y + (player.datas.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180))))
+				let x = player.datas.pos.x + (player.datas.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180)))
+				let y = player.datas.pos.y + (player.datas.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180)))
 				return { x: x, y: y }
 			},
 			// trigonometrie

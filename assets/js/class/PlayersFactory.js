@@ -16,6 +16,7 @@ class PlayersFactory extends CommunsTools {
 			divclickrange: Object,
 			divvisual: Object,
 			divbeyond: Object,
+			divclick: Object,
 			immat: 1,
 			datas: {
 				classname: 'player',
@@ -70,6 +71,12 @@ class PlayersFactory extends CommunsTools {
 			add_ToDom: () => {
 				document.body.appendChild(this.player.div)
 			},
+			add_ClickMarque: () => {
+				document.body.appendChild(this.player.div)
+			},
+			remove_ClickMarque: () => {
+				document.body.appendChild(this.player.div)
+			},
 			get_DivElem: () => {
 				if (this.player.datas) {
 					let playerDiv = document.createElement('div')
@@ -116,6 +123,19 @@ class PlayersFactory extends CommunsTools {
 					playerDivbeyond.style.height = this.player.datas.clickrange + px
 					playerDivbeyond.style.transform = 'rotate(0deg)'
 					this.player.divbeyond = playerDivbeyond
+
+
+
+					let playerdivclick = document.createElement('div')
+					playerdivclick.style.position = 'absolute'
+					playerdivclick.className = 'click'
+					// playerdivclick.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.w / 2)) + px
+					// playerdivclick.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.clickrange / 2) - (this.player.datas.size.h / 2)) + px
+					// playerdivclick.style.width = this.player.datas.clickrange + px
+					// playerdivclick.style.height = this.player.datas.clickrange + px
+					// playerdivclick.style.transform = 'rotate(0deg)'
+					this.player.divclick = playerdivclick
+
 
 					document.body.appendChild(this.player.divbeyond)
 
@@ -170,10 +190,10 @@ class PlayersFactory extends CommunsTools {
 					arrived: false
 				}
 				this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
-					this.player.datas.destination.x,
-					this.player.datas.destination.y,
 					this.player.datas.pos.x,
-					this.player.datas.pos.y
+					this.player.datas.pos.y,
+					this.player.datas.destination.x,
+					this.player.datas.destination.y
 				)
 			},
 			reset_Destination: (player) => {
