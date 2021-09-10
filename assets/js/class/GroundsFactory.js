@@ -113,7 +113,7 @@ class GroundsFactory extends CommunsTools {
 					let divdest = document.createElement('div')
 					divdest.style.position = 'absolute'
 					divdest.className = 'destination'
-					divdest.textContent = '❌'
+					divdest.textContent = 'X'//❌
 					this.ground.divDest = divdest
 
 

@@ -59,6 +59,7 @@
       -ms-flex-align: center;
           align-items: center;
   background-color: none;
+  color: greenyellow;
 }
 
 #game .player {
