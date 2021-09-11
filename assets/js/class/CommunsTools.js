@@ -1,14 +1,12 @@
 "use strict";
 class CommunsTools {
 	constructor() {
-		// on peux faire ça ??? can we do that ??? this call himself ?
-		// game data
-		// this.casesize = 32 * this.ratio // px
+		// communs to all class
 		this.communs = {
 			//casesize: 32 * this.ratio, // px
 			ratio: 1,
 			gamesize: { w: '1024', h: '1024' },
-			// gamesize2: this.setit()
+			parentnode: false,// game div parentNode
 		}
 		// mouse 
 		this.drag = false
@@ -17,10 +15,30 @@ class CommunsTools {
 		this.isWait = false
 		this.communsTools = this.communsTools()
 	}
-	setit = () => {
-		return {
-			w: this.PF.player.div.parentNode.clientWidth,
-			h: this.PF.player.div.parentNode.clientHeight
+	get_ParentNode = (mess) => {
+		let parentnode = false;
+		if (parentnode = this.GF.ground.divGame.parentNode) {
+			this.communs.parentnode = {
+				w: parentnode.clientWidth,
+				h: parentnode.clientHeight,
+				nodename: parentnode.nodeName,
+				id: parentnode.id.length > 0 ? parentnode.id : false,
+				class: parentnode.className.length > 0 ? parentnode.className.length : false,
+				object: parentnode,
+				fullpage: false
+			}
+			console.log('parentNode detection of game div')
+			if (this.communs.parentnode.nodename === "BODY") {
+				console.log('Parent = BODY')
+				this.communs.parentnode.fullpage = true
+			}
+			else {
+				console.log('Parent = ' + this.communs.parentnode.nodename)
+			}
+			console.log(this.communs.parentnode)
+		}
+		else {
+
 		}
 	}
 	setPause = () => {
@@ -31,7 +49,6 @@ class CommunsTools {
 	}
 	set_EventListener() {
 		window.addEventListener('resize', this.resize, true)
-
 		// drag test for futur drag and drop stuff ?
 		// document.addEventListener('mousedown', () => { this.drag = false });
 		// document.addEventListener('mousemove', () => { this.drag = true });
@@ -110,7 +127,7 @@ class CommunsTools {
 		}
 	}
 	add_ToDom = (div) => {
-		document.body.appendChild(div)
+		document.body.prepend(div)
 	}
 	add_ToGame = (div) => {
 		document.getElementById('game').appendChild(div)

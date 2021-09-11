@@ -9,6 +9,7 @@ class Ordinator extends CommunsTools {
 		this.add_ToGame(this.PF.player.div)
 		this.PF.player.refresh()
 
+		this.communs.setit = this.get_ParentNode('this is a test')
 		this.render = this.renderManager()
 		this.rendertics = 0
 		this.renderInterval = 30 // render speed 1ms * 50

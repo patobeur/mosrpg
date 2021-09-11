@@ -32,20 +32,24 @@ class PlayersFactory extends CommunsTools {
 					l: new Number('32'),
 				},
 				pos: {
-					x: new Number('1'),//window.innerWidth / 2, // left
-					y: new Number('1'),//window.innerHeight / 2, // right
+					x: new Number('512'),//window.innerWidth / 2, // left
+					y: new Number('512'),//window.innerHeight / 2, // right
 					z: new Number('1'), // z-index
 					d: 0 // north
 				},
-				clickrange: 1030,
+				clickrange: new Number('1030'),
+				stats: {
+					strength: new Number('10'),
+					agility: new Number('10'),
+					karma: new Number('10'),
+					intelect: new Number('10'),
+					dexterity: new Number('10'),
+					wisdom: new Number('10'),
+					fortitude: new Number('10'),
+				},
+				scale: new Number('1'),
 				height: new Number('180'),
-				strength: new Number('10'),
-				agility: new Number('10'),
-				karma: new Number('10'),
-				intelect: new Number('10'),
-				dexterity: new Number('10'),
-				wisdom: new Number('10'),
-				fortitude: new Number('10'),
+				weight: new Number('180'),
 				hp: new Number('100'),
 				xp: new Number('0'),
 				lv: new Number('1'),
@@ -85,7 +89,7 @@ class PlayersFactory extends CommunsTools {
 					// playerDiv.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.size.w / 2)) + px
 					// playerDiv.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.size.h / 2)) + px
 					playerDiv.className = this.player.datas.classname
-					playerDiv.style.zIndex = parseInt(this.player.datas.pos.z)
+					// playerDiv.style.zIndex = parseInt(this.player.datas.pos.z)
 
 					let playerDivvisual = document.createElement('div')
 					// playerDivvisual.style.position = 'absolute'

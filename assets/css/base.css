@@ -22,9 +22,17 @@
 body {
   overflow: hidden;
   color: white;
+  background-color: #5a1313;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
 }
 
 body .remove {
+  position: relative;
   pointer-events: none;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 /*# sourceMappingURL=base.css.map */
