@@ -2,6 +2,7 @@
 	position: absolute;
 	width: max-content;
 	height: 90%;
+	width: 400px;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -19,41 +20,43 @@
 	&.active {
 		display: initial;
 	}
-	.sheet-item {
-		background-color: rgb(109, 124, 93);
-		.sheet-item-stats {
-			background-color: rgb(252, 206, 0);
-			.sheet-item-stats-item {
+	.sheet-part {
+		.sheet-title {
+			background-color: rgb(0, 252, 126);
+		}
+		.sheet-stats {
+			background-color: rgba(0, 0, 0, 0.068);
+			.sheet-stats-item {
+				width: 100%;
 				display: flex;
+				flex-direction: row;
 				justify-content: center;
 				align-items: center;
-				background-color: rgb(0, 4, 252);
+				height: calc(1rem + (1vw));
 				.ico {
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					width: 1rem;
-					background-color: rgb(252, 0, 189);
-					padding: 0.5rem;
-					.ico2 {
-						background-color: rgb(206, 252, 0);
-					}
+					// background-color: rgb(252, 0, 189);
+					width: calc(1rem + (1vw));
+					height: calc(1rem + (1vw));
+					font-size: calc(1rem + (0.2vw));
+					line-height: calc(1rem + (0.2vw));
+					padding: 0.1rem;
 				}
 				.jauge {
 					width: 100%;
 					display: flex;
 					justify-content: start;
 					align-items: center;
-					background-color: rgb(17, 80, 31);
-					padding: 0.5rem;
+					// background-color: rgb(17, 80, 31);
 					.stat {
-						background-color: rgb(252, 0, 189);
+						// background-color: rgb(252, 0, 189);
+						font-size: calc(1rem + (0.5vw));
+						line-height: calc(1rem + (0.5vw));
 					}
 				}
 			}
-		}
-		.sheet-item-title {
-			background-color: rgb(0, 252, 126);
 		}
 	}
 }

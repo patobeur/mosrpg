@@ -124,66 +124,42 @@ class CommunsTools extends GameDatas {
 					let statDiv = document.createElement('div')
 					statDiv.id = 'a-' + key
 					statDiv.className = 'stat ' + key
-					statDiv.title = key
 					statDiv.textContent = value
 					this.PF.player.divstats['a-' + key] = statDiv
 
-					let capsule = this.sheetTools.set_DivCapsule(
+					let capsule = this.sheetTools.set_DivStatCapsule(
 						this.PF.player.divstats['a-' + key],
-						'c-' + key,//classname
-						'i-' + key,//id
-						key
+						key,
+						value
 					)
 					this.sheetTools.add_toStats(
+						'sheet-stats', // targetid
 						capsule
 					)
 					// document.getElementById('a-' + key).appendChild(this.PF.player.divstats['a-' + key])
 				}
 			},
-			set_DivCapsule: (div, classname = false, id = false, key) => {
-				// if (typeof div === Object) {
+			set_DivStatCapsule: (div, key = false, value = false) => {
 				let item = document.createElement('div')
 				// item.id = id ?? ''
-				item.className = classname ?? ''
-				item.title = classname ?? ''
-				item.setAttribute('data', this.sheetTools.get_emoji('stats', key))
-
-				item.appendChild(div)
+				item.className = 'sheet-stats-item'
+				item.title = key
+				//--
+				let ico = document.createElement('div')
+				ico.className = 'ico'
+				ico.textContent = this.get_emoji('stats', key)
+				//--
+				let jauge = document.createElement('div')
+				jauge.className = 'jauge'
+				//--
+				jauge.appendChild(div)
+				item.appendChild(ico)
+				item.appendChild(jauge)
 				return item
-				// }
 			},
-			add_toStats: (div) => {
-				document.getElementById('stats').appendChild(div)
+			add_toStats: (targetid, div) => {
+				document.getElementById(targetid).appendChild(div)
 			},
-			get_emoji: (cat, name) => {
-				return {
-					stats: {
-						strength: '💪',
-						agility: '🏐',
-						karma: '🪄',
-						intelect: '🎓',
-						dexterity: '🖐️',
-						wisdom: '✔️',
-						fortitude: '🏈',
-						hp: '❤️',
-					},
-					skills: {
-						magics: '📜',//📚
-						guarding: '🛡️',
-						long: '🏹',
-						medium: '⚔️',
-						short: '🗡️',
-						self: '🥋',//🤚
-						wtf: '🐖',//🐇
-					},
-					spells: {
-						fireball: '🔥',
-						water: '🌊',
-						cloud: '⛈️',
-						Sparkle: '✨',
-					}
-				}[cat][name]
-			}
 		}
 	}
 	cheattools = () => {
@@ -209,69 +185,6 @@ class CommunsTools extends GameDatas {
 				}
 				this.Play()
 			}
-		}
-	}
-	// emojis
-	get_emoji = () => {
-		let emojis = {
-			0: { ico: '⚔️', name: '' },
-			1: { ico: '🗡️', name: 'Dagger' },
-			2: { ico: '🔪', name: 'Kitchen Knife' },
-			3: { ico: '🥷', name: 'Ninja' },
-			4: { ico: '🤴', name: 'Prince' },
-			5: { ico: '👸', name: 'Princess' },
-			6: { ico: '🛡️', name: 'Shield' },
-			7: { ico: '🏹', name: 'Bow and Arrow' },
-			8: { ico: '⚚', name: 'Staff of Hermes' },
-			9: { ico: '🧙‍♂️', name: 'Man Mage' },
-			10: { ico: '🧙‍♀️', name: 'Woman Mage' },
-			11: { ico: '🧙🏼‍♀️', name: 'Woman Mage: Medium-Light Skin Tone' },
-			12: { ico: '🧙🏻‍♀️', name: 'Woman Mage: Light Skin Tone' },
-			13: { ico: '🧙🏽‍♀️', name: 'Woman Mage: Medium Skin Tone' },
-			14: { ico: '🧙🏿‍♀️', name: 'Woman Mage: Dark Skin Tone' },
-			15: { ico: '🧙🏾‍♀️', name: 'Woman Mage: Medium-Dark Skin Tone' },
-			16: { ico: '🧙🏻‍♂️', name: 'Man Mage: Light Skin Tone' },
-			17: { ico: '🧙🏾', name: 'Man Mage: Medium-Dark Skin Tone' },
-			18: { ico: '🧙🏽‍♂️', name: 'Man Mage: Medium Skin Tone' },
-		}
-		let emojis2 = [
-			{ ico: '⚔️', name: '' },
-			{ ico: '🗡️', name: 'Dagger' },
-			{ ico: '🔪', name: 'Kitchen Knife' },
-			{ ico: '🥷', name: 'Ninja' },
-			{ ico: '🤴', name: 'Prince' },
-			{ ico: '👸', name: 'Princess' },
-			{ ico: '🛡️', name: 'Shield' },
-			{ ico: '🏹', name: 'Bow and Arrow' },
-			{ ico: '⚚', name: 'Staff of Hermes' },
-			{ ico: '🧙‍♂️', name: 'Man Mage' },
-			{ ico: '🧙‍♀️', name: 'Woman Mage' },
-			{ ico: '🧙🏼‍♀️', name: 'Woman Mage: Medium-Light Skin Tone' },
-			{ ico: '🧙🏻‍♀️', name: 'Woman Mage: Light Skin Tone' },
-			{ ico: '🧙🏽‍♀️', name: 'Woman Mage: Medium Skin Tone' },
-			{ ico: '🧙🏿‍♀️', name: 'Woman Mage: Dark Skin Tone' },
-			{ ico: '🧙🏾‍♀️', name: 'Woman Mage: Medium-Dark Skin Tone' },
-			{ ico: '🧙🏻‍♂️', name: 'Man Mage: Light Skin Tone' },
-			{ ico: '🧙🏾', name: 'Man Mage: Medium-Dark Skin Tone' },
-			{ ico: '🧙🏽‍♂️', name: 'Man Mage: Medium Skin Tone' },
-		]
-		let stats = {
-			strength: '💪',
-			agility: '💪',
-			karma: '💪',
-			intelect: '🎓',
-			dexterity: '🖐️',
-			wisdom: '✔️',
-			fortitude: '🏈',
-			hp: '❤️',
-		}
-		let skills = {
-			magics: '📜',//📚
-			guarding: '🛡️',
-			distances: '🏹',
-			weapons: '⚔️',
-			dagger: '🗡️',
-			wtf: '🐖',//🐇
 		}
 	}
 }
