@@ -1,18 +1,9 @@
 "use strict";
-class CommunsTools {
+class CommunsTools extends GameDatas {
 	constructor() {
+		super()
 		// communs to all class
-		this.communs = {
-			//casesize: 32 * this.ratio, // px
-			ratio: 1,
-			gamesize: { w: '1024', h: '1024' },
-			parentnode: Object,// game div parentNode
-		}
 		// mouse 
-		this.drag = false
-		this.isBug = false
-		this.isPause = true
-		this.isWait = false
 		this.communsTools = this.communstools()
 		this.sheetTools = this.sheettools()
 		this.cheatTools = this.cheattools()
@@ -70,31 +61,6 @@ class CommunsTools {
 		this.PF.player.refresh(this.GF.ground)
 		this.GF.ground.refresh()
 	}
-	cheattools = () => {
-		return {
-			isCheat: true,
-			speed: (data) => {
-				this.Wait()
-				if (data === 'plus') {
-					this.PF.player.datas.speed += 1
-				}
-				if (data === 'minus') {
-					this.PF.player.datas.speed -= 1
-				}
-				this.Play()
-			},
-			interval: (data) => {
-				this.Wait()
-				if (data === 'plus') {
-					this.renderInterval += 1
-				}
-				if (data === 'minus') {
-					this.renderInterval -= 1
-				}
-				this.Play()
-			}
-		}
-	}
 	add_ToDom = (div) => {
 		document.body.prepend(div)
 	}
@@ -147,27 +113,102 @@ class CommunsTools {
 				this.sheetTools.isSheetOpen
 					? document.getElementById('sheet').classList.add('active')
 					: document.getElementById('sheet').classList.remove('active')
-				console.log(this.sheetTools.isSheetOpen)
 			},
-			get_DivSheet: () => {
+			set_DivSheet: () => {
+				// stats
+				this.sheetTools.set_statsDivs()
+			},
+			set_statsDivs: () => {
 				for (const [key, value] of Object.entries(this.PF.player.datas.stats)) {
 					// console.log(`${key}: ${value}`);
 					let statDiv = document.createElement('div')
 					statDiv.id = 'a-' + key
+					statDiv.className = 'stat ' + key
+					statDiv.title = key
 					statDiv.textContent = value
 					this.PF.player.divstats['a-' + key] = statDiv
+
+					let capsule = this.sheetTools.set_DivCapsule(
+						this.PF.player.divstats['a-' + key],
+						'c-' + key,//classname
+						'i-' + key,//id
+						key
+					)
+					this.sheetTools.add_toStats(
+						capsule
+					)
 					// document.getElementById('a-' + key).appendChild(this.PF.player.divstats['a-' + key])
 				}
 			},
-			get_DivCapsule: (div, classname = false, id = false) => {
-				if (typeof div === Object) {
-					let item = document.createElement('div')
-					item.id = id ?? ''
-					item.classname = classname ?? ''
-					item.appendChild(div)
-					return item
-				}
+			set_DivCapsule: (div, classname = false, id = false, key) => {
+				// if (typeof div === Object) {
+				let item = document.createElement('div')
+				// item.id = id ?? ''
+				item.className = classname ?? ''
+				item.title = classname ?? ''
+				item.setAttribute('data', this.sheetTools.get_emoji('stats', key))
+
+				item.appendChild(div)
+				return item
+				// }
 			},
+			add_toStats: (div) => {
+				document.getElementById('stats').appendChild(div)
+			},
+			get_emoji: (cat, name) => {
+				return {
+					stats: {
+						strength: '💪',
+						agility: '🏐',
+						karma: '🪄',
+						intelect: '🎓',
+						dexterity: '🖐️',
+						wisdom: '✔️',
+						fortitude: '🏈',
+						hp: '❤️',
+					},
+					skills: {
+						magics: '📜',//📚
+						guarding: '🛡️',
+						long: '🏹',
+						medium: '⚔️',
+						short: '🗡️',
+						self: '🥋',//🤚
+						wtf: '🐖',//🐇
+					},
+					spells: {
+						fireball: '🔥',
+						water: '🌊',
+						cloud: '⛈️',
+						Sparkle: '✨',
+					}
+				}[cat][name]
+			}
+		}
+	}
+	cheattools = () => {
+		return {
+			isCheat: true,
+			speed: (data) => {
+				this.Wait()
+				if (data === 'plus') {
+					this.PF.player.datas.speed += 1
+				}
+				if (data === 'minus') {
+					this.PF.player.datas.speed -= 1
+				}
+				this.Play()
+			},
+			interval: (data) => {
+				this.Wait()
+				if (data === 'plus') {
+					this.renderInterval += 1
+				}
+				if (data === 'minus') {
+					this.renderInterval -= 1
+				}
+				this.Play()
+			}
 		}
 	}
 	// emojis
@@ -214,5 +255,23 @@ class CommunsTools {
 			{ ico: '🧙🏾', name: 'Man Mage: Medium-Dark Skin Tone' },
 			{ ico: '🧙🏽‍♂️', name: 'Man Mage: Medium Skin Tone' },
 		]
+		let stats = {
+			strength: '💪',
+			agility: '💪',
+			karma: '💪',
+			intelect: '🎓',
+			dexterity: '🖐️',
+			wisdom: '✔️',
+			fortitude: '🏈',
+			hp: '❤️',
+		}
+		let skills = {
+			magics: '📜',//📚
+			guarding: '🛡️',
+			distances: '🏹',
+			weapons: '⚔️',
+			dagger: '🗡️',
+			wtf: '🐖',//🐇
+		}
 	}
 }

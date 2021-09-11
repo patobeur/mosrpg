@@ -20,7 +20,9 @@ class Ordinator extends CommunsTools {
 		this.set_Onkeydown()
 		// this.renderer = setInterval(10, this.render, ['true'], 50)
 
-		this.sheetTools.get_DivSheet()
+		this.sheetTools.set_DivSheet()
+		this.sheetTools.switch_Display()
+		// this.cheatTools.add_toStats(this.sheetTools.set_DivCapsule(this.PF.player.divstats['a-' + key]))
 		this.Start()
 
 	}
