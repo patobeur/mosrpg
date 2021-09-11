@@ -54,7 +54,6 @@ class CommunsTools {
 		// document.addEventListener('mousedown', () => { this.drag = false });
 		// document.addEventListener('mousemove', () => { this.drag = true });
 		// document.addEventListener('mouseup', () => console.log(this.drag ? 'draging' : 'clicking'));
-		console.log(this.sheetTools)
 		document.getElementById('speedplus').addEventListener('click', () => { this.cheatTools.speed('plus') }, true)
 		document.getElementById('speedminus').addEventListener('click', () => { this.cheatTools.speed('minus') }, true)
 		document.getElementById('intervalplus').addEventListener('click', () => { this.cheatTools.interval('plus') }, true)
