@@ -19,4 +19,41 @@
 	&.active {
 		display: initial;
 	}
+	.sheet-item {
+		background-color: rgb(109, 124, 93);
+		.sheet-item-stats {
+			background-color: rgb(252, 206, 0);
+			.sheet-item-stats-item {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: rgb(0, 4, 252);
+				.ico {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 1rem;
+					background-color: rgb(252, 0, 189);
+					padding: 0.5rem;
+					.ico2 {
+						background-color: rgb(206, 252, 0);
+					}
+				}
+				.jauge {
+					width: 100%;
+					display: flex;
+					justify-content: start;
+					align-items: center;
+					background-color: rgb(17, 80, 31);
+					padding: 0.5rem;
+					.stat {
+						background-color: rgb(252, 0, 189);
+					}
+				}
+			}
+		}
+		.sheet-item-title {
+			background-color: rgb(0, 252, 126);
+		}
+	}
 }

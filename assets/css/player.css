@@ -24,4 +24,67 @@
 #sheet.active {
   display: initial;
 }
+
+#sheet .sheet-item {
+  background-color: #6d7c5d;
+}
+
+#sheet .sheet-item .sheet-item-stats {
+  background-color: #fcce00;
+}
+
+#sheet .sheet-item .sheet-item-stats .sheet-item-stats-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #0004fc;
+}
+
+#sheet .sheet-item .sheet-item-stats .sheet-item-stats-item .ico {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 1rem;
+  background-color: #fc00bd;
+  padding: 0.5rem;
+}
+
+#sheet .sheet-item .sheet-item-stats .sheet-item-stats-item .ico .ico2 {
+  background-color: #cefc00;
+}
+
+#sheet .sheet-item .sheet-item-stats .sheet-item-stats-item .jauge {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #11501f;
+  padding: 0.5rem;
+}
+
+#sheet .sheet-item .sheet-item-stats .sheet-item-stats-item .jauge .stat {
+  background-color: #fc00bd;
+}
+
+#sheet .sheet-item .sheet-item-title {
+  background-color: #00fc7e;
+}
 /*# sourceMappingURL=player.css.map */
