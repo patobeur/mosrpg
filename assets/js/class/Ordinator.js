@@ -9,7 +9,8 @@ class Ordinator extends CommunsTools {
 		this.add_ToGame(this.PF.player.div)
 		this.PF.player.refresh()
 
-		this.communs.setit = this.get_ParentNode('this is a test')
+		this.communs.parentnode = this.get_ParentNode('this is a test')
+
 		this.render = this.renderManager()
 		this.rendertics = 0
 		this.renderInterval = 30 // render speed 1ms * 50
@@ -19,6 +20,7 @@ class Ordinator extends CommunsTools {
 		this.set_Onkeydown()
 		// this.renderer = setInterval(10, this.render, ['true'], 50)
 
+		this.sheetTools.get_DivSheet()
 		this.Start()
 
 	}
@@ -45,7 +47,6 @@ class Ordinator extends CommunsTools {
 	}
 	renderManager = () => {
 		return () => {
-			console.log('- - - - - - -')
 			this.rendertics++
 			if (this.isPause != false) {
 				this.PF.player.refresh(this.GF.ground)
@@ -64,7 +65,10 @@ class Ordinator extends CommunsTools {
 
 		let tmpMooving = false // needed to check if actived mooves
 		if (eventKeyDown === 'p') {
-			this.setPause(false)
+			this.switch_Pause(false)
+		}
+		if (eventKeyDown === 'c') {
+			this.sheetTools.switch_Display()
 		}
 		// key 37 & 81
 		if (eventKeyDown === "ArrowLeft" || eventKeyDown === "q") {

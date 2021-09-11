@@ -14,15 +14,14 @@
   -ms-user-select: none;
   /* IE10+/Edge */
   user-select: none;
-  /* Standard */
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-size: calc(1rem + (0.5vw));
 }
 
 body {
   overflow: hidden;
   color: white;
-  background-color: #5a1313;
   background-color: black;
   width: 100vw;
   height: 100vh;
@@ -34,5 +33,9 @@ body .remove {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+}
+
+body .remove * {
+  font-size: 1rem;
 }
 /*# sourceMappingURL=base.css.map */

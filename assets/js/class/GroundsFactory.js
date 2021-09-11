@@ -115,98 +115,84 @@ class GroundsFactory extends CommunsTools {
 					divdest.className = 'destination'
 					divdest.textContent = 'X'//❌
 					this.ground.divDest = divdest
-
-
-
-
 					return groundDiv
 				}
 				return false
 			},
 			set_Destination: (e) => {
+				// set action to true
 				this.player.datas.actions.movingToDestinationClick = true
+				// refresh destination datas 
 				this.player.datas.destination = {
 					x: e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x - (this.player.datas.size.w / 2),
 					y: e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y - (this.player.datas.size.h / 2),
-					mapX: e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x - (this.player.datas.size.w / 2),
-					mapY: e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y - (this.player.datas.size.h / 2),
 					z: 1,
 					d: this.player.datas.pos.d,
+					mapX: e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x - (this.player.datas.size.w / 2),
+					mapY: e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y - (this.player.datas.size.h / 2),
 					arrivedX: false,
 					arrivedY: false,
-					arrived: false
+					arrived: false,
 				}
-				console.log('Cliked->Pos:', this.player.datas.destination.x, this.player.datas.destination.y)
-				console.log('Cliked->map:', this.player.datas.destination.mapX, this.player.datas.destination.mapY)
+				// get degree from both pos player and click
 				this.player.datas.pos.d = this.communsTools.get_DegreeWithTwoPos(
 					this.player.datas.pos.x,
 					this.player.datas.pos.y,
 					this.player.datas.destination.x,
 					this.player.datas.destination.y
 				)
+			},
 
-				// this.ground.add_DestMark()
+			add_DestMark: () => {
+				this.add_ToMap(this.ground.divDest)
+				this.ground.divDest.style.left = this.player.datas.destination.mapX + px
+				this.ground.divDest.style.top = this.player.datas.destination.mapY + px
+				this.ground.div.appendChild(this.ground.divDest)
 			},
 			reset_Destination: () => {
 				this.player.datas.actions.movingToDestinationClick = false
 				this.ground.divDest.remove()
 			},
-
-			add_DestMark: () => {
-				// v1 
-				// this.ground.divDest.style.left = parseInt(this.player.datas.destination.mapX + this.ground.datas.pos.x - (this.casesize / 2)) + px
-				// this.ground.divDest.style.top = parseInt(this.player.datas.destination.mapY + this.ground.datas.pos.y - (this.casesize / 2)) + px
-				// this.player.divDest.style.zIndex = this.player.datas.destination.z
-				this.add_ToMap(this.ground.divDest)
-				// v2 
-				this.ground.divDest.style.left = this.player.datas.destination.mapX + px
-				this.ground.divDest.style.top = this.player.datas.destination.mapY + px
-				this.ground.div.appendChild(this.ground.divDest)
-			},
-			// refresh_DestMark: () => {
-			// 	this.ground.divDest.style.left = (this.player.datas.destination.mapX + this.ground.datas.pos.x - (this.casesize / 2)) + px
-			// 	this.ground.divDest.style.top = (this.player.datas.destination.mapY + this.ground.datas.pos.y - (this.casesize / 2)) + px
-			// },
 			move_ToPlayerDestination: (GF) => {
+				// distances check
 				let xxx = [this.player.datas.destination.x, this.player.datas.pos.x]
 				let yyy = [this.player.datas.destination.y, this.player.datas.pos.y]
+				let newdistx = Math.max(...xxx) - Math.min(...xxx) // get distance x
+				let newdisty = Math.max(...yyy) - Math.min(...yyy) // get distance y
 
 				// check only if arrivedX not reach
 				!this.player.datas.destination.arrivedX
 					? this.player.datas.destination.arrivedX =
-					(Math.max(...xxx) - Math.min(...xxx) <= (this.player.datas.size.w / 2))
+					(newdistx > this.player.datas.destination.distx)// <= (this.player.datas.size.w / 2))
 						? true
 						: false
 					: ''
 				// check only if arrivedY not reach
 				!this.player.datas.destination.arrivedY
 					? this.player.datas.destination.arrivedY =
-					(Math.max(...yyy) - Math.min(...yyy) <= (this.player.datas.size.h / 2))
+					(newdisty > this.player.datas.destination.disty)//<= (this.player.datas.size.h / 2))
 						? true
 						: false
 					: ''
-				// if both x && y are reached then arrived = true
+				// check only if arrived is false
 				!this.player.datas.destination.arrived
+					// if both arrivedx && arrivedy are reached then arrived = true
 					? this.player.datas.destination.arrived = (this.player.datas.destination.arrivedX && this.player.datas.destination.arrivedY)
 					: ''
 
-				// console.log('playerPIXELSmove:' + this.player.datas.speed)
-				// console.log('dist x:' + (Math.max(...xxx) - Math.min(...xxx)), this.player.datas.destination.arrivedX)
-				// console.log('dist y:' + (Math.max(...yyy) - Math.min(...yyy)), this.player.datas.destination.arrivedY)
-				console.log('CurDestPos:', this.player.datas.destination)
-				console.log('CurPlayPos:', this.player.datas.pos)
-				console.log('CurGrndPos:', this.ground.datas.pos)
-				// console.log('DestMark:', this.ground.datas.pos)
-
-
+				// destination reached check
 				if (this.player.datas.destination.arrived) {
 					// console.log('RESET')
 					this.ground.reset_Destination()
 				}
 				else {
+					// if not reached dest then refresh
 					let nextpos = this.communsTools.get_PosWithDegree(this.player)
 					this.player.datas.pos.x = nextpos.x
 					this.player.datas.pos.y = nextpos.y
+					// save last dist for next check
+					this.player.datas.destination.distx = newdistx
+					this.player.datas.destination.disty = newdisty
 				}
 
 			}
@@ -214,32 +200,24 @@ class GroundsFactory extends CommunsTools {
 		return newground
 	}
 	click_Ground = (e) => {
-		console.log(e.target.id)
 		// 	// to do 
 		// 	// fonction and Set good dest pos with the translated coords if out ground clicked
 		if (e.target.id === 'ground') {
 			// CLICK TO RUN
 			// reset last arrived actions
 			this.ground.reset_Destination(e)
-
-
-
 			// methode A test if e.clientX and e.clientY is on board
 			// this work but not realy tested
 			// let x = e.clientX - (window.innerWidth / 2) + this.player.datas.pos.x + (this.casesize / 2)
 			// let y = e.clientY - (window.innerHeight / 2) + this.player.datas.pos.y + (this.casesize / 2)
-
 			// if (x > 0 && x < this.ground.datas.size.w && y > 0 && y < this.ground.datas.size.h) {
-
-
 			// 	// set new destination 
 			// 	this.player.set_Destination(e, this.ground)
 			// }
 
 			// methode B open bar click
-			this.ground.set_Destination(e, this.ground)
+			this.ground.set_Destination(e)
 			this.ground.add_DestMark()
-
 		}
 	}
 	get_ScreenConfig = () => {

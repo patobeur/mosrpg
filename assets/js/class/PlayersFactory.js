@@ -17,7 +17,8 @@ class PlayersFactory extends CommunsTools {
 			divvisual: Object,
 			divbeyond: Object,
 			divclick: Object,
-			divfog: Object,
+			divfog: Object, // need to change divclick to divfog
+			divstats: Object,
 			immat: 1,
 			datas: {
 				classname: 'player',
@@ -59,9 +60,11 @@ class PlayersFactory extends CommunsTools {
 					y: 64,
 					z: 1,
 					d: 0,
+					mapX: 0,
+					mapY: 0,
 					arrivedX: true,
 					arrivedY: true,
-					arrived: true
+					arrived: true,
 				},
 				actions: {
 					movingToDestinationClick: false,
@@ -75,9 +78,24 @@ class PlayersFactory extends CommunsTools {
 					undead: { active: false, currentdelay: new Number('0'), maxdelay: new Number('100') },
 				},
 				skills: {
-					magic: false
+					magics: false,
+					weapons: false,
+					distances: false,
+					wtfs: false
 				},
 			},
+			// get_DivSheet: () => {
+			// 	// console.log(this.player.datas.stats)
+			// 	for (const [key, value] of Object.entries(this.player.datas.stats)) {
+			// 		// console.log(`${key}: ${value}`);
+			// 		let statDiv = document.createElement('div')
+			// 		statDiv.id = 'a-' + key
+			// 		statDiv.textContent = value
+			// 		this.player.divstats['a-' + key] = statDiv
+			// 	}
+			// 	// console.log(this.player.divstats)
+
+			// },
 			get_DivElem: () => {
 				if (this.player.datas) {
 					let playerDiv = document.createElement('div')

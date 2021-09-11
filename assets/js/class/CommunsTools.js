@@ -6,7 +6,7 @@ class CommunsTools {
 			//casesize: 32 * this.ratio, // px
 			ratio: 1,
 			gamesize: { w: '1024', h: '1024' },
-			parentnode: false,// game div parentNode
+			parentnode: Object,// game div parentNode
 		}
 		// mouse 
 		this.drag = false
@@ -14,6 +14,7 @@ class CommunsTools {
 		this.isPause = true
 		this.isWait = false
 		this.communsTools = this.communsTools()
+		this.sheetTools = this.sheetTools()
 	}
 	get_ParentNode = (mess) => {
 		let parentnode = false;
@@ -27,21 +28,20 @@ class CommunsTools {
 				object: parentnode,
 				fullpage: false
 			}
-			console.log('parentNode detection of game div')
+			// console.log('parentNode detection of game div')
 			if (this.communs.parentnode.nodename === "BODY") {
-				console.log('Parent = BODY')
 				this.communs.parentnode.fullpage = true
 			}
 			else {
-				console.log('Parent = ' + this.communs.parentnode.nodename)
+				// console.log('Parent = ' + this.communs.parentnode.nodename)
 			}
-			console.log(this.communs.parentnode)
+			// console.log(this.communs.parentnode)
 		}
 		else {
-
+			// to do
 		}
 	}
-	setPause = () => {
+	switch_Pause = () => {
 		this.isPause = !this.isPause
 	}
 	get_isPause() {
@@ -53,10 +53,10 @@ class CommunsTools {
 		// document.addEventListener('mousedown', () => { this.drag = false });
 		// document.addEventListener('mousemove', () => { this.drag = true });
 		// document.addEventListener('mouseup', () => console.log(this.drag ? 'draging' : 'clicking'));
-		document.getElementById('speedplus').addEventListener('click', () => { this.set_speed('plus') }, true)
-		document.getElementById('speedminus').addEventListener('click', () => { this.set_speed('minus') }, true)
-		document.getElementById('intervalplus').addEventListener('click', () => { this.set_Interval('plus') }, true)
-		document.getElementById('intervalminus').addEventListener('click', () => { this.set_Interval('minus') }, true)
+		document.getElementById('speedplus').addEventListener('click', () => { this.cheat.speed('plus') }, true)
+		document.getElementById('speedminus').addEventListener('click', () => { this.cheat.speed('minus') }, true)
+		document.getElementById('intervalplus').addEventListener('click', () => { this.cheat.interval('plus') }, true)
+		document.getElementById('intervalminus').addEventListener('click', () => { this.cheat.interval('minus') }, true)
 		// on click to move
 		document.addEventListener('click', this.GF.click_Ground, true)
 	}
@@ -69,27 +69,63 @@ class CommunsTools {
 		this.PF.player.refresh(this.GF.ground)
 		this.GF.ground.refresh()
 	}
-	set_speed = (data) => {
-		if (data === 'plus') {
-			this.PF.player.datas.speed += 1
-		}
-		if (data === 'minus') {
-			this.PF.player.datas.speed -= 1
+	cheat = () => {
+		return {
+			isCheat: true,
+			speed: (data) => {
+				this.Wait()
+				if (data === 'plus') {
+					this.PF.player.datas.speed += 1
+				}
+				if (data === 'minus') {
+					this.PF.player.datas.speed -= 1
+				}
+				this.Play()
+			},
+			interval: (data) => {
+				this.Wait()
+				if (data === 'plus') {
+					this.renderInterval += 1
+				}
+				if (data === 'minus') {
+					this.renderInterval -= 1
+				}
+				this.Play()
+			}
 		}
 	}
-	set_Interval = (data) => {
-		if (data === 'plus') {
-			console.log(this.renderInterval)
-			this.Wait()
-			this.renderInterval += 1
-			this.Play()
-		}
-		if (data === 'minus') {
-			console.log(this.renderInterval)
-			this.Wait()
-			this.renderInterval -= 1
-			this.Play()
-		}
+	// cheat_speed = (data) => {
+	// 	if (data === 'plus') {
+	// 		this.Wait()
+	// 		this.PF.player.datas.speed += 1
+	// 		this.Play()
+	// 	}
+	// 	if (data === 'minus') {
+	// 		this.Wait()
+	// 		this.PF.player.datas.speed -= 1
+	// 		this.Play()
+	// 	}
+	// }
+	// cheat_Interval = (data) => {
+	// 	if (data === 'plus') {
+	// 		this.Wait()
+	// 		this.renderInterval += 1
+	// 		this.Play()
+	// 	}
+	// 	if (data === 'minus') {
+	// 		this.Wait()
+	// 		this.renderInterval -= 1
+	// 		this.Play()
+	// 	}
+	// }
+	add_ToDom = (div) => {
+		document.body.prepend(div)
+	}
+	add_ToGame = (div) => {
+		document.getElementById('game').appendChild(div)
+	}
+	add_ToMap = (div) => {
+		document.getElementById('ground').appendChild(div)
 	}
 	communsTools = () => {
 		return {
@@ -126,14 +162,36 @@ class CommunsTools {
 			}
 		}
 	}
-	add_ToDom = (div) => {
-		document.body.prepend(div)
-	}
-	add_ToGame = (div) => {
-		document.getElementById('game').appendChild(div)
-	}
-	add_ToMap = (div) => {
-		document.getElementById('ground').appendChild(div)
+	sheetTools = () => {
+		return {
+			isSheetOpen: false,
+			switch_Display: () => {
+				this.sheetTools.isSheetOpen = !this.sheetTools.isSheetOpen;
+				this.sheetTools.isSheetOpen
+					? document.getElementById('sheet').classList.add('active')
+					: document.getElementById('sheet').classList.remove('active')
+				console.log(this.sheetTools.isSheetOpen)
+			},
+			get_DivSheet: () => {
+				for (const [key, value] of Object.entries(this.PF.player.datas.stats)) {
+					// console.log(`${key}: ${value}`);
+					let statDiv = document.createElement('div')
+					statDiv.id = 'a-' + key
+					statDiv.textContent = value
+					this.PF.player.divstats['a-' + key] = statDiv
+					// document.getElementById('a-' + key).appendChild(this.PF.player.divstats['a-' + key])
+				}
+			},
+			get_DivCapsule: (div, classname = false, id = false) => {
+				if (typeof div === Object) {
+					let item = document.createElement('div')
+					item.id = id ?? ''
+					item.classname = classname ?? ''
+					item.appendChild(div)
+					return item
+				}
+			},
+		}
 	}
 	// emojis
 	get_emoji = () => {

@@ -60,10 +60,9 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  z-index: 1999;
   background-color: rgba(255, 255, 255, 0.76);
   border-radius: 0.5rem;
-  font-size: 1.2rem;
+  font-size: calc(16px + 0.5vw);
   border: 3px dotted rgba(0, 0, 0, 0.349);
 }
 

@@ -1,1 +1,27 @@
-/* No CSS *//*# sourceMappingURL=player.css.map */
+#sheet {
+  position: absolute;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: 90%;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.856);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: black;
+  padding: 0.5rem;
+  display: none;
+  border-radius: 0.5rem;
+}
+
+#sheet.active {
+  display: initial;
+}
+/*# sourceMappingURL=player.css.map */
