@@ -13,8 +13,9 @@ class CommunsTools {
 		this.isBug = false
 		this.isPause = true
 		this.isWait = false
-		this.communsTools = this.communsTools()
-		this.sheetTools = this.sheetTools()
+		this.communsTools = this.communstools()
+		this.sheetTools = this.sheettools()
+		this.cheatTools = this.cheattools()
 	}
 	get_ParentNode = (mess) => {
 		let parentnode = false;
@@ -53,10 +54,11 @@ class CommunsTools {
 		// document.addEventListener('mousedown', () => { this.drag = false });
 		// document.addEventListener('mousemove', () => { this.drag = true });
 		// document.addEventListener('mouseup', () => console.log(this.drag ? 'draging' : 'clicking'));
-		document.getElementById('speedplus').addEventListener('click', () => { this.cheat.speed('plus') }, true)
-		document.getElementById('speedminus').addEventListener('click', () => { this.cheat.speed('minus') }, true)
-		document.getElementById('intervalplus').addEventListener('click', () => { this.cheat.interval('plus') }, true)
-		document.getElementById('intervalminus').addEventListener('click', () => { this.cheat.interval('minus') }, true)
+		console.log(this.sheetTools)
+		document.getElementById('speedplus').addEventListener('click', () => { this.cheatTools.speed('plus') }, true)
+		document.getElementById('speedminus').addEventListener('click', () => { this.cheatTools.speed('minus') }, true)
+		document.getElementById('intervalplus').addEventListener('click', () => { this.cheatTools.interval('plus') }, true)
+		document.getElementById('intervalminus').addEventListener('click', () => { this.cheatTools.interval('minus') }, true)
 		// on click to move
 		document.addEventListener('click', this.GF.click_Ground, true)
 	}
@@ -69,7 +71,7 @@ class CommunsTools {
 		this.PF.player.refresh(this.GF.ground)
 		this.GF.ground.refresh()
 	}
-	cheat = () => {
+	cheattools = () => {
 		return {
 			isCheat: true,
 			speed: (data) => {
@@ -94,30 +96,6 @@ class CommunsTools {
 			}
 		}
 	}
-	// cheat_speed = (data) => {
-	// 	if (data === 'plus') {
-	// 		this.Wait()
-	// 		this.PF.player.datas.speed += 1
-	// 		this.Play()
-	// 	}
-	// 	if (data === 'minus') {
-	// 		this.Wait()
-	// 		this.PF.player.datas.speed -= 1
-	// 		this.Play()
-	// 	}
-	// }
-	// cheat_Interval = (data) => {
-	// 	if (data === 'plus') {
-	// 		this.Wait()
-	// 		this.renderInterval += 1
-	// 		this.Play()
-	// 	}
-	// 	if (data === 'minus') {
-	// 		this.Wait()
-	// 		this.renderInterval -= 1
-	// 		this.Play()
-	// 	}
-	// }
 	add_ToDom = (div) => {
 		document.body.prepend(div)
 	}
@@ -127,7 +105,7 @@ class CommunsTools {
 	add_ToMap = (div) => {
 		document.getElementById('ground').appendChild(div)
 	}
-	communsTools = () => {
+	communstools = () => {
 		return {
 			set_BugAndPause: (string = false) => {
 				this.isBug = true
@@ -162,7 +140,7 @@ class CommunsTools {
 			}
 		}
 	}
-	sheetTools = () => {
+	sheettools = () => {
 		return {
 			isSheetOpen: false,
 			switch_Display: () => {
