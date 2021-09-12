@@ -56,8 +56,8 @@
       -ms-flex-align: center;
           align-items: center;
   background-color: none;
-  text-shadow: 2px 0px 15px black;
-  color: greenyellow;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.87);
+  color: #acff2f;
 }
 
 #game .player {

@@ -33,9 +33,9 @@ get_DegreeWithTwoPos: (fromX, fromY, destX, destY,) ={
 By the way : get next position x,y with degree
 ```
 get_PosWithDegree: (player) => {
-	let x = parseInt( player.datas.pos.x + (player.datas.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180))))
+	let x = parseInt( player.datas.pos.x + (player.datas.character.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180))))
 	// x  = parseInt( current pos x  + ( distance * Math.cos( tetha * (Math.PI / 180))))
-	let y = parseInt( player.datas.pos.y + (player.datas.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180))))
+	let y = parseInt( player.datas.pos.y + (player.datas.character.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180))))
 	// y  = parseInt( current pos y + ( distance * Math.sin( tetha * (Math.PI / 180))))
 	return { x: x, y: y }
 },

@@ -46,7 +46,6 @@ class CommunsTools extends GameDatas {
 		} else {
 			document.getElementById('pause').classList.remove('active')
 		}
-		console.log(this.isPause)
 	}
 	// get_isPause() {
 	// 	return this.isPause
@@ -65,7 +64,7 @@ class CommunsTools extends GameDatas {
 		document.addEventListener('click', this.GF.click_Ground, true)
 	}
 	refresh_Console() {
-		document.getElementById('speedvalue').textContent = this.PF.player.datas.speed
+		document.getElementById('speedvalue').textContent = this.PF.player.datas.character.height
 		document.getElementById('intervalvalue').textContent = this.renderInterval
 	}
 	resize = () => {
@@ -82,11 +81,13 @@ class CommunsTools extends GameDatas {
 	add_ToMap = (div) => {
 		document.getElementById('ground').appendChild(div)
 	}
+	add_toStats = (targetid, div) => {
+		document.getElementById(targetid).appendChild(div)
+	}
 	listenertools = () => {
 		return {
 			playerKeyboard: (eventKeyDown) => {
 				// stop auto move
-				this.GF.ground.reset_Destination()
 
 				let tmpMooving = false // needed to check if actived mooves
 				if (eventKeyDown === 'p') {
@@ -117,6 +118,7 @@ class CommunsTools extends GameDatas {
 				}
 
 				if (tmpMooving) {
+					this.GF.ground.reset_Destination()
 					let nextpos = this.communsTools.get_PosWithDegree(this.PF.player)
 					this.PF.player.datas.pos.x = nextpos.x
 					this.PF.player.datas.pos.y = nextpos.y
@@ -146,10 +148,10 @@ class CommunsTools extends GameDatas {
 				return theta;
 			},
 			get_PosWithDegree: (player) => {
-				// let x = parseInt(player.datas.pos.x + (player.datas.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180))))
-				// let y = parseInt(player.datas.pos.y + (player.datas.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180))))
-				let x = player.datas.pos.x + (player.datas.speed * Math.cos((player.datas.pos.d) * (Math.PI / 180)))
-				let y = player.datas.pos.y + (player.datas.speed * Math.sin((player.datas.pos.d) * (Math.PI / 180)))
+				// let x = parseInt(player.datas.pos.x + (player.datas.character.physics.speed.current * Math.cos((player.datas.pos.d) * (Math.PI / 180))))
+				// let y = parseInt(player.datas.pos.y + (player.datas.character.physics.speed.current * Math.sin((player.datas.pos.d) * (Math.PI / 180))))
+				let x = player.datas.pos.x + (player.datas.character.physics.speed.current * Math.cos((player.datas.pos.d) * (Math.PI / 180)))
+				let y = player.datas.pos.y + (player.datas.character.physics.speed.current * Math.sin((player.datas.pos.d) * (Math.PI / 180)))
 				return { x: x, y: y }
 			},
 			// trigonometrie
@@ -165,42 +167,67 @@ class CommunsTools extends GameDatas {
 			isSheetOpen: false,
 			switch_Display: () => {
 				this.communsSheet.isSheetOpen = !this.communsSheet.isSheetOpen;
-				if (this.communsSheet.isSheetOpen) {
-					document.getElementById('sheet').classList.add('active')
-				} else {
-					document.getElementById('sheet').classList.remove('active')
-				}
+				// if (this.communsSheet.isSheetOpen) {
+				// 	document.getElementById('sheet').classList.add('active')
+				// } else {
+				// 	document.getElementById('sheet').classList.remove('active')
+				// }
+				this.communsSheet.isSheetOpen ? document.getElementById('sheet').classList.add('active') : document.getElementById('sheet').classList.remove('active')
 
 				this.switch_Pause([this.communsSheet.isSheetOpen])
-
-				console.log('pause:' + this.isPause)
-				console.log('isSheetOpen:' + this.communsSheet.isSheetOpen)
 			},
 			set_DivSheet: () => {
 				// stats
-				this.communsSheet.set_statsDivs()
+				this.communsSheet.set_statsDivs(this.PF.player.datas.character.stats, 'Statistics')
+				this.communsSheet.set_statsDivs(this.PF.player.datas.character.rules, 'Rules')
 			},
-			set_statsDivs: () => {
-				for (const [key, value] of Object.entries(this.PF.player.datas.stats)) {
-					// console.log(`${key}: ${value}`);
-					let statDiv = document.createElement('div')
-					statDiv.id = 'range-' + key
-					statDiv.className = 'stat ' + key
-					// statDiv.textContent = value
-					statDiv.style.width = 'calc( ( 100% / ' + this.communs.maxStat + ') * ' + value + ')'
-					// statDiv.style.height = 'auto'
-					this.PF.player.divstats['a-' + key] = statDiv
+			set_statsDivs: (datas, cat) => {
+				// create tmp Div
+				let fullDiv = document.createElement('div')
+				fullDiv.id = 'part-' + cat
+				fullDiv.className = 'sheet-part part-' + cat
+				// fullDiv.textContent = cat
 
+				let titleDiv = document.createElement('div')
+				titleDiv.className = 'sheet-title'
+				titleDiv.textContent = cat
+
+				fullDiv.appendChild(titleDiv)
+
+
+				for (const [key, value] of Object.entries(datas)) {
+					// console.log(`${key}: ${value}`);
+					// create tmp Div
+					let statDiv = document.createElement('div')
+					statDiv.id = 'stat-' + key
+					statDiv.className = 'stat'
+					statDiv.style.height = '100%'
+					if (typeof value) {
+						console.log(typeof value)
+					}
+					statDiv.style.width = 'calc( ( 100% / ' + this.communs.maxstat + ') * ' + value.current + ')'
+					// add to lists stats
+					this.PF.player.divstats['div' + key] = statDiv
+					// capsule it for front and css
 					let capsule = this.communsSheet.set_DivStatCapsule(
-						this.PF.player.divstats['a-' + key],
+						this.PF.player.divstats['div' + key],
 						key,
 						value
 					)
-					this.communsSheet.add_toStats(
-						'sheet-stats', // targetid
-						capsule
+
+					fullDiv.appendChild(capsule)
+					// // add to dom
+					// this.add_toStats(
+					// 	'sheet-stats', // div target id
+					// 	titleDiv
+					// )
+
+
+					// add to dom
+					this.add_toStats(
+						'sheet-stats', // div target id
+						fullDiv
 					)
-					// document.getElementById('a-' + key).appendChild(this.PF.player.divstats['a-' + key])
 				}
 			},
 			set_DivStatCapsule: (div, key = false, value = false) => {
@@ -217,10 +244,10 @@ class CommunsTools extends GameDatas {
 				jauge.className = 'jauge'
 				//--
 				let rangevalue = document.createElement('div')
-				rangevalue.className = 'rangevalue'
-				rangevalue.id = 'value-' + key
+				rangevalue.className = 'range'
+				rangevalue.id = 'range-' + key
 				rangevalue.setAttribute('stat', key)
-				rangevalue.textContent = value + '/16'
+				rangevalue.textContent = value.current + '/' + value.max
 				jauge.prepend(rangevalue)
 				//--
 				let plus = document.createElement('div')
@@ -235,9 +262,6 @@ class CommunsTools extends GameDatas {
 				item.appendChild(plus)
 				return item
 			},
-			add_toStats: (targetid, div) => {
-				document.getElementById(targetid).appendChild(div)
-			},
 		}
 	}
 	cheattools = () => {
@@ -245,11 +269,11 @@ class CommunsTools extends GameDatas {
 			isCheat: true,
 			speed: (data) => {
 				this.Wait()
-				if (data === 'plus') {
-					this.PF.player.datas.speed += 1
+				if (data === 'plus' && this.PF.player.datas.character.physics.speed.current < this.PF.player.datas.character.speed.max) {
+					this.PF.player.datas.character.physics.speed.current += 1
 				}
-				if (data === 'minus') {
-					this.PF.player.datas.speed -= 1
+				if (data === 'minus' && this.PF.player.datas.character.physics.speed.current > -5) {
+					this.PF.player.datas.character.physics.speed.current -= 1
 				}
 				this.Play()
 			},
@@ -258,7 +282,7 @@ class CommunsTools extends GameDatas {
 				if (data === 'plus') {
 					this.renderInterval += 1
 				}
-				if (data === 'minus') {
+				if (data === 'minus' && this.renderInterval >= 20) {
 					this.renderInterval -= 1
 				}
 				this.Play()

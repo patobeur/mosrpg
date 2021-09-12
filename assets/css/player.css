@@ -29,11 +29,11 @@
   display: initial;
 }
 
-#sheet .sheet-part .sheet-title {
+#sheet .sheet-lists .sheet-title {
   text-align: center;
 }
 
-#sheet .sheet-part .sheet-stats .sheet-stats-item {
+#sheet .sheet-lists .sheet-stats .sheet-part .sheet-stats-item {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -50,7 +50,11 @@
   background-color: black;
 }
 
-#sheet .sheet-part .sheet-stats .sheet-stats-item .ico {
+#sheet .sheet-lists .sheet-stats .sheet-part .sheet-stats-item:last-child {
+  margin-bottom: 0.8vh;
+}
+
+#sheet .sheet-lists .sheet-stats .sheet-part .sheet-stats-item .ico {
   background-color: rgba(19, 19, 58, 0.719);
   -ms-grid-column: 1;
   grid-column: 1 / 1;
@@ -68,7 +72,7 @@
   padding: 0 0.1rem;
 }
 
-#sheet .sheet-part .sheet-stats .sheet-stats-item .jauge {
+#sheet .sheet-lists .sheet-stats .sheet-part .sheet-stats-item .jauge {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -86,13 +90,13 @@
   grid-row: 1;
 }
 
-#sheet .sheet-part .sheet-stats .sheet-stats-item .jauge .stat {
+#sheet .sheet-lists .sheet-stats .sheet-part .sheet-stats-item .jauge .stat {
   background-color: rgba(21, 255, 0, 0.534);
   height: 100%;
   left: 0px;
 }
 
-#sheet .sheet-part .sheet-stats .sheet-stats-item .jauge .rangevalue {
+#sheet .sheet-lists .sheet-stats .sheet-part .sheet-stats-item .jauge .range {
   position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -100,7 +104,7 @@
   color: white;
 }
 
-#sheet .sheet-part .sheet-stats .sheet-stats-item .statplus {
+#sheet .sheet-lists .sheet-stats .sheet-part .sheet-stats-item .statplus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

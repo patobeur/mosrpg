@@ -15,7 +15,7 @@ class GameDatas {
 			ratio: 1,
 			gamesize: { w: '1024', h: '1024' },
 			parentnode: Object,// game div parentNode
-			maxStat: 16, // temporary ??
+			maxstat: 16, // temporary ??
 		}
 	}
 	get_emoji = (cat, name) => {
@@ -28,7 +28,6 @@ class GameDatas {
 				dexterity: '🤏',//🖐️
 				wisdom: '🦄',//🎓🏳️🎲
 				fortitude: '🍔',//🏈
-				hp: '❤️',
 				speed: '💨',
 			},
 			skills: {
@@ -45,6 +44,9 @@ class GameDatas {
 				water: '🌊',
 				cloud: '⛈️',
 				Sparkle: '✨',
+			},
+			rules: {
+				hp: '❤️',
 			}
 		}[cat][name]
 	}
