@@ -103,16 +103,15 @@ class GroundsFactory extends CommunsTools {
 					this.player.datas.destination.y
 				)
 			},
-
-			add_DestMark: () => {
+			reset_Destination: () => {
+				this.player.datas.actions.movingToDestinationClick = false
+				this.ground.divDest.remove()
+			},
+			add_DestinationMark: () => {
 				this.add_ToMap(this.ground.divDest)
 				this.ground.divDest.style.left = this.player.datas.destination.mapX + this.px
 				this.ground.divDest.style.top = this.player.datas.destination.mapY + this.px
 				this.ground.div.appendChild(this.ground.divDest)
-			},
-			reset_Destination: () => {
-				this.player.datas.actions.movingToDestinationClick = false
-				this.ground.divDest.remove()
 			},
 			move_ToPlayerDestination: (GF) => {
 				// distances check
@@ -161,8 +160,8 @@ class GroundsFactory extends CommunsTools {
 		return newground
 	}
 	click_Ground = (e) => {
-		// 	// to do 
-		// 	// fonction and Set good dest pos with the translated coords if out ground clicked
+		// to do 
+		// fonction and Set good dest pos with the translated coords if out ground clicked
 		if (e.target.id === 'ground') {
 			// CLICK TO RUN
 			// reset last arrived actions
@@ -178,7 +177,7 @@ class GroundsFactory extends CommunsTools {
 
 			// methode B open bar click
 			this.ground.set_Destination(e)
-			this.ground.add_DestMark()
+			this.ground.add_DestinationMark()
 		}
 	}
 	get_ScreenConfig = () => {

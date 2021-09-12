@@ -13,6 +13,9 @@
 	box-sizing: border-box;
 	font-size: calc(1rem + (0.5vw));
 }
+img {
+	max-width: 100%;
+}
 body {
 	overflow: hidden;
 	color: rgb(255, 255, 255);
@@ -27,5 +30,17 @@ body {
 		* {
 			font-size: 1rem;
 		}
+	}
+}
+.shadow {
+	box-shadow: 0px 0px 3px rgb(24, 19, 19);
+}
+#pause {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	display: none;
+	&.active {
+		display: initial;
 	}
 }

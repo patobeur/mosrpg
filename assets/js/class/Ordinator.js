@@ -15,14 +15,13 @@ class Ordinator extends CommunsTools {
 		this.rendertics = 0
 		this.renderInterval = 30 // render speed 1ms * 50
 		this.gameRender = false
-		this.PAUSE = this.isPause
 		this.set_EventListener()
 		this.set_Onkeydown()
 		// this.renderer = setInterval(10, this.render, ['true'], 50)
 
-		this.sheetTools.set_DivSheet()
-		this.sheetTools.switch_Display()
-		// this.cheatTools.add_toStats(this.sheetTools.set_DivCapsule(this.PF.player.divstats['a-' + key]))
+		this.communsSheet.set_DivSheet()
+		// this.communsSheet.switch_Display()
+
 		this.Start()
 
 	}
@@ -44,21 +43,7 @@ class Ordinator extends CommunsTools {
 	}
 	set_Onkeydown() {
 		document.onkeydown = (eventkeydown) => {
-			this.playerKeyboard(eventkeydown.key)
-		}
-	}
-	renderManager = () => {
-		return () => {
-			this.rendertics++
-			if (this.isPause != false) {
-				this.PF.player.refresh(this.GF.ground)
-				this.GF.ground.refresh()
-				// if new destination x y clicked
-				this.refresh_Console()
-				if (this.PF.player.datas.actions.movingToDestinationClick === true) {
-					this.GF.ground.move_ToPlayerDestination()
-				}
-			}
+			this.communsListener.playerKeyboard(eventkeydown.key)
 		}
 	}
 	playerKeyboard(eventKeyDown) {
@@ -70,7 +55,7 @@ class Ordinator extends CommunsTools {
 			this.switch_Pause(false)
 		}
 		if (eventKeyDown === 'c') {
-			this.sheetTools.switch_Display()
+			this.communsSheet.switch_Display()
 		}
 		// key 37 & 81
 		if (eventKeyDown === "ArrowLeft" || eventKeyDown === "q") {
@@ -98,6 +83,20 @@ class Ordinator extends CommunsTools {
 			this.PF.player.datas.pos.x = nextpos.x
 			this.PF.player.datas.pos.y = nextpos.y
 			console.log('CurPlayPos:', this.PF.player.datas.pos)
+		}
+	}
+	renderManager = () => {
+		return () => {
+			this.rendertics++
+			if (!this.isPause) {
+				this.PF.player.refresh(this.GF.ground)
+				this.GF.ground.refresh()
+				// if new destination x y clicked
+				this.refresh_Console()
+				if (this.PF.player.datas.actions.movingToDestinationClick === true) {
+					this.GF.ground.move_ToPlayerDestination()
+				}
+			}
 		}
 	}
 }

@@ -4,7 +4,7 @@ class GameDatas {
 		// communs to all class
 		this.drag = false
 		this.isBug = false
-		this.isPause = true
+		this.isPause = false
 		this.isWait = false
 		// groundsfactory
 		this.px = 'px';
@@ -12,10 +12,10 @@ class GameDatas {
 		this.rem = 'rem';
 		//
 		this.communs = {
-			//casesize: 32 * this.ratio, // px
 			ratio: 1,
 			gamesize: { w: '1024', h: '1024' },
 			parentnode: Object,// game div parentNode
+			maxStat: 16, // temporary ??
 		}
 	}
 	get_emoji = (cat, name) => {
@@ -23,12 +23,13 @@ class GameDatas {
 			stats: {
 				strength: '💪',
 				agility: '🏐',
-				karma: '🪄',
-				intelect: '🎓',
-				dexterity: '🖐️',
-				wisdom: '✔️',
-				fortitude: '🏈',
+				karma: '⚗️',//🪄
+				intelect: '✔️',
+				dexterity: '🤏',//🖐️
+				wisdom: '🦄',//🎓🏳️🎲
+				fortitude: '🍔',//🏈
 				hp: '❤️',
+				speed: '💨',
 			},
 			skills: {
 				magics: '📜',//📚

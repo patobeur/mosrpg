@@ -4,9 +4,10 @@ class CommunsTools extends GameDatas {
 		super()
 		// communs to all class
 		// mouse 
+		this.communsListener = this.listenertools()
 		this.communsTools = this.communstools()
-		this.sheetTools = this.sheettools()
-		this.cheatTools = this.cheattools()
+		this.communsSheet = this.sheettools()
+		this.communsCheat = this.cheattools()
 	}
 	get_ParentNode = (mess) => {
 		let parentnode = false;
@@ -33,22 +34,33 @@ class CommunsTools extends GameDatas {
 			// to do
 		}
 	}
-	switch_Pause = () => {
-		this.isPause = !this.isPause
+	switch_Pause = (bool = false) => {
+		if (!bool === false) {
+			this.isPause = bool[0]
+		}
+		else {
+			this.isPause = !this.isPause
+		}
+		if (this.isPause) {
+			document.getElementById('pause').classList.add('active')
+		} else {
+			document.getElementById('pause').classList.remove('active')
+		}
+		console.log(this.isPause)
 	}
-	get_isPause() {
-		return this.isPause
-	}
+	// get_isPause() {
+	// 	return this.isPause
+	// }
 	set_EventListener() {
 		window.addEventListener('resize', this.resize, true)
 		// drag test for futur drag and drop stuff ?
 		// document.addEventListener('mousedown', () => { this.drag = false });
 		// document.addEventListener('mousemove', () => { this.drag = true });
 		// document.addEventListener('mouseup', () => console.log(this.drag ? 'draging' : 'clicking'));
-		document.getElementById('speedplus').addEventListener('click', () => { this.cheatTools.speed('plus') }, true)
-		document.getElementById('speedminus').addEventListener('click', () => { this.cheatTools.speed('minus') }, true)
-		document.getElementById('intervalplus').addEventListener('click', () => { this.cheatTools.interval('plus') }, true)
-		document.getElementById('intervalminus').addEventListener('click', () => { this.cheatTools.interval('minus') }, true)
+		document.getElementById('speedplus').addEventListener('click', () => { this.communsCheat.speed('plus') }, true)
+		document.getElementById('speedminus').addEventListener('click', () => { this.communsCheat.speed('minus') }, true)
+		document.getElementById('intervalplus').addEventListener('click', () => { this.communsCheat.interval('plus') }, true)
+		document.getElementById('intervalminus').addEventListener('click', () => { this.communsCheat.interval('minus') }, true)
 		// on click to move
 		document.addEventListener('click', this.GF.click_Ground, true)
 	}
@@ -69,6 +81,49 @@ class CommunsTools extends GameDatas {
 	}
 	add_ToMap = (div) => {
 		document.getElementById('ground').appendChild(div)
+	}
+	listenertools = () => {
+		return {
+			playerKeyboard: (eventKeyDown) => {
+				// stop auto move
+				this.GF.ground.reset_Destination()
+
+				let tmpMooving = false // needed to check if actived mooves
+				if (eventKeyDown === 'p') {
+					this.switch_Pause()
+				}
+				if (eventKeyDown === 'c') {
+					this.communsSheet.switch_Display()
+				}
+				// key 37 & 81
+				if (eventKeyDown === "ArrowLeft" || eventKeyDown === "q") {
+					this.PF.player.datas.pos.d = 180
+					tmpMooving = true
+				}
+				// key 37 & 81
+				if (eventKeyDown === "ArrowRight" || eventKeyDown === "d") {
+					this.PF.player.datas.pos.d = 0
+					tmpMooving = true
+				}
+				// key 38 & 90
+				if (eventKeyDown === "ArrowUp" || eventKeyDown === "z") {
+					this.PF.player.datas.pos.d = 270
+					tmpMooving = true
+				}
+				// key 40 & 83
+				if (eventKeyDown === "ArrowDown" || eventKeyDown === "s") {
+					this.PF.player.datas.pos.d = 90
+					tmpMooving = true
+				}
+
+				if (tmpMooving) {
+					let nextpos = this.communsTools.get_PosWithDegree(this.PF.player)
+					this.PF.player.datas.pos.x = nextpos.x
+					this.PF.player.datas.pos.y = nextpos.y
+					// console.log('CurPlayPos:', this.PF.player.datas.pos)
+				}
+			}
+		}
 	}
 	communstools = () => {
 		return {
@@ -109,30 +164,39 @@ class CommunsTools extends GameDatas {
 		return {
 			isSheetOpen: false,
 			switch_Display: () => {
-				this.sheetTools.isSheetOpen = !this.sheetTools.isSheetOpen;
-				this.sheetTools.isSheetOpen
-					? document.getElementById('sheet').classList.add('active')
-					: document.getElementById('sheet').classList.remove('active')
+				this.communsSheet.isSheetOpen = !this.communsSheet.isSheetOpen;
+				if (this.communsSheet.isSheetOpen) {
+					document.getElementById('sheet').classList.add('active')
+				} else {
+					document.getElementById('sheet').classList.remove('active')
+				}
+
+				this.switch_Pause([this.communsSheet.isSheetOpen])
+
+				console.log('pause:' + this.isPause)
+				console.log('isSheetOpen:' + this.communsSheet.isSheetOpen)
 			},
 			set_DivSheet: () => {
 				// stats
-				this.sheetTools.set_statsDivs()
+				this.communsSheet.set_statsDivs()
 			},
 			set_statsDivs: () => {
 				for (const [key, value] of Object.entries(this.PF.player.datas.stats)) {
 					// console.log(`${key}: ${value}`);
 					let statDiv = document.createElement('div')
-					statDiv.id = 'a-' + key
+					statDiv.id = 'range-' + key
 					statDiv.className = 'stat ' + key
-					statDiv.textContent = value
+					// statDiv.textContent = value
+					statDiv.style.width = 'calc( ( 100% / ' + this.communs.maxStat + ') * ' + value + ')'
+					// statDiv.style.height = 'auto'
 					this.PF.player.divstats['a-' + key] = statDiv
 
-					let capsule = this.sheetTools.set_DivStatCapsule(
+					let capsule = this.communsSheet.set_DivStatCapsule(
 						this.PF.player.divstats['a-' + key],
 						key,
 						value
 					)
-					this.sheetTools.add_toStats(
+					this.communsSheet.add_toStats(
 						'sheet-stats', // targetid
 						capsule
 					)
@@ -142,7 +206,7 @@ class CommunsTools extends GameDatas {
 			set_DivStatCapsule: (div, key = false, value = false) => {
 				let item = document.createElement('div')
 				// item.id = id ?? ''
-				item.className = 'sheet-stats-item'
+				item.className = 'sheet-stats-item shadow'
 				item.title = key
 				//--
 				let ico = document.createElement('div')
@@ -152,9 +216,23 @@ class CommunsTools extends GameDatas {
 				let jauge = document.createElement('div')
 				jauge.className = 'jauge'
 				//--
+				let rangevalue = document.createElement('div')
+				rangevalue.className = 'rangevalue'
+				rangevalue.id = 'value-' + key
+				rangevalue.setAttribute('stat', key)
+				rangevalue.textContent = value + '/16'
+				jauge.prepend(rangevalue)
+				//--
+				let plus = document.createElement('div')
+				plus.className = 'statplus'
+				plus.setAttribute('stat', key)
+				plus.textContent = '+'
+				//--
 				jauge.appendChild(div)
+				//--
 				item.appendChild(ico)
 				item.appendChild(jauge)
+				item.appendChild(plus)
 				return item
 			},
 			add_toStats: (targetid, div) => {

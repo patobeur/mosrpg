@@ -3,8 +3,7 @@
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  height: 90%;
-  width: 400px;
+  width: 50%;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -22,16 +21,16 @@
   border-radius: 0.5rem;
 }
 
+#sheet * {
+  line-height: unset;
+}
+
 #sheet.active {
   display: initial;
 }
 
 #sheet .sheet-part .sheet-title {
-  background-color: #00fc7e;
-}
-
-#sheet .sheet-part .sheet-stats {
-  background-color: rgba(0, 0, 0, 0.068);
+  text-align: center;
 }
 
 #sheet .sheet-part .sheet-stats .sheet-stats-item {
@@ -39,20 +38,24 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: calc(1rem + (1vw));
+  margin-top: 0.6vh;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto 4fr auto;
+      grid-template-columns: auto 4fr auto;
+  grid-gap: 0px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid black;
+  background-color: black;
 }
 
 #sheet .sheet-part .sheet-stats .sheet-stats-item .ico {
+  background-color: rgba(19, 19, 58, 0.719);
+  -ms-grid-column: 1;
+  grid-column: 1 / 1;
+  -ms-grid-row: 1;
+  grid-row: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -62,15 +65,10 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: calc(1rem + (1vw));
-  height: calc(1rem + (1vw));
-  font-size: calc(1rem + (0.2vw));
-  line-height: calc(1rem + (0.2vw));
-  padding: 0.1rem;
+  padding: 0 0.1rem;
 }
 
 #sheet .sheet-part .sheet-stats .sheet-stats-item .jauge {
-  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -80,10 +78,41 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background-color: rgba(44, 8, 8, 0.74);
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2 / 3;
+  -ms-grid-row: 1;
+  grid-row: 1;
 }
 
 #sheet .sheet-part .sheet-stats .sheet-stats-item .jauge .stat {
-  font-size: calc(1rem + (0.5vw));
-  line-height: calc(1rem + (0.5vw));
+  background-color: rgba(21, 255, 0, 0.534);
+  height: 100%;
+  left: 0px;
+}
+
+#sheet .sheet-part .sheet-stats .sheet-stats-item .jauge .rangevalue {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  color: white;
+}
+
+#sheet .sheet-part .sheet-stats .sheet-stats-item .statplus {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(255, 255, 255, 0.575);
+  -ms-grid-column: 4;
+  grid-column: 4 / 4;
+  -ms-grid-row: 1;
+  grid-row: 1;
+  padding: 0 0.5rem;
+  font-weight: 900;
 }
 /*# sourceMappingURL=player.css.map */

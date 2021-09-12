@@ -19,6 +19,10 @@
   font-size: calc(1rem + (0.5vw));
 }
 
+img {
+  max-width: 100%;
+}
+
 body {
   overflow: hidden;
   color: white;
@@ -37,5 +41,21 @@ body .remove {
 
 body .remove * {
   font-size: 1rem;
+}
+
+.shadow {
+  -webkit-box-shadow: 0px 0px 3px #181313;
+          box-shadow: 0px 0px 3px #181313;
+}
+
+#pause {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: none;
+}
+
+#pause.active {
+  display: initial;
 }
 /*# sourceMappingURL=base.css.map */
