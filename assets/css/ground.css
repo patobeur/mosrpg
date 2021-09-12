@@ -56,7 +56,7 @@
       -ms-flex-align: center;
           align-items: center;
   background-color: none;
-  text-shadow: 0px 0px 5px #181313;
+  text-shadow: 2px 0px 15px black;
   color: greenyellow;
 }
 
@@ -145,15 +145,6 @@
   color: white;
 }
 
-#game .beyond {
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.644);
-  border-radius: 50%;
-  pointer-events: none;
-  background-image: url(../img/danger.png);
-  background-size: 50%;
-}
-
 .mire {
   position: absolute;
   width: 4px;
@@ -173,5 +164,6 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  z-index: 9999;
 }
 /*# sourceMappingURL=ground.css.map */

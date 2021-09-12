@@ -23,12 +23,19 @@ img {
   max-width: 100%;
 }
 
+@font-face {
+  font-family: "quikhand";
+  src: url("../fonts/quikhand/Quikhand.ttf") format("truetype");
+}
+
 body {
   overflow: hidden;
   color: white;
   background-color: black;
   width: 100vw;
   height: 100vh;
+  font-family: quikhand;
+  letter-spacing: 0.2rem;
 }
 
 body .remove {

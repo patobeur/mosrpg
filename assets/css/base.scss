@@ -16,6 +16,11 @@
 img {
 	max-width: 100%;
 }
+
+@font-face {
+	font-family: "quikhand";
+	src: url("../fonts/quikhand/Quikhand.ttf") format("truetype");
+}
 body {
 	overflow: hidden;
 	color: rgb(255, 255, 255);
@@ -23,6 +28,8 @@ body {
 	background-color: black;
 	width: 100vw;
 	height: 100vh;
+	font-family: quikhand;
+	letter-spacing: 0.2rem;
 	.remove {
 		position: relative;
 		pointer-events: none;
