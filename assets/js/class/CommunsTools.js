@@ -178,8 +178,9 @@ class CommunsTools extends GameDatas {
 			},
 			set_DivSheet: () => {
 				// stats
-				this.communsSheet.set_statsDivs(this.PF.player.datas.character.stats, 'Statistics')
-				this.communsSheet.set_statsDivs(this.PF.player.datas.character.rules, 'Rules')
+				this.communsSheet.set_statsDivs(this.PF.player.datas.character.stats, 'stats')
+				this.communsSheet.set_statsDivs(this.PF.player.datas.character.rules, 'rules')
+				this.communsSheet.set_statsDivs(this.PF.player.datas.character.physics, 'physics')
 			},
 			set_statsDivs: (datas, cat) => {
 				// create tmp Div
@@ -194,7 +195,6 @@ class CommunsTools extends GameDatas {
 
 				fullDiv.appendChild(titleDiv)
 
-
 				for (const [key, value] of Object.entries(datas)) {
 					// console.log(`${key}: ${value}`);
 					// create tmp Div
@@ -202,17 +202,15 @@ class CommunsTools extends GameDatas {
 					statDiv.id = 'stat-' + key
 					statDiv.className = 'stat'
 					statDiv.style.height = '100%'
-					if (typeof value) {
-						console.log(typeof value)
-					}
-					statDiv.style.width = 'calc( ( 100% / ' + this.communs.maxstat + ') * ' + value.current + ')'
+					statDiv.style.width = 'calc( ( 100% / ' + value.max + ') * ' + value.current + ')'
 					// add to lists stats
 					this.PF.player.divstats['div' + key] = statDiv
 					// capsule it for front and css
 					let capsule = this.communsSheet.set_DivStatCapsule(
 						this.PF.player.divstats['div' + key],
 						key,
-						value
+						value,
+						cat
 					)
 
 					fullDiv.appendChild(capsule)
@@ -226,11 +224,12 @@ class CommunsTools extends GameDatas {
 					// add to dom
 					this.add_toStats(
 						'sheet-stats', // div target id
-						fullDiv
+						fullDiv,
+						cat
 					)
 				}
 			},
-			set_DivStatCapsule: (div, key = false, value = false) => {
+			set_DivStatCapsule: (div, key = false, value = false, cat) => {
 				let item = document.createElement('div')
 				// item.id = id ?? ''
 				item.className = 'sheet-stats-item shadow'
@@ -238,7 +237,7 @@ class CommunsTools extends GameDatas {
 				//--
 				let ico = document.createElement('div')
 				ico.className = 'ico'
-				ico.textContent = this.get_emoji('stats', key)
+				ico.textContent = this.get_emoji(cat, key)
 				//--
 				let jauge = document.createElement('div')
 				jauge.className = 'jauge'
@@ -262,6 +261,9 @@ class CommunsTools extends GameDatas {
 				item.appendChild(plus)
 				return item
 			},
+			set_RefreshStats: () => {
+				// console.log('1')
+			}
 		}
 	}
 	cheattools = () => {

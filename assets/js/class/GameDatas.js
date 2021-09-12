@@ -20,15 +20,25 @@ class GameDatas {
 	}
 	get_emoji = (cat, name) => {
 		return {
+			rules: {
+				hp: '❤️',
+				mana: '🌡️',
+				xp: '🎲',
+				lv: '💊',
+			},
+			physics: {
+				speed: '💨',
+				height: '📏',
+				weight: '⚖️',
+			},
 			stats: {
 				strength: '💪',
 				agility: '🏐',
 				karma: '⚗️',//🪄
 				intelect: '✔️',
 				dexterity: '🤏',//🖐️
-				wisdom: '🦄',//🎓🏳️🎲
+				wisdom: '🦄',//🎓🏳️
 				fortitude: '🍔',//🏈
-				speed: '💨',
 			},
 			skills: {
 				magics: '📜',//📚
@@ -44,9 +54,6 @@ class GameDatas {
 				water: '🌊',
 				cloud: '⛈️',
 				Sparkle: '✨',
-			},
-			rules: {
-				hp: '❤️',
 			}
 		}[cat][name]
 	}
@@ -90,6 +97,7 @@ class GameDatas {
 		}
 	}
 	// emojis
+	// 🪨
 	// get_emoji = () => {
 	// 	let emojis = {
 	// 		0: { ico: '⚔️', name: '' },

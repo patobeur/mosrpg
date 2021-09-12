@@ -20,7 +20,7 @@ class Ordinator extends CommunsTools {
 		// this.renderer = setInterval(10, this.render, ['true'], 50)
 
 		this.communsSheet.set_DivSheet()
-		// this.communsSheet.switch_Display()
+		this.communsSheet.switch_Display()
 
 		this.Start()
 
@@ -92,6 +92,7 @@ class Ordinator extends CommunsTools {
 				this.PF.player.refresh(this.GF.ground)
 				this.GF.ground.refresh()
 				// if new destination x y clicked
+				this.communsSheet.set_RefreshStats()
 				this.refresh_Console()
 				if (this.PF.player.datas.actions.movingToDestinationClick === true) {
 					this.GF.ground.move_ToPlayerDestination()

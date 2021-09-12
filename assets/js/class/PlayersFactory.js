@@ -40,8 +40,6 @@ class PlayersFactory extends CommunsTools {
 				},
 				clickrange: new Number('1030'),
 				scale: new Number('1'),
-				height: new Number('180'),
-				weight: new Number('180'),
 				character: {
 					stats: {
 						strength: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },// new Number('10'),
@@ -52,16 +50,16 @@ class PlayersFactory extends CommunsTools {
 						wisdom: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },
 						fortitude: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },
 					},
+					rules: {
+						hp: { current: new Number('100'), max: new Number('100') },
+						mana: { current: new Number('1'), max: new Number('100') },
+						xp: { current: new Number('1'), max: new Number('0') },
+						lv: { current: new Number('1'), max: new Number('0') },
+					},
 					physics: {
 						speed: { current: new Number('5'), max: new Number('10') },
 						height: { current: new Number('180'), max: new Number('240') },
 						weight: { current: new Number('80'), max: new Number('190') },
-					},
-					rules: {
-						hp: { current: new Number('100'), max: new Number('100') },
-						mana: { current: new Number('0'), max: new Number('100') },
-						xp: { current: new Number('0'), max: new Number('99999') },
-						lv: { current: new Number('0'), max: new Number('99999') },
 					},
 				},
 				destination: {
