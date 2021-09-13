@@ -202,7 +202,7 @@ class GameDatas {
 				size: { w: 128, h: 128, l: 1 },
 				classname: 'ground ground-2',
 				casesize: { w: 32, h: 32, l: 32 },
-				nbcase: { x: 30, y: 30, z: 1 }
+				nbcase: { x: 90, y: 90, z: 1 }
 			},
 		}
 	}
