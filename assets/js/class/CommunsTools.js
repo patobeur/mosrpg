@@ -23,8 +23,8 @@ class CommunsTools extends GameDatas {
 			if (
 				e.target.id === 'displaysheet'
 				|| (
-					(this.isSheetOpen && e.target.id == '')
-					|| (this.isSheetOpen && (e.target.id === 'ground'))
+					// (this.isSheetOpen && e.target.id == '')|| 
+					(this.isSheetOpen && (e.target.id === 'ground'))
 				)
 			) {
 				this.switch_Display()
