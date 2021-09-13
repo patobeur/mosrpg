@@ -11,6 +11,8 @@
 	-ms-user-select: none; /* IE10+/Edge */
 	user-select: none;
 	box-sizing: border-box;
+	font-family: quikhand;
+	letter-spacing: calc(0.2rem + (0.5vw / 5));
 	font-size: calc(1rem + (0.5vw));
 }
 img {
@@ -27,9 +29,9 @@ body {
 	background-color: black;
 	width: 100vw;
 	height: 100vh;
-	font-family: quikhand;
-	letter-spacing: 0.2rem;
 	.remove {
+		top: 0.5rem;
+		left: 0.5rem;
 		position: relative;
 		pointer-events: none;
 		width: max-content;

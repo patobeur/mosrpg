@@ -8,15 +8,17 @@
 	.github,
 	.codepen {
 		position: relative;
-		width: 24px;
-		height: 24px;
+		width: calc(24px + 1vw);
+		height: calc(24px + 1vw);
 		min-width: 24px;
 		min-height: 24px;
 		background-size: cover;
+		// background-size: 20px;
 		border-radius: 50%;
-		outline: 1px solid black;
+		border: 2px solid none;
 		&:hover {
 			filter: invert(1);
+			border: 2px solid black;
 		}
 		a {
 			position: absolute;

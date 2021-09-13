@@ -16,6 +16,8 @@
   user-select: none;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: quikhand;
+  letter-spacing: calc(0.2rem + (0.5vw / 5));
   font-size: calc(1rem + (0.5vw));
 }
 
@@ -34,11 +36,11 @@ body {
   background-color: black;
   width: 100vw;
   height: 100vh;
-  font-family: quikhand;
-  letter-spacing: 0.2rem;
 }
 
 body .remove {
+  top: 0.5rem;
+  left: 0.5rem;
   position: relative;
   pointer-events: none;
   width: -webkit-max-content;

@@ -14,19 +14,20 @@
 #info .github,
 #info .codepen {
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: calc(24px + 1vw);
+  height: calc(24px + 1vw);
   min-width: 24px;
   min-height: 24px;
   background-size: cover;
   border-radius: 50%;
-  outline: 1px solid black;
+  border: 2px solid none;
 }
 
 #info .github:hover,
 #info .codepen:hover {
   -webkit-filter: invert(1);
           filter: invert(1);
+  border: 2px solid black;
 }
 
 #info .github a,

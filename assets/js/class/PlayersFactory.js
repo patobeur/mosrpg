@@ -42,13 +42,13 @@ class PlayersFactory extends CommunsTools {
 				scale: new Number('1'),
 				character: {
 					stats: {
-						strength: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },// new Number('10'),
-						agility: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },
-						karma: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },
-						intelect: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },
-						dexterity: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },
-						wisdom: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },
-						fortitude: { current: this.communsTools.get_aleaEntreBornes(10, this.communs.maxstat), max: this.communs.maxstat },
+						strength: { current: this.communsTools.get_aleaEntreBornes(10, this.gamedatas.maxstat), max: this.gamedatas.maxstat },// new Number('10'),
+						agility: { current: this.communsTools.get_aleaEntreBornes(10, this.gamedatas.maxstat), max: this.gamedatas.maxstat },
+						karma: { current: this.communsTools.get_aleaEntreBornes(10, this.gamedatas.maxstat), max: this.gamedatas.maxstat },
+						intelect: { current: this.communsTools.get_aleaEntreBornes(10, this.gamedatas.maxstat), max: this.gamedatas.maxstat },
+						dexterity: { current: this.communsTools.get_aleaEntreBornes(10, this.gamedatas.maxstat), max: this.gamedatas.maxstat },
+						wisdom: { current: this.communsTools.get_aleaEntreBornes(10, this.gamedatas.maxstat), max: this.gamedatas.maxstat },
+						fortitude: { current: this.communsTools.get_aleaEntreBornes(10, this.gamedatas.maxstat), max: this.gamedatas.maxstat },
 					},
 					rules: {
 						hp: { current: new Number('100'), max: new Number('100') },
@@ -61,6 +61,21 @@ class PlayersFactory extends CommunsTools {
 						height: { current: new Number('180'), max: new Number('240') },
 						weight: { current: new Number('80'), max: new Number('190') },
 					},
+					skills: {
+						magic: { current: new Number('0'), max: new Number('1') },
+						faith: { current: new Number('0'), max: new Number('1') },
+						guarding: { current: new Number('0'), max: new Number('1') },
+						long: { current: new Number('0'), max: new Number('1') },
+						medium: { current: new Number('0'), max: new Number('1') },
+						short: { current: new Number('0'), max: new Number('1') },
+						self: { current: new Number('0'), max: new Number('1') },
+						wtf: { current: new Number('0'), max: new Number('1') },
+					},
+					skins: {
+						race: { current: new Number('0'), max: new Number(this.raceList.length - 1) },
+						gender: { current: new Number('0'), max: new Number(this.genderList.length - 1) },
+						skin: { current: new Number('0'), max: new Number(this.skinList.length - 1) },
+					}
 				},
 				destination: {
 					x: 64,
@@ -83,12 +98,6 @@ class PlayersFactory extends CommunsTools {
 					cursed: { active: false, currentdelay: new Number('0'), maxdelay: new Number('100') },
 					petrifyed: { active: false, currentdelay: new Number('0'), maxdelay: new Number('100') },
 					undead: { active: false, currentdelay: new Number('0'), maxdelay: new Number('100') },
-				},
-				skills: {
-					magics: false,
-					weapons: false,
-					distances: false,
-					wtfs: false
 				},
 			},
 			// get_DivSheet: () => {

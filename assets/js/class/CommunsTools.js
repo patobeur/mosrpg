@@ -2,54 +2,28 @@
 class CommunsTools extends GameDatas {
 	constructor() {
 		super()
-		// communs to all class
-		// mouse 
 		this.communsListener = this.listenertools()
 		this.communsTools = this.communstools()
 		this.communsSheet = this.sheettools()
 		this.communsCheat = this.cheattools()
 	}
-	get_ParentNode = (mess) => {
-		let parentnode = false;
-		if (parentnode = this.GF.ground.divGame.parentNode) {
-			this.communs.parentnode = {
-				w: parentnode.clientWidth,
-				h: parentnode.clientHeight,
-				nodename: parentnode.nodeName,
-				id: parentnode.id.length > 0 ? parentnode.id : false,
-				class: parentnode.className.length > 0 ? parentnode.className.length : false,
-				object: parentnode,
-				fullpage: false
-			}
-			// console.log('parentNode detection of game div')
-			if (this.communs.parentnode.nodename === "BODY") {
-				this.communs.parentnode.fullpage = true
-			}
-			else {
-				// console.log('Parent = ' + this.communs.parentnode.nodename)
-			}
-			// console.log(this.communs.parentnode)
-		}
-		else {
-			// to do
-		}
-	}
 	switch_Pause = (bool = false) => {
-		if (!bool === false) {
-			this.isPause = bool[0]
+		if (
+			// sheet is Open and requeste is to Pause game
+			this.communsSheet.isSheetOpen === true && (bool && bool[0] === true)
+			// sheet is Close and requeste is to UnPause game
+			|| this.communsSheet.isSheetOpen === false && (bool && bool[0] === false)
+			// sheet is Close and switch Pause is requested
+			|| this.communsSheet.isSheetOpen === false && bool === false
+		) {
+			this.isPause = (bool)
+				? bool[0]
+				: !this.isPause
 		}
-		else {
-			this.isPause = !this.isPause
-		}
-		if (this.isPause) {
-			document.getElementById('pause').classList.add('active')
-		} else {
-			document.getElementById('pause').classList.remove('active')
-		}
+		(this.isPause)
+			? document.getElementById('pause').classList.add('active')
+			: document.getElementById('pause').classList.remove('active')
 	}
-	// get_isPause() {
-	// 	return this.isPause
-	// }
 	set_EventListener() {
 		window.addEventListener('resize', this.resize, true)
 		// drag test for futur drag and drop stuff ?
@@ -64,7 +38,7 @@ class CommunsTools extends GameDatas {
 		document.addEventListener('click', this.GF.click_Ground, true)
 	}
 	refresh_Console() {
-		document.getElementById('speedvalue').textContent = this.PF.player.datas.character.height
+		document.getElementById('speedvalue').textContent = this.PF.player.datas.character.physics.speed.current
 		document.getElementById('intervalvalue').textContent = this.renderInterval
 	}
 	resize = () => {
@@ -129,6 +103,31 @@ class CommunsTools extends GameDatas {
 	}
 	communstools = () => {
 		return {
+			get_ParentNode: (mess) => {
+				let parentnode = false;
+				if (parentnode = this.GF.ground.divGame.parentNode) {
+					this.gamedatas.parentnode = {
+						w: parentnode.clientWidth,
+						h: parentnode.clientHeight,
+						nodename: parentnode.nodeName,
+						id: parentnode.id.length > 0 ? parentnode.id : false,
+						class: parentnode.className.length > 0 ? parentnode.className.length : false,
+						object: parentnode,
+						fullpage: false
+					}
+					// console.log('parentNode detection of game div')
+					if (this.gamedatas.parentnode.nodename === "BODY") {
+						this.gamedatas.parentnode.fullpage = true
+					}
+					else {
+						// console.log('Parent = ' + this.gamedatas.parentnode.nodename)
+					}
+					// console.log(this.gamedatas.parentnode)
+				}
+				else {
+					// to do
+				}
+			},
 			set_BugAndPause: (string = false) => {
 				this.isBug = true
 				this.isPause = true
@@ -167,22 +166,149 @@ class CommunsTools extends GameDatas {
 			isSheetOpen: false,
 			switch_Display: () => {
 				this.communsSheet.isSheetOpen = !this.communsSheet.isSheetOpen;
-				// if (this.communsSheet.isSheetOpen) {
-				// 	document.getElementById('sheet').classList.add('active')
-				// } else {
-				// 	document.getElementById('sheet').classList.remove('active')
-				// }
-				this.communsSheet.isSheetOpen ? document.getElementById('sheet').classList.add('active') : document.getElementById('sheet').classList.remove('active')
-
+				this.communsSheet.isSheetOpen
+					? document.getElementById('sheet').classList.add('active')
+					: document.getElementById('sheet').classList.remove('active')
+				// switch pause with isSheetOpen case true/false
 				this.switch_Pause([this.communsSheet.isSheetOpen])
 			},
 			set_DivSheet: () => {
 				// stats
-				this.communsSheet.set_statsDivs(this.PF.player.datas.character.stats, 'stats')
-				this.communsSheet.set_statsDivs(this.PF.player.datas.character.rules, 'rules')
-				this.communsSheet.set_statsDivs(this.PF.player.datas.character.physics, 'physics')
+				this.communsSheet.set_avatarDivs(this.PF.player.datas.character, 'avatar', 'You ?')
+				this.communsSheet.set_skinChoiceDivs(this.PF.player.datas.character, 'skins', 'skin\'s stats')
+				this.communsSheet.set_statsDivs(this.PF.player.datas.character.stats, 'stats', 'Yo\'s stats')
+				this.communsSheet.set_statsDivs(this.PF.player.datas.character.rules, 'rules', 'rule\'s stats')
+				this.communsSheet.set_statsDivs(this.PF.player.datas.character.physics, 'physics', 'physic\'s stats')
+				this.communsSheet.set_statsDivs(this.PF.player.datas.character.skills, 'skills', 'skill\'s stats')
 			},
-			set_statsDivs: (datas, cat) => {
+			refresh_SheetSkins: () => {
+				for (const [key, value] of Object.entries(this.PF.player.datas.character.skins)) {
+					this.PF.player.divstats['divSkins' + key + 'Range'].style.left = (parseInt(100 / (this.PF.player.datas.character.skins[key].max + 1) * this.PF.player.datas.character.skins[key].current)) + '%'
+					this.PF.player.divstats['divSkins' + key + 'Stat'].textContent = '' + this[key + 'List'][this.PF.player.datas.character.skins[key].current]
+				}
+				//refresh EMOJI
+				// let emoji = this.get_EmojiRaceArray()
+				// [this.raceList[this.PF.player.datas.character.skins.race.current]]
+				// [this.genderList[this.PF.player.datas.character.skins.gender.current]]
+				// [this.skinList[this.PF.player.datas.character.skins.skin.current]].emoji
+				// this.PF.player.divstats['divAvatar'].textContent = emoji
+				this.PF.player.divstats['divAvatar'].textContent = this.get_EmojiRace(
+					this.PF.player.datas.character.skins.race.current,
+					this.PF.player.datas.character.skins.gender.current,
+					this.PF.player.datas.character.skins.skin.current)
+			},
+			lowerStat: (key, value) => {
+				if (value.current > 0) { value.current -= 1 }
+				else { value.current = value.max }
+				// this.PF.player.datas.character.skins[key].current = value.current
+				// console.log('lowerStat:' + key + ' to ' + this.PF.player.datas.character.skins[key].current)
+				this.communsSheet.refresh_SheetSkins()
+			},
+			raiseStat: (key, value) => {
+				if (value.current < value.max) { value.current += 1 }
+				else { value.current = new Number('0') }
+				// this.PF.player.datas.character.skins[key].current = value.current
+				// console.log('raiseStat:' + key + ' to ' + this.PF.player.datas.character.skins[key].current)
+				this.communsSheet.refresh_SheetSkins()
+			},
+			set_avatarDivs: (datas, cat, title) => {
+				// create tmp Div
+				let fullDiv = document.createElement('div')
+				fullDiv.id = 'part-' + cat
+				fullDiv.className = 'sheet-part part-' + cat
+
+				// let titleDiv = document.createElement('div')
+				// titleDiv.className = 'sheet-title'
+				// titleDiv.textContent = title
+				// fullDiv.appendChild(titleDiv)
+
+				let playernameDiv = document.createElement('div')
+				playernameDiv.className = 'sheet-name'
+
+				let playernameInput = document.createElement('input')
+				let gold = !localStorage.getItem('mosrpgName') ? ' golden' : ''
+				playernameInput.className = 'sheet-name-input' + gold
+				playernameInput.value = 'You !!!'
+				playernameDiv.appendChild(playernameInput)
+				fullDiv.appendChild(playernameDiv)
+
+				let avatarDiv = document.createElement('div')
+				avatarDiv.className = 'sheet-avatar'
+				avatarDiv.textContent = this.get_EmojiRace(
+					this.PF.player.datas.character.skins.race.current,
+					this.PF.player.datas.character.skins.gender.current,
+					this.PF.player.datas.character.skins.skin.current)
+				fullDiv.appendChild(avatarDiv)
+
+				this.PF.player.divstats['divAvatar'] = avatarDiv
+				// add to dom
+				this.add_toStats(
+					'sheet-stats', // div target id
+					fullDiv,
+					cat
+				)
+			},
+			set_skinChoiceDivs: (datas, cat, title) => {
+				// create tmp Div
+				let fullDiv = document.createElement('div')
+				fullDiv.id = 'part-' + cat
+				fullDiv.className = 'sheet-part part-' + cat
+				let titleDiv = document.createElement('div')
+				titleDiv.className = 'sheet-title'
+				titleDiv.textContent = title
+
+				fullDiv.appendChild(titleDiv)
+				for (const [key, value] of Object.entries(datas.skins)) {
+					let skindiv = document.createElement('div')
+					skindiv.className = 'sheet-skins-item'
+					//--
+					let minus = document.createElement('div')
+					minus.className = 'statminus'
+					minus.setAttribute('stat', key)
+					minus.textContent = '-'
+					minus.addEventListener('click', (e) => {
+						this.communsSheet.lowerStat(key, value)
+					}, true)
+					skindiv.appendChild(minus)
+					//--
+					let skinjauge = document.createElement('div')
+					skinjauge.className = 'jauge'
+					skindiv.appendChild(skinjauge)
+					//--
+					let skinrange = document.createElement('div')
+					skinrange.className = 'range'
+					// skinrange.style.width = (parseInt(100 / this.PF.player.datas.character.skins[key].max) * this.PF.player.datas.character.skins[key].current) + '%'
+					skinrange.style.width = (parseInt(100 / (this.PF.player.datas.character.skins[key].max + 1))) + '%'
+					skinrange.style.left = (parseInt(100 / (this.PF.player.datas.character.skins[key].max + 1) * this.PF.player.datas.character.skins[key].current)) + '%'
+					this.PF.player.divstats['divSkins' + key + 'Range'] = skinrange
+					skinjauge.appendChild(this.PF.player.divstats['divSkins' + key + 'Range'])
+					//--
+					let skinstat = document.createElement('div')
+					skinstat.className = 'stat'
+					skinstat.textContent = key + ':' + this[key + 'List'][value.current]
+					this.PF.player.divstats['divSkins' + key + 'Stat'] = skinstat
+					skinjauge.appendChild(this.PF.player.divstats['divSkins' + key + 'Stat'])
+					//--
+					//--
+					let plus = document.createElement('div')
+					plus.className = 'statplus'
+					plus.textContent = '+'
+					plus.addEventListener('click', (e) => {
+						this.communsSheet.raiseStat(key, value)
+					}, true)
+					skindiv.appendChild(plus)
+					//--
+					fullDiv.appendChild(skindiv)
+				}
+
+				// add to dom
+				this.add_toStats(
+					'sheet-stats', // div target id
+					fullDiv,
+					cat
+				)
+			},
+			set_statsDivs: (datas, cat, title) => {
 				// create tmp Div
 				let fullDiv = document.createElement('div')
 				fullDiv.id = 'part-' + cat
@@ -191,7 +317,7 @@ class CommunsTools extends GameDatas {
 
 				let titleDiv = document.createElement('div')
 				titleDiv.className = 'sheet-title'
-				titleDiv.textContent = cat
+				titleDiv.textContent = title
 
 				fullDiv.appendChild(titleDiv)
 
@@ -201,25 +327,18 @@ class CommunsTools extends GameDatas {
 					let statDiv = document.createElement('div')
 					statDiv.id = 'stat-' + key
 					statDiv.className = 'stat'
-					statDiv.style.height = '100%'
-					statDiv.style.width = 'calc( ( 100% / ' + value.max + ') * ' + value.current + ')'
+					statDiv.textContent = key + ':' + value.current + '/' + value.max
 					// add to lists stats
-					this.PF.player.divstats['div' + key] = statDiv
+					this.PF.player.divstats['divStats' + key + 'Stat'] = statDiv
 					// capsule it for front and css
 					let capsule = this.communsSheet.set_DivStatCapsule(
-						this.PF.player.divstats['div' + key],
+						this.PF.player.divstats['divStats' + key + 'Stat'],
 						key,
 						value,
 						cat
 					)
 
 					fullDiv.appendChild(capsule)
-					// // add to dom
-					// this.add_toStats(
-					// 	'sheet-stats', // div target id
-					// 	titleDiv
-					// )
-
 
 					// add to dom
 					this.add_toStats(
@@ -237,7 +356,7 @@ class CommunsTools extends GameDatas {
 				//--
 				let ico = document.createElement('div')
 				ico.className = 'ico'
-				ico.textContent = this.get_emoji(cat, key)
+				ico.textContent = this.get_emojiStat(cat, key)
 				//--
 				let jauge = document.createElement('div')
 				jauge.className = 'jauge'
@@ -245,13 +364,12 @@ class CommunsTools extends GameDatas {
 				let rangevalue = document.createElement('div')
 				rangevalue.className = 'range'
 				rangevalue.id = 'range-' + key
-				rangevalue.setAttribute('stat', key)
-				rangevalue.textContent = value.current + '/' + value.max
+				rangevalue.style.height = '100%'
+				rangevalue.style.width = 'calc( ( 100% / ' + value.max + ') * ' + value.current + ')'
 				jauge.prepend(rangevalue)
 				//--
 				let plus = document.createElement('div')
 				plus.className = 'statplus'
-				plus.setAttribute('stat', key)
 				plus.textContent = '+'
 				//--
 				jauge.appendChild(div)
@@ -267,17 +385,20 @@ class CommunsTools extends GameDatas {
 		}
 	}
 	cheattools = () => {
+		// CHEATS
 		return {
 			isCheat: true,
 			speed: (data) => {
-				this.Wait()
-				if (data === 'plus' && this.PF.player.datas.character.physics.speed.current < this.PF.player.datas.character.speed.max) {
-					this.PF.player.datas.character.physics.speed.current += 1
+				if (!this.isPause) {
+					this.Wait()
+					if (data === 'plus' && this.PF.player.datas.character.physics.speed.current < this.PF.player.datas.character.physics.speed.max) {
+						this.PF.player.datas.character.physics.speed.current += 1
+					}
+					if (data === 'minus' && this.PF.player.datas.character.physics.speed.current > -5) {
+						this.PF.player.datas.character.physics.speed.current -= 1
+					}
+					this.Play()
 				}
-				if (data === 'minus' && this.PF.player.datas.character.physics.speed.current > -5) {
-					this.PF.player.datas.character.physics.speed.current -= 1
-				}
-				this.Play()
 			},
 			interval: (data) => {
 				this.Wait()

@@ -26,15 +26,15 @@ class GroundsFactory extends CommunsTools {
 			divDest: Object,
 			refresh: () => {
 				if (this.ground) {
-					this.ground.datas.pos.x = 0 - this.player.datas.pos.x + (this.communs.gamesize.w / 2)
-					this.ground.datas.pos.y = 0 - this.player.datas.pos.y + (this.communs.gamesize.h / 2)
+					this.ground.datas.pos.x = 0 - this.player.datas.pos.x + (this.gamedatas.gamesize.w / 2)
+					this.ground.datas.pos.y = 0 - this.player.datas.pos.y + (this.gamedatas.gamesize.h / 2)
 					this.ground.div.style.left = this.ground.datas.pos.x + this.px
 					this.ground.div.style.top = this.ground.datas.pos.y + this.px
 				}
 			},
 			resize_Ground: () => {
-				this.ground.datas.size.w = (this.ground.datas.nbcase.x * this.ground.datas.casesize.w)// * this.communs.ratio)
-				this.ground.datas.size.h = (this.ground.datas.nbcase.y * this.ground.datas.casesize.h)// * this.communs.ratio)
+				this.ground.datas.size.w = (this.ground.datas.nbcase.x * this.ground.datas.casesize.w)// * this.gamedatas.ratio)
+				this.ground.datas.size.h = (this.ground.datas.nbcase.y * this.ground.datas.casesize.h)// * this.gamedatas.ratio)
 			},
 			set_GroundDatas: () => {
 				let grounds = this.get_ground()
@@ -56,8 +56,8 @@ class GroundsFactory extends CommunsTools {
 				this.ground.divGame = document.createElement('div')
 				this.ground.divGame.id = 'game'
 				this.ground.divGame.className = 'game'
-				this.ground.divGame.style.width = this.communs.gamesize.w + this.px
-				this.ground.divGame.style.height = this.communs.gamesize.h + this.px
+				this.ground.divGame.style.width = this.gamedatas.gamesize.w + this.px
+				this.ground.divGame.style.height = this.gamedatas.gamesize.h + this.px
 			},
 			get_DivElem: () => {
 				if (this.ground.datas) {
@@ -68,8 +68,8 @@ class GroundsFactory extends CommunsTools {
 					//--
 					groundDiv.style.width = this.ground.datas.size.w + this.px
 					groundDiv.style.height = this.ground.datas.size.h + this.px
-					groundDiv.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - (this.communs.casesize / 2)) + this.px
-					groundDiv.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - (this.communs.casesize / 2)) + this.px
+					groundDiv.style.left = parseInt((window.innerWidth / 2) - (this.player.datas.pos.x) - (this.gamedatas.casesize / 2)) + this.px
+					groundDiv.style.top = parseInt((window.innerHeight / 2) - (this.player.datas.pos.y) - (this.gamedatas.casesize / 2)) + this.px
 
 					let divdest = document.createElement('div')
 					divdest.style.position = 'absolute'

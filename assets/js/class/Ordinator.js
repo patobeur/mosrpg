@@ -8,19 +8,14 @@ class Ordinator extends CommunsTools {
 
 		this.add_ToGame(this.PF.player.div)
 		this.PF.player.refresh()
-
-		this.communs.parentnode = this.get_ParentNode('this is a test')
-
+		this.gamedatas.parentnode = this.communsTools.get_ParentNode('this is a test')
 		this.render = this.renderManager()
-		this.rendertics = 0
-		this.renderInterval = 30 // render speed 1ms * 50
-		this.gameRender = false
 		this.set_EventListener()
 		this.set_Onkeydown()
 		// this.renderer = setInterval(10, this.render, ['true'], 50)
 
 		this.communsSheet.set_DivSheet()
-		this.communsSheet.switch_Display()
+		// this.communsSheet.switch_Display()
 
 		this.Start()
 
