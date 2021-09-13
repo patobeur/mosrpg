@@ -6,6 +6,8 @@ class GameDatas {
 		this.isBug = false
 		this.isPause = false
 		this.isWait = false
+		this.isSheetOpen = false
+		this.fromGameDatas = 'it work !!!'
 		// groundsfactory
 		this.px = 'px';
 		this.pc = '%';

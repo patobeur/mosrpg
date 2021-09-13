@@ -44,7 +44,7 @@
   position: absolute;
   width: 1px;
   height: 1px;
-  font-size: 2rem;
+  font-size: calc(2rem + (0.5vw));
   line-height: 2rem;
   display: -webkit-box;
   display: -ms-flexbox;

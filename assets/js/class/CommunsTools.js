@@ -2,27 +2,11 @@
 class CommunsTools extends GameDatas {
 	constructor() {
 		super()
+
 		this.communsListener = this.listenertools()
 		this.communsTools = this.communstools()
 		this.communsSheet = this.sheettools()
 		this.communsCheat = this.cheattools()
-	}
-	switch_Pause = (bool = false) => {
-		if (
-			// sheet is Open and requeste is to Pause game
-			this.communsSheet.isSheetOpen === true && (bool && bool[0] === true)
-			// sheet is Close and requeste is to UnPause game
-			|| this.communsSheet.isSheetOpen === false && (bool && bool[0] === false)
-			// sheet is Close and switch Pause is requested
-			|| this.communsSheet.isSheetOpen === false && bool === false
-		) {
-			this.isPause = (bool)
-				? bool[0]
-				: !this.isPause
-		}
-		(this.isPause)
-			? document.getElementById('pause').classList.add('active')
-			: document.getElementById('pause').classList.remove('active')
 	}
 	set_EventListener() {
 		window.addEventListener('resize', this.resize, true)
@@ -35,7 +19,12 @@ class CommunsTools extends GameDatas {
 		document.getElementById('intervalplus').addEventListener('click', () => { this.communsCheat.interval('plus') }, true)
 		document.getElementById('intervalminus').addEventListener('click', () => { this.communsCheat.interval('minus') }, true)
 		// on click to move
-		document.addEventListener('click', this.GF.click_Ground, true)
+		document.addEventListener('click', (e) => {
+			if (e.target.id === '' || (e.target.id === 'ground' && this.isSheetOpen)) {
+				this.switch_Display()
+			}
+			this.GF.click_Ground(e)
+		}, true)
 	}
 	refresh_Console() {
 		document.getElementById('speedvalue').textContent = this.PF.player.datas.character.physics.speed.current
@@ -74,7 +63,7 @@ class CommunsTools extends GameDatas {
 					this.switch_Pause()
 				}
 				if (eventKeyDown === 'c') {
-					this.communsSheet.switch_Display()
+					this.switch_Display()
 				}
 				// key 37 & 81
 				if (eventKeyDown === "ArrowLeft" || eventKeyDown === "q") {
@@ -167,32 +156,48 @@ class CommunsTools extends GameDatas {
 			}
 		}
 	}
+	switch_Display = () => {
+		this.isSheetOpen = this.isSheetOpen === false ? true : false;
+		this.isSheetOpen
+			? document.getElementById('sheet').classList.add('active')
+			: document.getElementById('sheet').classList.remove('active')
+		// switch pause with isSheetOpen case true/false
+		this.switch_Pause([this.isSheetOpen])
+	}
+	switch_Pause = (bool = false) => {
+		if (
+			// sheet is Open and requeste is to Pause game
+			this.isSheetOpen === true && (bool && bool[0] === true)
+			// sheet is Close and requeste is to UnPause game
+			|| this.isSheetOpen === false && (bool && bool[0] === false)
+			// sheet is Close and switch Pause is requested
+			|| this.isSheetOpen === false && bool === false
+		) {
+			this.isPause = (bool)
+				? bool[0]
+				: !this.isPause
+		}
+		(this.isPause)
+			? document.getElementById('pause').classList.add('active')
+			: document.getElementById('pause').classList.remove('active')
+	}
 	sheettools = () => {
 		return {
-			isSheetOpen: false,
 			add_button: () => {
 				let butttons = document.createElement('div')
 				butttons.id = 'displayparts' // key c
 
 				let buttton = document.createElement('div')
-				buttton.id = 'displaydheet' // key c
+				buttton.id = 'displaysheet' // key c
 				let butttonIn = document.createElement('div')
-				butttonIn.textContent = 'c'
+				butttonIn.textContent = '📜'
 				buttton.appendChild(butttonIn)
-				buttton.addEventListener('click', this.communsSheet.switch_Display, true)
+				buttton.addEventListener('click', this.switch_Display, true)
 				// -- 
 
 				butttons.appendChild(buttton)
 				this.add_ToDom(butttons, true)
 
-			},
-			switch_Display: () => {
-				this.communsSheet.isSheetOpen = !this.communsSheet.isSheetOpen;
-				this.communsSheet.isSheetOpen
-					? document.getElementById('sheet').classList.add('active')
-					: document.getElementById('sheet').classList.remove('active')
-				// switch pause with isSheetOpen case true/false
-				this.switch_Pause([this.communsSheet.isSheetOpen])
 			},
 			set_DivSheet: () => {
 				// stats
@@ -261,6 +266,7 @@ class CommunsTools extends GameDatas {
 					let playernameInput = document.createElement('input')
 					playernameInput.className = 'sheet-name-input golden'
 					playernameInput.value = mosrpgName
+					playernameInput.size = '12'
 					playernameInput.addEventListener('change', (e) => {
 						// CLEAN THIS RIGHT NOW
 						let newvalue = e.target.value

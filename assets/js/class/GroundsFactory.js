@@ -162,12 +162,14 @@ class GroundsFactory extends CommunsTools {
 	click_Ground = (e) => {
 		// to do 
 		// fonction and Set good dest pos with the translated coords if out ground clicked
-		if (e.target.id === 'ground') {
-			// if display on 
-			if (this.sheettools.isSheetOpen) {
-				this.sheettools.switch_Display()
-			}
-			console.log(e.target)
+		if (e.target.id === '' || e.target.id === 'ground') {
+			// // if display on 
+			// console.log('click_Ground this.isSheetOpen:' + this.isSheetOpen)
+			// console.log('fromGameDatas:' + this.fromGameDatas)
+			// if (this.isSheetOpen) {
+			// 	console.log(e.target)
+			// 	this.switch_Display()
+			// }
 			// CLICK TO RUN
 			// reset last arrived actions
 			this.ground.reset_Destination(e)

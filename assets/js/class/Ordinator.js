@@ -16,7 +16,7 @@ class Ordinator extends CommunsTools {
 
 		this.communsSheet.set_DivSheet()
 		this.communsSheet.add_button()
-		// this.communsSheet.switch_Display()
+		// this.switch_Display()
 
 		this.Start()
 
@@ -51,7 +51,7 @@ class Ordinator extends CommunsTools {
 			this.switch_Pause(false)
 		}
 		if (eventKeyDown === 'c') {
-			this.communsSheet.switch_Display()
+			this.switch_Display()
 		}
 		// key 37 & 81
 		if (eventKeyDown === "ArrowLeft" || eventKeyDown === "q") {

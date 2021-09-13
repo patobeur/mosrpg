@@ -13,7 +13,6 @@
 	box-sizing: border-box;
 	font-family: quikhand;
 	letter-spacing: calc(0.2rem + (0.5vw / 5));
-	font-size: calc(1rem + (0.5vw));
 }
 img {
 	max-width: 100%;
@@ -36,7 +35,7 @@ body {
 		pointer-events: none;
 		width: max-content;
 		* {
-			font-size: 1rem;
+			font-size: calc(1rem + (0.5vw));
 		}
 	}
 }
@@ -48,6 +47,7 @@ body {
 	top: 0.5rem;
 	right: 0.5rem;
 	display: none;
+	font-size: calc(1rem + (0.5vw));
 	&.active {
 		display: initial;
 	}
