@@ -20,10 +20,18 @@ class CommunsTools extends GameDatas {
 		document.getElementById('intervalminus').addEventListener('click', () => { this.communsCheat.interval('minus') }, true)
 		// on click to move
 		document.addEventListener('click', (e) => {
-			if (e.target.id === '' || (e.target.id === 'ground' && this.isSheetOpen)) {
+			if (
+				e.target.id === 'displaysheet'
+				|| (
+					(this.isSheetOpen && e.target.id == '')
+					|| (this.isSheetOpen && (e.target.id === 'ground'))
+				)
+			) {
 				this.switch_Display()
 			}
-			this.GF.click_Ground(e)
+			if ((e.target.id === 'ground' && !this.isSheetOpen)) {
+				this.GF.click_Ground(e)
+			}
 		}, true)
 	}
 	refresh_Console() {
