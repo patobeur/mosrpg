@@ -46,8 +46,14 @@ class CommunsTools extends GameDatas {
 		this.PF.player.refresh(this.GF.ground)
 		this.GF.ground.refresh()
 	}
-	add_ToDom = (div) => {
-		document.body.prepend(div)
+	add_ToDom = (div, append = false) => {
+		if (append) {
+			document.body.appendChild(div)
+		}
+		else {
+			document.body.prepend(div)
+
+		}
 	}
 	add_ToGame = (div) => {
 		document.getElementById('game').appendChild(div)
@@ -164,6 +170,22 @@ class CommunsTools extends GameDatas {
 	sheettools = () => {
 		return {
 			isSheetOpen: false,
+			add_button: () => {
+				let butttons = document.createElement('div')
+				butttons.id = 'displayparts' // key c
+
+				let buttton = document.createElement('div')
+				buttton.id = 'displaydheet' // key c
+				let butttonIn = document.createElement('div')
+				butttonIn.textContent = 'c'
+				buttton.appendChild(butttonIn)
+				buttton.addEventListener('click', this.communsSheet.switch_Display, true)
+				// -- 
+
+				butttons.appendChild(buttton)
+				this.add_ToDom(butttons, true)
+
+			},
 			switch_Display: () => {
 				this.communsSheet.isSheetOpen = !this.communsSheet.isSheetOpen;
 				this.communsSheet.isSheetOpen
@@ -223,13 +245,40 @@ class CommunsTools extends GameDatas {
 				// fullDiv.appendChild(titleDiv)
 
 				let playernameDiv = document.createElement('div')
-				playernameDiv.className = 'sheet-name'
 
-				let playernameInput = document.createElement('input')
-				let gold = !localStorage.getItem('mosrpgName') ? ' golden' : ''
-				playernameInput.className = 'sheet-name-input' + gold
-				playernameInput.value = 'You !!!'
-				playernameDiv.appendChild(playernameInput)
+				let mosrpgName = localStorage.getItem('mosrpgName')
+				let golden = ''
+				if (mosrpgName) {
+					playernameDiv.className = 'sheet-name'
+					let Div = document.createElement('div')
+					Div.className = 'sheet-name-title'
+					Div.textContent = mosrpgName
+					playernameDiv.appendChild(Div)
+				}
+				else {
+					playernameDiv.className = 'sheet-name changeonce'
+					mosrpgName = 'You !!!'
+					let playernameInput = document.createElement('input')
+					playernameInput.className = 'sheet-name-input golden'
+					playernameInput.value = mosrpgName
+					playernameInput.addEventListener('change', (e) => {
+						// CLEAN THIS RIGHT NOW
+						let newvalue = e.target.value
+
+						localStorage.setItem('mosrpgName', newvalue)
+						let Div = document.createElement('div')
+						Div.className = 'sheet-name-title'
+						Div.textContent = newvalue
+						e.target.parentNode.classList.remove('changeonce')
+						e.target.parentNode.appendChild(Div)
+						e.target.remove()
+					})
+					playernameDiv.appendChild(playernameInput)
+				}
+
+				//--
+				// this.PF.player.divstats['divPlayerName'] = playernameInput
+				//--
 				fullDiv.appendChild(playernameDiv)
 
 				let avatarDiv = document.createElement('div')

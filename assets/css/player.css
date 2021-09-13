@@ -183,6 +183,7 @@
 }
 
 #sheet .sheet-lists .sheet-stats .sheet-part.part-avatar .sheet-name {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -199,6 +200,7 @@
 }
 
 #sheet .sheet-lists .sheet-stats .sheet-part.part-avatar .sheet-name .sheet-name-input {
+  position: relative;
   background-color: unset;
   color: white;
   text-transform: uppercase;
@@ -221,6 +223,60 @@
           align-items: center;
   text-align: center;
   border: none;
+}
+
+#sheet .sheet-lists .sheet-stats .sheet-part.part-avatar .sheet-name.changeonce:hover:before {
+  position: absolute;
+  top: 110%;
+  left: 0%;
+  width: 100%;
+  content: "Watch Out ! You can't change this Twice !!!";
+  z-index: 999999999999;
+  background-color: rgba(12, 9, 27, 0.692);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+#displayparts {
+  position: absolute;
+  top: calc(2rem + (0.5vw));
+  right: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+#displayparts #displaydheet {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(255, 255, 255, 0.274);
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 .golden {

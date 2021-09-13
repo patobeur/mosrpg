@@ -15,6 +15,7 @@ class Ordinator extends CommunsTools {
 		// this.renderer = setInterval(10, this.render, ['true'], 50)
 
 		this.communsSheet.set_DivSheet()
+		this.communsSheet.add_button()
 		// this.communsSheet.switch_Display()
 
 		this.Start()

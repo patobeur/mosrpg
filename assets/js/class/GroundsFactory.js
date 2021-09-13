@@ -163,6 +163,11 @@ class GroundsFactory extends CommunsTools {
 		// to do 
 		// fonction and Set good dest pos with the translated coords if out ground clicked
 		if (e.target.id === 'ground') {
+			// if display on 
+			if (this.sheettools.isSheetOpen) {
+				this.sheettools.switch_Display()
+			}
+			console.log(e.target)
 			// CLICK TO RUN
 			// reset last arrived actions
 			this.ground.reset_Destination(e)
