@@ -13,7 +13,7 @@ class CommunsTools extends GameDatas {
 		notepad.addEventListener("contextmenu", function (event) {
 			event.preventDefault();
 			var ctxMenu = document.getElementById("ctxMenu");
-			ctxMenu.style.display = "block";
+			ctxMenu.style.display = "flex";
 			ctxMenu.style.left = (event.pageX - 10) + "px";
 			ctxMenu.style.top = (event.pageY - 10) + "px";
 		}, false);

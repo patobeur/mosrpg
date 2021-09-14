@@ -19,13 +19,12 @@
 				<a target="github" title="new tab on github" href="https://github.com/patobeur/"> </a>
 			</div>
 		</div>
-		<div class="remove">
-			<!-- <div class="ico">💡</div> -->
-			<div class="item">Pause : [P]</div>
-			<div class="item">Mouse Click to Run !</div>
-			<div class="item">Arrows to walk !</div>
-			<div class="item">💡 Sheet on [C]</div>
-		</div>
+		<!-- <div class="remove">
+		<div class="item">Pause : [P]</div>
+		<div class="item">Mouse Click to Run !</div>
+		<div class="item">Arrows to walk !</div>
+		<div class="item">💡 Sheet on [C]</div>
+		</div> -->
 		<div id="tools">
 			<div class="devjauge speed" title='change speed (1 to ?)'>
 				<div class="ico">💨</div>
@@ -51,7 +50,8 @@
 			</div>
 		</div>
 		<div id="pause">Game Paused !</div>
-		<menu id="ctxMenu">
+		<!-- <menu id="ctxMenu">
+			<div class="a">A</div>
 			<menu title="Actions">
 				<menu title="Talk to"></menu>
 				<menu id="walkhere" title="Walk to"></menu>
@@ -66,6 +66,26 @@
 				<menu title="Lv up"></menu>
 				<menu title="Death"></menu>
 			</menu>
+		</menu> -->
+		<menu id="contextmenu">
+			<ul class="lv1">
+				<li class="lv1" title="MOSRPG">🎲MOSRPG</li>
+				<li class="lv1" data="Programme" title="Programme">💡Programme
+					<ul class="lv2">
+						<li class="lv2" title="Le Github">Le Github</li>
+						<li class="lv2" title="Actions">Actions</li>
+						<li class="lv2" title="Wiki">Wiki</li>
+					</ul>
+				</li>
+				<li class="lv1" data="Programme" title="Keys">⌨️Keys
+					<ul class="lv2">
+						<li class="lv2" mos-current="true" title="Run">Mouse click -> Run</li>
+						<li class="lv2" title="Walk">Arrows Keyboards -> Walk</li>
+						<li class="lv2" title="Pause">P -> Pause Game</li>
+						<li class="lv2" title="Sheet">C -> Character Sheet</li>
+					</ul>
+				</li>
+			</ul>
 		</menu>
 		<!-- <div class="mire">+</div> -->
 		<script src='assets/js/class/GameDatas.js' id='gamedatas-js'></script>
