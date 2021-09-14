@@ -8,6 +8,23 @@ class CommunsTools extends GameDatas {
 		this.communsSheet = this.sheettools()
 		this.communsCheat = this.cheattools()
 	}
+	set_ContextMenu() {
+		var notepad = document.getElementById("ground");
+		notepad.addEventListener("contextmenu", function (event) {
+			event.preventDefault();
+			var ctxMenu = document.getElementById("ctxMenu");
+			ctxMenu.style.display = "block";
+			ctxMenu.style.left = (event.pageX - 10) + "px";
+			ctxMenu.style.top = (event.pageY - 10) + "px";
+		}, false);
+		notepad.addEventListener("click", function (event) {
+			event.preventDefault();
+			var ctxMenu = document.getElementById("ctxMenu");
+			ctxMenu.style.display = "";
+			ctxMenu.style.left = "";
+			ctxMenu.style.top = "";
+		}, false);
+	}
 	set_EventListener() {
 		window.addEventListener('resize', this.resize, true)
 		// drag test for futur drag and drop stuff ?

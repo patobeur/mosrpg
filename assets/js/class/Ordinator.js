@@ -18,6 +18,7 @@ class Ordinator extends CommunsTools {
 		this.communsSheet.add_button()
 		// this.switch_Display()
 
+		this.set_ContextMenu()
 		this.Start()
 
 	}
