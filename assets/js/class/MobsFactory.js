@@ -3,25 +3,44 @@
 class MobsFactory extends CommunsTools {
 	constructor() {
 		super()
-		this.mob = Object
-		this.get_Basics()
+		this.immat = new Number('0')
 	}
-	get_Basics() {
-		this.mobManager()
+	refresh_mobs = (ground) => {
+		this.mobs.forEach(mob => {
+			// get dir
+			// Patrol 
+			if (mob.datas.dirdelay.cur < 1) {
+				mob.datas.pos.d += this.communsTools.get_aleaEntreBornes(-50, 50)
+			}
+			// get next pos
+			let nexpos = this.communsTools.get_PosWithDegree(mob)
+			mob.datas.pos.x = nexpos.x
+			mob.datas.pos.y = nexpos.y
+			this.checkPos(mob, ground)
+			// refresh div
+			// mob.div.style.transform = 'rotate(' + mob.datas.pos.d + 'deg)'
+			mob.div.style.left = (nexpos.x - (mob.datas.size.w / 2)) + this.px
+			mob.div.style.top = (nexpos.y - (mob.datas.size.h / 2)) + this.px
+			mob.datas.dirdelay.cur++
+			if (mob.datas.dirdelay.cur > mob.datas.dirdelay.max) {
+				mob.datas.dirdelay.cur = 0
+			}
+		});
 	}
-	mobManager() {
+	add_NewMobPackToStack = (ground) => {
+		for (let i = 0; i < 31; i++) {
+			this.add_NewMobToStack(ground)
+		}
+	}
+	add_NewMobToStack = (ground) => {
 		let mob = {
 			div: Object,
-			divinfo: Object,
-			divclickrange: Object,
-			divvisual: Object,
-			divbeyond: Object,
-			divclick: Object,
-			divfog: Object, // need to change divclick to divfog
-			divstats: Object,
-			immat: 1,
+			immat: this.immat,
 			datas: {
 				classname: 'mob',
+				dirdelay: { cur: 0, max: 20 },
+				movdelay: { cur: 0, max: 30 },
+				alignement: ['neutral', 'chaotique'],
 				size: {
 					w: new Number('4'),
 					h: new Number('4'),
@@ -33,12 +52,11 @@ class MobsFactory extends CommunsTools {
 					l: new Number('32'),
 				},
 				pos: {
-					x: new Number('1'),//window.innerWidth / 2, // left
-					y: new Number('1'),//window.innerHeight / 2, // right
-					z: new Number('1'), // z-index
+					x: new Number(this.communsTools.get_aleaEntreBornes(1, ground.datas.size.w - 1)),
+					y: new Number(this.communsTools.get_aleaEntreBornes(1, ground.datas.size.h - 1)),
+					z: new Number('2'), // z-index
 					d: 0 // north
 				},
-				clickrange: new Number('1030'),
 				scale: new Number('1'),
 				character: {
 					stats: {
@@ -57,7 +75,7 @@ class MobsFactory extends CommunsTools {
 						lv: { current: new Number('1'), max: new Number('0') },
 					},
 					physics: {
-						speed: { current: new Number('5'), max: new Number('10') },
+						speed: { current: new Number('1'), max: new Number('10') },
 						height: { current: new Number('180'), max: new Number('240') },
 						weight: { current: new Number('80'), max: new Number('190') },
 					},
@@ -78,8 +96,8 @@ class MobsFactory extends CommunsTools {
 					}
 				},
 				destination: {
-					x: 64,
-					y: 64,
+					x: new Number('440'),
+					y: new Number('440'),
 					z: 1,
 					d: 0,
 					mapX: 0,
@@ -99,84 +117,31 @@ class MobsFactory extends CommunsTools {
 					petrifyed: { active: false, currentdelay: new Number('0'), maxdelay: new Number('100') },
 					undead: { active: false, currentdelay: new Number('0'), maxdelay: new Number('100') },
 				},
-			},
-			get_DivElem: () => {
-				if (this.mob.datas) {
-					let mobDiv = document.createElement('div')
-					mobDiv.style.position = 'absolute'
-					mobDiv.style.width = this.mob.datas.size.w + this.px
-					mobDiv.style.height = this.mob.datas.size.h + this.px
-					// mobDiv.style.left = parseInt(this.mob.datas.pos.x - (this.mob.datas.size.w / 2)) + this.px
-					// mobDiv.style.top = parseInt(this.mob.datas.pos.y - (this.mob.datas.size.h / 2)) + this.px
-					// mobDiv.style.left = parseInt((window.innerWidth / 2) - (this.mob.datas.size.w / 2)) + this.px
-					// mobDiv.style.top = parseInt((window.innerHeight / 2) - (this.mob.datas.size.h / 2)) + this.px
-					mobDiv.className = this.mob.datas.classname
-					// mobDiv.style.zIndex = parseInt(this.mob.datas.pos.z)
-
-					let mobDivvisual = document.createElement('div')
-					// mobDivvisual.style.position = 'absolute'
-					mobDivvisual.textContent = this.communsTools.get_aleaEntreBornes(0, 1) > 0 ? '🧙‍♂️' : '🧙‍♀️'// Man Mage
-					mobDivvisual.className = 'visual'
-					mobDivvisual.style.width = this.mob.datas.sizevisual.w + this.px
-					mobDivvisual.style.height = this.mob.datas.sizevisual.h + this.px
-					this.mob.divvisual = mobDivvisual
-
-					let mobDivinfo = document.createElement('div')
-					mobDivinfo.style.position = 'absolute'
-					mobDivinfo.textContent = 'ok mobOne'
-					mobDivinfo.className = 'info'
-					this.mob.divinfo = mobDivinfo
-
-					let mobDivclickrange = document.createElement('div')
-					// mobDivclickrange.style.position = 'absolute'
-					mobDivclickrange.className = 'clickrange'
-					mobDivclickrange.style.width = (this.mob.datas.clickrange) + this.px
-					mobDivclickrange.style.height = (this.mob.datas.clickrange) + this.px
-					this.mob.divclickrange = mobDivclickrange
-
-
-					mobDiv.appendChild(this.mob.divclickrange)
-					mobDiv.appendChild(this.mob.divvisual)
-					mobDiv.appendChild(this.mob.divinfo)
-					// mobDiv.appendChild(this.mob.divfog)
-					this.mob.div = mobDiv
-					// this.add_ToGame(this.mob.div)
-					// this.mob.refresh()
-				}
-			},
-			refresh: (ground) => {
-				if (ground) {
-					this.mob.checkPos(ground)
-					this.mob.divinfo.textContent = 'x:' + parseInt(this.mob.datas.pos.x) + ' , y:' + parseInt(this.mob.datas.pos.y) + ' , d:' + parseInt(this.mob.datas.pos.d) + '°'
-					this.mob.divclickrange.style.transform = 'rotate(' + (this.mob.datas.pos.d + 90) + 'deg)'
-
-					// Parse or NOT to parse !!!
-
-					// let's put the toon in the full center of the screen (window)
-					// this.mob.div.style.left = parseInt((window.innerWidth / 2)) + this.px
-					// this.mob.div.style.top = parseInt((window.innerHeight / 2)) + this.px
-
-					// same here 
-					// this.mob.divbeyond.style.left = parseInt((window.innerWidth / 2) - (this.mob.datas.clickrange / 2) - (this.mob.datas.size.w / 2)) + this.px
-					// this.mob.divbeyond.style.top = parseInt((window.innerHeight / 2) - (this.mob.datas.clickrange / 2) - (this.mob.datas.size.h / 2)) + this.px
-				}
-			},
-			checkPos: (ground) => {
-				if (this.mob.datas.pos.x + (this.mob.datas.size.w / 2) < 1) {
-					this.mob.datas.pos.x = ground.datas.size.w - (this.mob.datas.size.w / 2)
-				}
-				if (this.mob.datas.pos.x + (this.mob.datas.size.w / 2) > ground.datas.size.w) {
-					this.mob.datas.pos.x = 1 - (this.mob.datas.size.w / 2)
-				}
-				if (this.mob.datas.pos.y + (this.mob.datas.size.h / 2) < 1) {
-					this.mob.datas.pos.y = ground.datas.size.h - (this.mob.datas.size.h / 2)
-				}
-				if (this.mob.datas.pos.y + (this.mob.datas.size.h / 2) > ground.datas.size.h) {
-					this.mob.datas.pos.y = 1 - (this.mob.datas.size.h / 2)
-				}
-			},
+			}
 		}
-		this.mob = mob
-		this.mob.get_DivElem()
+		this.immat++
+		// this.mob = mob
+		mob.div = this.get_DivElem(mob)
+		this.mobs.push(mob)
+		// this.mob.refresh()
+		this.add_ToMap(mob.div)
+
+	}
+	get_DivElem = (mob) => {
+		if (mob) {
+			let mobDiv = document.createElement('div')
+			mobDiv.id = 'mob' + mob.immat
+			mobDiv.style.position = 'absolute'
+			mobDiv.style.width = mob.datas.size.w + this.px
+			mobDiv.style.height = mob.datas.size.h + this.px
+			mobDiv.style.top = mob.datas.pos.x + this.px
+			mobDiv.style.left = mob.datas.pos.y + this.px
+			mobDiv.className = mob.datas.classname
+			mobDiv.textContent = this.get_EmojiMobArray()[this.communsTools.get_aleaEntreBornes(0, this.get_EmojiMobArray().length)]
+			//  this.communsTools.get_aleaEntreBornes(0, 1) > 0 ? '🐇' : '🐖'
+
+			// Man Mage
+			return mobDiv
+		}
 	}
 }

@@ -4,6 +4,7 @@ class Ordinator extends CommunsTools {
 		super()
 		this.PF = new PlayersFactory()
 		this.GF = new GroundsFactory(this.PF.player)
+		this.MF = new MobsFactory()
 
 
 		this.add_ToGame(this.PF.player.div)
@@ -19,6 +20,7 @@ class Ordinator extends CommunsTools {
 		// this.switch_Display()
 
 		// this.set_ContextMenu()
+		this.MF.add_NewMobPackToStack(this.GF.ground)
 		this.Start()
 
 	}
@@ -88,6 +90,7 @@ class Ordinator extends CommunsTools {
 			if (!this.isPause) {
 				this.PF.player.refresh(this.GF.ground)
 				this.GF.ground.refresh()
+				this.MF.refresh_mobs(this.GF.ground)
 				// if new destination x y clicked
 				this.communsSheet.set_RefreshStats()
 				this.refresh_Console()

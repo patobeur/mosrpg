@@ -57,7 +57,7 @@ class PlayersFactory extends CommunsTools {
 						lv: { current: new Number('1'), max: new Number('0') },
 					},
 					physics: {
-						speed: { current: new Number('5'), max: new Number('10') },
+						speed: { current: new Number('3'), max: new Number('10') },
 						height: { current: new Number('180'), max: new Number('240') },
 						weight: { current: new Number('80'), max: new Number('190') },
 					},

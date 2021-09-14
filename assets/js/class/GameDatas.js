@@ -167,6 +167,13 @@ class GameDatas {
 		}
 	}
 	// GROUNDS
+	get_EmojiMobArray = () => {
+		return [
+			'🪳', '🪰', '🕷️', '🐞', '🪲'
+		]
+
+	}
+	// GROUNDS
 	get_ground = () => {
 		return {
 			0: {

@@ -7,6 +7,8 @@ class CommunsTools extends GameDatas {
 		this.communsTools = this.communstools()
 		this.communsSheet = this.sheettools()
 		this.communsCheat = this.cheattools()
+
+		this.mobs = []
 	}
 	set_ContextMenu() {
 		var notepad = document.getElementById("ground");
@@ -155,6 +157,9 @@ class CommunsTools extends GameDatas {
 					console.log('🐛 bug ! game paused' + (string ? ' 💀->' + string : ''))
 				}
 			},
+			get_randomRadians: () => {
+				return this.communsTools.get_aleaEntreBornes(0, 400)
+			},
 			get_aleaEntreBornes: (minimum, maximum) => {
 				return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
 			},
@@ -178,7 +183,21 @@ class CommunsTools extends GameDatas {
 				let AB = (destination.x) - (from.x)
 				let AC = (destination.y) - (from.y)
 				return Math.sqrt((AB * AB) + (AC * AC))
-			}
+			},
+		}
+	}
+	checkPos = (obj, ground) => {
+		if (obj.datas.pos.x + (obj.datas.size.w / 2) < 1) {
+			obj.datas.pos.x = ground.datas.size.w - (obj.datas.size.w / 2)
+		}
+		if (obj.datas.pos.x + (obj.datas.size.w / 2) > ground.datas.size.w) {
+			obj.datas.pos.x = 1 - (obj.datas.size.w / 2)
+		}
+		if (obj.datas.pos.y + (obj.datas.size.h / 2) < 1) {
+			obj.datas.pos.y = ground.datas.size.h - (obj.datas.size.h / 2)
+		}
+		if (obj.datas.pos.y + (obj.datas.size.h / 2) > ground.datas.size.h) {
+			obj.datas.pos.y = 1 - (obj.datas.size.h / 2)
 		}
 	}
 	switch_Display = () => {
@@ -188,23 +207,6 @@ class CommunsTools extends GameDatas {
 			: document.getElementById('sheet').classList.remove('active')
 		// switch pause with isSheetOpen case true/false
 		this.switch_Pause([this.isSheetOpen])
-	}
-	switch_Pause = (bool = false) => {
-		if (
-			// sheet is Open and requeste is to Pause game
-			this.isSheetOpen === true && (bool && bool[0] === true)
-			// sheet is Close and requeste is to UnPause game
-			|| this.isSheetOpen === false && (bool && bool[0] === false)
-			// sheet is Close and switch Pause is requested
-			|| this.isSheetOpen === false && bool === false
-		) {
-			this.isPause = (bool)
-				? bool[0]
-				: !this.isPause
-		}
-		(this.isPause)
-			? document.getElementById('pause').classList.add('active')
-			: document.getElementById('pause').classList.remove('active')
 	}
 	sheettools = () => {
 		return {
@@ -491,5 +493,22 @@ class CommunsTools extends GameDatas {
 				this.Play()
 			}
 		}
+	}
+	switch_Pause = (bool = false) => {
+		if (
+			// sheet is Open and requeste is to Pause game
+			this.isSheetOpen === true && (bool && bool[0] === true)
+			// sheet is Close and requeste is to UnPause game
+			|| this.isSheetOpen === false && (bool && bool[0] === false)
+			// sheet is Close and switch Pause is requested
+			|| this.isSheetOpen === false && bool === false
+		) {
+			this.isPause = (bool)
+				? bool[0]
+				: !this.isPause
+		}
+		(this.isPause)
+			? document.getElementById('pause').classList.add('active')
+			: document.getElementById('pause').classList.remove('active')
 	}
 }
